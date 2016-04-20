@@ -1,10 +1,14 @@
 <root>
     <styles>
-        <include src="file://{resources}/styles/dotastyles.css" />
+        <include src="s2r://panorama/styles/dotastyles.vcss_c" />
         <include src="s2r://panorama/styles/hudstyles.vcss_c" />
-        <include src="file://panorama/styles/custom_game/hud.css" />
-        
+        <include src="file://panorama/styles/custom_game/hud.css" />        
     </styles>
+
+    <scripts>
+        <include src="s2r://panorama/scripts/custom_game/hud.js" />
+    </scripts>
+
     <Panel class="MainPanel" hittest="false">
         <Panel id="ZooHUD" class="ZooTab" hittest="false">
             <Panel class="hudpanel" hittest="false">
@@ -28,61 +32,8 @@
                 </Panel>
                 <Panel class="hud" id="center_right">
                     <Panel id="AbilitiesContainer">
-                        <Panel id="Ability1" class="Ability">
-                            <Panel class="AbilityFrame">
-                                <Panel class="abilitycooldowncontainer">
-                                    <Panel class="cooldownswipe"/>
-                                </Panel>
-                                <Panel class="LeveledPipContainer">
-                                    <Panel class="LeveledPip"/>
-                                    <Panel class="LeveledPip"/>
-                                    <Panel class="LeveledPip"/>
-                                    <Panel class="LeveledPip"/>
-                                </Panel>
-                            </Panel>
-                        </Panel>
-                        <Panel class="Ability">
-                            <Panel class="AbilityFrame">
-                                <Panel class="abilitycooldowncontainer">
-                                    <Panel class="cooldownswipe"/>
-                                </Panel>
-                                <Panel class="LeveledPipContainer">
-                                    <Panel class="LeveledPip"/>
-                                    <Panel class="LeveledPip"/>
-                                    <Panel class="LeveledPip"/>
-                                    <Panel class="LeveledPip"/>
-                                </Panel>
-                            </Panel>
-                        </Panel>
-                        <Panel class="Ability">
-                            <Panel class="AbilityFrame">
-                                <Panel class="abilitycooldowncontainer">
-                                    <Panel class="cooldownswipe"/>
-                                </Panel>
-                                <Panel class="LeveledPipContainer">
-                                    <Panel class="LeveledPip"/>
-                                    <Panel class="LeveledPip"/>
-                                    <Panel class="LeveledPip"/>
-                                    <Panel class="LeveledPip"/>
-                                </Panel>
-                            </Panel>
-                        </Panel>
-                        <Panel class="Ability">
-                            <Panel class="AbilityFrame">
-                                <Panel class="abilitycooldowncontainer">
-                                    <Panel class="cooldownswipe"/>
-                                </Panel>
-                                <Panel class="LeveledPipContainer">
-                                    <Panel class="PipPadding" />
-                                    <Panel class="LeveledPip"/>
-                                    <Panel class="LeveledPip"/>
-                                    <Panel class="LeveledPip"/>
-                                </Panel>
-                            </Panel>
-                        </Panel>
 
                     </Panel>
-
                 </Panel>
 			</Panel>
         </Panel>

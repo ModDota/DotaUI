@@ -1,0 +1,35 @@
+<root>
+    <styles>
+        <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+        <include src="s2r://panorama/styles/hudstyles.vcss_c" />
+        <include src="file://panorama/styles/custom_game/hud.css" />        
+    </styles>
+
+    <scripts>
+        <include src="s2r://panorama/scripts/custom_game/actionbar_ability.js" />
+    </scripts>
+
+    <Panel class="Ability">
+        <Panel class="AbilityFrame">
+            <!-- Main ability button -->
+            <Button id="AbilityButton"
+                hittest = "true"
+                onmouseover="$.GetContextPanel().showTooltip();"
+                onmouseout="$.GetContextPanel().hideTooltip();" >
+
+                <DOTAAbilityImage id="AbilityImage" />
+                <Panel class="abilitycooldowncontainer">
+                    <Panel class="cooldownswipe"/>
+                </Panel>
+            </Button>
+
+            <!-- Ability level indicators -->
+            <Panel class="LeveledPipContainer">
+                <Panel class="LeveledPip"/>
+                <Panel class="LeveledPip"/>
+                <Panel class="LeveledPip"/>
+                <Panel class="LeveledPip"/>
+            </Panel>
+        </Panel>
+    </Panel>
+</root>
