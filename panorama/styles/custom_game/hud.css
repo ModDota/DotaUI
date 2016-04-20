@@ -1,0 +1,91 @@
+#ZooHUD
+{
+	width: 1920px;
+	height: 1080px;
+    //This is to move the UI up so we can do comparisons, remove in final product
+    padding-bottom: 180px;
+}
+#padding
+{
+    width: 32.5%; //32.5
+}
+#center_left_wide
+{
+    width: 13% !important; 
+    height: 60% !important;
+    background-size: 100% 100%;
+    //opacity: 0.0;
+}
+#RightStatsBox
+{
+    margin-left: 2%;
+}
+.BlackBox
+{
+    width: 46%;
+    height: 65%;
+    margin-left: 8%;
+    margin-bottom: 4%;
+}
+#center_right 
+{
+    width: 24.1% !important;
+    height: 60% !important;
+    background-size: 100% 100%;
+}
+.hudpanel:hover
+{
+    pre-transform-scale2d: 1;
+}
+.hudpanel
+{
+    width: 100% !important;
+    height: 28% !important;
+    overflow: squish squish;
+    pre-transform-scale2d: 1;
+}
+.Ability
+{
+    width: 25%;
+    height: 100%;
+}
+#AbilitiesContainer
+{
+    height: 68%;
+    width: 100%;
+    padding-left: 6%;
+    padding-right: 4%;
+    vertical-align: bottom;
+}
+.AbilityFrame
+{
+    width: 100% !important;
+    height: 100% !important;
+    margin-top: 5%;
+    margin-right: 15%;
+    background-size: contain;
+}
+.abilitycooldowncontainer
+{
+    width: 100% !important;
+    height: 84% !important;
+}
+.cooldownswipe
+{
+    width: 100% !important;
+    height: 100% !important;
+}
+.LeveledPipContainer
+{
+    width: 100%;
+    height: 30%;
+}
+.PipPadding
+{
+    width: 12%;
+}
+.LeveledPip
+{
+    width: 15% !important;
+    height: 100% !important;
+}
