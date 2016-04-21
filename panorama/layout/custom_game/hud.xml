@@ -30,7 +30,7 @@
                     <Panel class="BlackBox" id="LeftStatsBox"/>
                     <Panel class="BlackBox" id="RightStatsBox"/>
                 </Panel>
-                <Panel class="hud" id="center_right">
+                <Panel id="center_right">
                     <Panel id="AbilitiesContainer">
 
                     </Panel>

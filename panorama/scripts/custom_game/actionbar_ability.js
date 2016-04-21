@@ -8,11 +8,12 @@
         panel.abilityName = Abilities.GetAbilityName(ability);
         panel.ownerUnit = unit;
 
-        // Set the ability image
+        // Set the ability image.
         $( "#AbilityImage" ).abilityname = panel.abilityName;
         $( "#AbilityImage" ).contextEntityIndex = panel.ability;
 
-        //panel.setLevel(getAbilityLevel)
+        // Set the level of the ability.
+        panel.setLevel(Abilities.GetLevel(panel.ability));
 
         //check cooldowns
     }
@@ -37,7 +38,22 @@
     /* Set the level of the ability */
     panel.setLevel = function(level) {
         // If level == 0 desaturate image with css, otherwise revert
+        if (level == 0) {
+            $("#AbilityImage").AddClass("NotLearned");
+        } else {
+            $("#AbilityImage").RemoveClass("NotLearned");
+        }
 
-        // Set the bottom level indicators.
+        // Add pips.
+        var pipContainer = $("#PipContainer");
+        var maxLevel = Abilities.GetMaxLevel(panel.ability);
+        for (var i = 0; i < maxLevel; i++) {
+            var pip = $.CreatePanel( "Panel", pipContainer, "" );
+            if (i < level) {
+                pip.AddClass("LeveledPip");
+            } else {
+                pip.AddClass("EmptyPip");
+            }
+        }
     }
 })();

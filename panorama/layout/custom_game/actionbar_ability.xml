@@ -24,11 +24,10 @@
             </Button>
 
             <!-- Ability level indicators -->
-            <Panel class="LeveledPipContainer">
-                <Panel class="LeveledPip"/>
-                <Panel class="LeveledPip"/>
-                <Panel class="LeveledPip"/>
-                <Panel class="LeveledPip"/>
+            <Panel id="PopContainer2">
+            <Panel id="PipContainer">
+                <!-- <Panel class="LeveledPip"/> or <Panel class="EmptyPip"/> Inserted by code here. -->
+            </Panel>
             </Panel>
         </Panel>
     </Panel>

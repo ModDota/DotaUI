@@ -32,6 +32,7 @@
     width: 24.1% !important;
     height: 60% !important;
     background-size: 100% 100%;
+    vertical-align: bottom;
 }
 .hudpanel:hover
 {
@@ -65,31 +66,81 @@
     margin-right: 15%;
     background-size: contain;
 }
-#AbilityButton {
-    width: 100%;
-    height: 84%;
+.PipPadding
+{
+    width: 12%;
 }
+
+/* Preparations to move to separate file */
+#AbilityButton {
+    width: 89%;
+    height: 83%;
+    margin-left: 6%;
+    margin-top: 4%;
+    tooltip-body-position: 50% 100%;
+    tooltip-position: left bottom;
+}
+
+#AbilityImage {
+    width: 100%;
+    border-top: 3px solid #777777;
+    border-left: 3px solid #636363;
+    border-right: 3px solid #343434;
+    border-bottom: 3px solid #2c2c2c;
+}
+
+#AbilityButton:hover {
+    brightness: 1.5;
+}
+
+#AbilityImage.NotLearned {
+    saturation: 0;
+    brightness: 0.1;
+}
+
 .abilitycooldowncontainer
 {
-    width: 100% !important;
-    height: 84% !important;
+    width: 94%;
+    height: 92%;
+    margin-left: 3%;
+    margin-top: 4%;
 }
 .cooldownswipe
 {
     width: 100% !important;
     height: 100% !important;
+    //background-color: #000000cc;
 }
-.LeveledPipContainer
-{
+
+.EmptyPip {
+    width: height-percentage( 100% );
+    height: 200%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: -2px;
+    background-image: url("s2r://panorama/images/hud/pip_off_png.vtex");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#PopContainer2 {
+    height: 13%;
     width: 100%;
-    height: 30%;
+    margin-top: 8px;
 }
-.PipPadding
-{
-    width: 12%;
-}
+
 .LeveledPip
 {
     width: 15% !important;
     height: 100% !important;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+#PipContainer
+{
+    width: fit-children;
+    height: 100%;
+    flow-children: right;
+    horizontal-align: center;
 }
