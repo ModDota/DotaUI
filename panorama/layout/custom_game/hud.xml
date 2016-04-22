@@ -10,6 +10,7 @@
     </scripts>
 
     <Panel class="MainPanel" hittest="false">
+        <Panel style="width: 100px; height: 100px; background-color: #ff0000; clip: radial(50% 50%, 0deg, 10deg);"></Panel>
         <Panel id="ZooHUD" class="ZooTab" hittest="false">
             <Panel class="hudpanel" hittest="false">
                 <!--<Panel class="hud" id="minimapborder"/>

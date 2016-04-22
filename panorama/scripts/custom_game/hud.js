@@ -55,4 +55,10 @@
     // Bind query unit update event
     GameEvents.Subscribe("dota_player_update_selected_unit", onUpdateSelectedUnit);
     GameEvents.Subscribe("dota_player_update_query_unit", onUpdateQueryUnit);
+
+    //Listen to dota_action_success to determine cast state
+
+    //Listen for level ups
+
+    //Listen for casts (cooldown starts)
 })();
