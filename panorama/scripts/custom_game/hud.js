@@ -57,30 +57,14 @@
         }
     }
 
-    /* Handle the action success event to check if an ability is being cast. */
-    function onActionSuccess(event) {
-        var activeAbility = Abilities.GetLocalPlayerActiveAbility();
-
-        if (activeAbility !== -1) {
-            if (abilities[activeAbility] !== undefined) {
-                if (Abilities.IsInAbilityPhase(activeAbility)) {
-                    abilities[activeAbility].setActive(false);
-                    abilities[activeAbility].setAbilityPhase(true);
-                } else {
-                    abilities[activeAbility].setActive(true);
-                }
-            }
-        } else {
-            for (var ab in abilities) {
-                abilities[ab].setActive(false);
-                abilities[activeAbility].setAbilityPhase(false);
-            }
+    /* Update loop */
+    function onUpdate() {
+        // Update all abilities.
+        for (var ab in abilities) {
+            abilities[ab].update();
         }
-    }
 
-    /* Handle ability changed (level up?) event */
-    function onAbilityCHanged(event) {
-
+        $.Schedule(0.005, onUpdate);
     }
 
     // Bind query unit update event
@@ -88,7 +72,7 @@
     GameEvents.Subscribe("dota_player_update_query_unit", onUpdateQueryUnit);
 
     //Listen to dota_action_success to determine cast state
-    GameEvents.Subscribe("dota_action_success", onActionSuccess);
+    onUpdate();
 
     //Listen for level up event - dota_ability_changed
 

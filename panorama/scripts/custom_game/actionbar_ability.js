@@ -1,4 +1,10 @@
 (function() {
+    var ABILITY_STATE_DEFAULT = 0,
+        ABILITY_STATE_ACTIVE = 1,
+        ABILITY_STATE_ABILITY_PHASE = 2,
+        ABILITY_STATE_COOLDOWN = 3;
+
+    var currentState = ABILITY_STATE_DEFAULT;
     var panel = $.GetContextPanel();
 
     /* Initialise this ability panel with a slot and ability (like a constructor). */
@@ -36,8 +42,13 @@
     }
 
     /* Start cooldown animation based on current duration and the total duration */
-    panel.startCooldown = function(duration, totalDuration) {
+    panel.startCooldown = function(duration) {
         // Do the radial clip thing.
+        var totalDuration = Abilities.GetCooldownLength(panel.ability);
+        $("#cooldownswipe").style.opacity = "0.75";
+        $.Schedule(duration, function() {
+            $("#cooldownswipe").style.opacity = "0";
+        });
     }
 
     /* Set the level of the ability */
@@ -62,21 +73,41 @@
         }
     }
 
-    /* Set the state of the panel to active or not (casting state) */
-    panel.setActive = function(active) {
-        if (active) {
-            $("#AbilityImage").AddClass("Active");
-        } else {
-            $("#AbilityImage").RemoveClass("Active");
+    /* Check for changes in the ability state */
+    panel.update = function() {
+        var state = ABILITY_STATE_DEFAULT;
+        if (Abilities.GetLocalPlayerActiveAbility() === panel.ability) {
+            state = ABILITY_STATE_ACTIVE;
         }
-    }
+        else if (Abilities.IsInAbilityPhase(panel.ability)) {
+            state = ABILITY_STATE_ABILITY_PHASE;
+        }
+        else if (!Abilities.IsCooldownReady(panel.ability)) {
+            state = ABILITY_STATE_COOLDOWN;
+        }
 
-    /* Set the state of the panel to ability state or not (during cast animation) */
-    panel.setActive = function(active) {
-        if (active) {
-            $("#AbilityImage").AddClass("AbilityPhase");
-        } else {
-            $("#AbilityImage").RemoveClass("AbilityPhase");
+        if (state !== currentState) {
+            if (state === ABILITY_STATE_DEFAULT) {
+                $("#AbilityImage").RemoveClass("Active");
+                $("#AbilityImage").RemoveClass("AbilityPhase");
+                $("#AbilityImage").RemoveClass("Cooldown");
+            } else if (state === ABILITY_STATE_ACTIVE) {
+                $("#AbilityImage").AddClass("Active");
+                $("#AbilityImage").RemoveClass("AbilityPhase");
+                $("#AbilityImage").RemoveClass("Cooldown");
+            } else if (state === ABILITY_STATE_ABILITY_PHASE) {
+                $("#AbilityImage").RemoveClass("Active");
+                $("#AbilityImage").AddClass("AbilityPhase");
+                $("#AbilityImage").RemoveClass("Cooldown");
+            } else if (state === ABILITY_STATE_COOLDOWN) {
+                $("#AbilityImage").RemoveClass("Active");
+                $("#AbilityImage").RemoveClass("AbilityPhase");
+                $("#AbilityImage").AddClass("Cooldown");
+
+                panel.startCooldown(Abilities.GetCooldownTimeRemaining(panel.ability));
+            }
+
+            currentState = state;
         }
     }
 })();
