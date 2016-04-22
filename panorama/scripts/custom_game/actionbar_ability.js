@@ -12,6 +12,11 @@
         $( "#AbilityImage" ).abilityname = panel.abilityName;
         $( "#AbilityImage" ).contextEntityIndex = panel.ability;
 
+        // Set a special style for passive abilities
+        if (Abilities.IsPassive(panel.ability)) {
+            $( "#AbilityFrame" ).AddClass("Passive");
+        }
+
         // Set the level of the ability.
         panel.setLevel(Abilities.GetLevel(panel.ability));
 
@@ -54,6 +59,24 @@
             } else {
                 pip.AddClass("EmptyPip");
             }
+        }
+    }
+
+    /* Set the state of the panel to active or not (casting state) */
+    panel.setActive = function(active) {
+        if (active) {
+            $("#AbilityImage").AddClass("Active");
+        } else {
+            $("#AbilityImage").RemoveClass("Active");
+        }
+    }
+
+    /* Set the state of the panel to ability state or not (during cast animation) */
+    panel.setActive = function(active) {
+        if (active) {
+            $("#AbilityImage").AddClass("AbilityPhase");
+        } else {
+            $("#AbilityImage").RemoveClass("AbilityPhase");
         }
     }
 })();

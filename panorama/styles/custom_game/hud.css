@@ -58,21 +58,29 @@
     padding-right: 4%;
     vertical-align: bottom;
 }
-.AbilityFrame
+#AbilityFrame
 {
-    width: 100% !important;
-    height: 100% !important;
+    width: 100%;
+    height: 100%;
     margin-top: 5%;
     margin-right: 15%;
     background-size: contain;
+    background-position: center top;
 }
+
+#AbilityFrame.Passive
+{
+    background-image: none;
+}
+
 .PipPadding
 {
     width: 12%;
 }
 
 /* Preparations to move to separate file */
-#AbilityButton {
+#AbilityButton 
+{
     width: 89%;
     height: 83%;
     margin-left: 6%;
@@ -81,7 +89,8 @@
     tooltip-position: left bottom;
 }
 
-#AbilityImage {
+#AbilityImage 
+{
     width: 100%;
     border-top: 3px solid #777777;
     border-left: 3px solid #636363;
@@ -89,13 +98,23 @@
     border-bottom: 3px solid #2c2c2c;
 }
 
-#AbilityButton:hover {
-    //brightness: 1.5;
+#AbilityFrame.Passive #AbilityImage 
+{
+    border: 0px solid black;
+    height: 98%;
 }
 
-#AbilityImage.NotLearned {
+#AbilityImage.NotLearned 
+{
     saturation: 0;
     brightness: 0.1;
+}
+
+#AbilityImage.Active 
+{
+    brightness: 1.6;
+    border-color: #999999;
+    padding-top: 3px;
 }
 
 .abilitycooldowncontainer
@@ -104,18 +123,21 @@
     height: 92%;
     margin-left: 3%;
     margin-top: 4%;
+    //background-color: #ff000088;
 }
-.cooldownswipe
+
+#cooldownswipe
 {
     width: 100% !important;
     height: 100% !important;
-    background-color: #000000cc;
-    clip: radial(50% 50%, 90deg, -90deg);
+    //background-color: #FFFFFFFF;
+    //clip: radial(50% 50%, 6deg, 10deg);
 }
 
-.EmptyPip {
-    width: height-percentage( 100% );
-    height: 200%;
+.EmptyPip 
+{
+    width: 18%;
+    height: 100%;
     margin-left: 0px;
     margin-right: 0px;
     margin-top: -2px;
@@ -124,15 +146,9 @@
     background-repeat: no-repeat;
 }
 
-#PopContainer2 {
-    height: 13%;
-    width: 100%;
-    margin-top: 8px;
-}
-
 .LeveledPip
 {
-    width: 15% !important;
+    width: 13% !important;
     height: 100% !important;
     margin-left: 1px;
     margin-right: 1px;
@@ -140,17 +156,29 @@
 
 #PipContainer
 {
-    width: fit-children;
+    width: 100%;
     height: 100%;
     flow-children: right;
     horizontal-align: center;
+    margin-top: 7%;
 }
 
-#HoverHighlight {
+#HoverHighlight 
+{
     width: 100%;
     height: 100%;
 }
 
-#AbilityButton:hover #HoverHighlight {
-    background-color: gradient( linear, 0% 0%, 0% 70%, from( #ffffff05 ), to( #ffffff00 ) );
+#AbilityButton:hover #HoverHighlight 
+{
+    background-color: gradient( linear, 0% 0%, 0% 40%, from( #ffffff08 ), to( #ffffff00 ) );
+}
+
+#AbilityFrame.Passive #PassiveMask
+{
+    width: 100%;
+    height: 100%;
+    background-image: url("s2r://panorama/images/hud/passive_ability_border_png.vtex");
+    background-size: contain;
+    background-repeat: no-repeat;
 }

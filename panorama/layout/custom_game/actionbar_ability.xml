@@ -10,7 +10,7 @@
     </scripts>
 
     <Panel class="Ability">
-        <Panel class="AbilityFrame">
+        <Panel id="AbilityFrame" class="AbilityFrame">
             <!-- Main ability button -->
             <Button id="AbilityButton"
                 hittest = "true"
@@ -19,16 +19,17 @@
 
                 <DOTAAbilityImage id="AbilityImage" />
                 <Panel class="abilitycooldowncontainer">
-                    <Panel class="cooldownswipe"/>
+                    <Panel id="cooldownswipe" />
                 </Panel>
+
+                <Panel id="PassiveMask"></Panel>
+                <!--<Panel id="HoverHighlight"></Panel>-->
                 <Panel id="HoverHighlight"></Panel>
             </Button>
 
             <!-- Ability level indicators -->
-            <Panel id="PopContainer2">
             <Panel id="PipContainer">
                 <!-- <Panel class="LeveledPip"/> or <Panel class="EmptyPip"/> Inserted by code here. -->
-            </Panel>
             </Panel>
         </Panel>
     </Panel>
