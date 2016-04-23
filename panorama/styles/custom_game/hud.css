@@ -148,7 +148,8 @@
     height: 100% !important;
     background-color: #000000;
     opacity: 0;
-    //clip: radial(50% 50%, 6deg, 10deg);
+    transition-timing-function: linear;
+    transition-property: clip;
 }
 
 .EmptyPip 
