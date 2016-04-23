@@ -1,4 +1,5 @@
 (function() {
+    var units = {};
     var abilities = {};
 
     /* Set actionpanel for a specified unit. */
@@ -6,37 +7,53 @@
         var abilityContainer = $("#AbilitiesContainer");
 
         // Get rid of the old abilities first.
-        abilities = {};
-        abilityContainer.RemoveAndDeleteChildren();
+        for (var ab in abilities) {
+            abilities[ab].style.visibility = "collapse";
+        }
+        
+        // Retrieve panels we made previously to avoid deletion or excessive panels.
+        if (units[unit] !== undefined) {
+            abilities = units[unit];
+            for (var ab in abilities) {
+                abilities[ab].reinit();
+                abilities[ab].style.visibility = "visible";
+            }
+        }
+        else {
+            // Add new abilities
+            var abilityCount = Entities.GetAbilityCount(unit) -1;
+            var slot = 0;
 
-        // Add new abilities
-        var abilityCount = Entities.GetAbilityCount(unit) -1;
-        var slot = 0;
+            var newAbilities = {};
 
-        while (slot < abilityCount) {
-            // Get ability.
-            var ability = Entities.GetAbility(unit, slot);
+            while (slot < abilityCount) {
+                // Get ability.
+                var ability = Entities.GetAbility(unit, slot);
 
-            // Stop once an invalid ability is found (or just continue and ignore?)
-            if (ability === -1) {
-                break;
+                // Stop once an invalid ability is found (or just continue and ignore?)
+                if (ability === -1) {
+                    break;
+                }
+
+                // Skip abilities not on the cast bar (attribute bonus).
+                if (!Abilities.IsAttributeBonus(ability) && !Abilities.IsHidden(ability)) {
+                    // Create new panel and load the layout.
+                    var abilityPanel = $.CreatePanel( "Panel", abilityContainer, "" );
+                    abilityPanel.LoadLayoutAsync( "file://{resources}/layout/custom_game/actionbar_ability.xml", false, false );
+                    
+                    // Initialise the ability panel.
+                    abilityPanel.init(slot, ability, unit);
+
+                    // Keep ability for later
+                    newAbilities[ability] = abilityPanel;
+                }
+
+                // Increment slot for next ability.
+                slot++;
             }
 
-            // Skip abilities not on the cast bar (attribute bonus).
-            if (!Abilities.IsAttributeBonus(ability)) {
-                // Create new panel and load the layout.
-                var abilityPanel = $.CreatePanel( "Panel", abilityContainer, "" );
-                abilityPanel.BLoadLayout( "file://{resources}/layout/custom_game/actionbar_ability.xml", false, false );
-                
-                // Initialise the ability panel.
-                abilityPanel.init(slot, ability, unit);
-
-                // Keep ability for later
-                abilities[ability] = abilityPanel;
-            }
-
-            // Increment slot for next ability.
-            slot++;
+            units[unit] = newAbilities;
+            abilities = newAbilities;
         }
     }
 
@@ -70,6 +87,13 @@
     // Bind query unit update event
     GameEvents.Subscribe("dota_player_update_selected_unit", onUpdateSelectedUnit);
     GameEvents.Subscribe("dota_player_update_query_unit", onUpdateQueryUnit);
+
+    //Set default unit
+    var unit = Players.GetQueryUnit(Players.GetLocalPlayer());
+    if (unit === -1 ) {
+        unit = Players.GetLocalPlayerPortraitUnit();
+    }
+    SetActionPanel(unit);
 
     //Listen to dota_action_success to determine cast state
     onUpdate();

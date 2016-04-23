@@ -13,6 +13,9 @@
         panel.ability = ability;
         panel.abilityName = Abilities.GetAbilityName(ability);
         panel.ownerUnit = unit;
+        panel.maxLevel = Abilities.GetMaxLevel(panel.ability);
+
+        panel.pips = [];
 
         // Set the ability image.
         $( "#AbilityImage" ).abilityname = panel.abilityName;
@@ -23,10 +26,19 @@
             $( "#AbilityFrame" ).AddClass("Passive");
         }
 
+        // Add ability pips.
+        panel.addLevelPips();
+
         // Set the level of the ability.
         panel.setLevel(Abilities.GetLevel(panel.ability));
 
         //check cooldowns
+    }
+
+    /* Re-initialise when fetching this existing panel again. */
+    panel.reinit = function() {
+        // Set the level of the ability.
+        panel.setLevel(Abilities.GetLevel(panel.ability));
     }
 
     /* Show the ability tooltip */
@@ -41,6 +53,19 @@
         $.DispatchEvent("DOTAHideAbilityTooltip", abilityButton);
     }
 
+    /* Left click */
+    panel.onLeftClick = function() {
+        Abilities.ExecuteAbility(panel.ability, panel.ownerUnit, false);
+    }
+
+    /* Right click */
+    panel.onRightClick = function() {
+        if (Abilities.IsAutocast(panel.ability)) {
+            //Abilities.
+            //Turn on autocast
+        }
+    }
+
     /* Start cooldown animation based on current duration and the total duration */
     panel.startCooldown = function(duration) {
         // Do the radial clip thing.
@@ -49,6 +74,32 @@
         $.Schedule(duration, function() {
             $("#cooldownswipe").style.opacity = "0";
         });
+    }
+
+    /* Add level pips. */
+    panel.addLevelPips = function(level) {
+        // Add pips.
+        var pipContainer = $("#PipContainer");
+        var maxLevel = panel.maxLevel;
+        if (maxLevel < 8) {
+            for (var i = 0; i < maxLevel; i++) {
+                var pip = $.CreatePanel("Panel", pipContainer, "");
+                if (i < level) {
+                    pip.AddClass("LeveledPip");
+                } else {
+                    pip.AddClass("EmptyPip");
+                }
+                if (maxLevel > 5) {
+                    pip.AddClass("Small");
+                }
+                panel.pips.push(pip);
+            }
+        } else {
+            //Add pips for levels > 8
+            var pipLabel = $.CreatePanel("Label", pipContainer, "");
+            pipLabel.text = "0/"+maxLevel;
+            panel.pips[0] = pipLabel;
+        }
     }
 
     /* Set the level of the ability */
@@ -60,16 +111,18 @@
             $("#AbilityImage").RemoveClass("NotLearned");
         }
 
-        // Add pips.
-        var pipContainer = $("#PipContainer");
-        var maxLevel = Abilities.GetMaxLevel(panel.ability);
-        for (var i = 0; i < maxLevel; i++) {
-            var pip = $.CreatePanel( "Panel", pipContainer, "" );
-            if (i < level) {
-                pip.AddClass("LeveledPip");
-            } else {
-                pip.AddClass("EmptyPip");
+        // Set pips.
+        if (panel.maxLevel < 8) {
+            var pipContainer = $("#PipContainer");
+            for (var i = 0; i < level; i++) {
+                var pip = panel.pips[i];
+                if (pip.BHasClass("EmptyPip")) {
+                    pip.RemoveClass("EmptyPip");
+                    pip.AddClass("LeveledPip");
+                }
             }
+        } else {
+            panel.pips[0].text = level + "/" + panel.maxLevel;
         }
     }
 
@@ -79,7 +132,7 @@
         if (Abilities.GetLocalPlayerActiveAbility() === panel.ability) {
             state = ABILITY_STATE_ACTIVE;
         }
-        else if (Abilities.IsInAbilityPhase(panel.ability)) {
+        else if (Abilities.IsInAbilityPhase(panel.ability) || Abilities.GetToggleState(panel.ability)) {
             state = ABILITY_STATE_ABILITY_PHASE;
         }
         else if (!Abilities.IsCooldownReady(panel.ability)) {

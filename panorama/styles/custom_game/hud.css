@@ -139,41 +139,50 @@
     height: 92%;
     margin-left: 3%;
     margin-top: 4%;
-    //background-color: #ff000088;
+    //background-color: #ffffff88;
 }
 
 #cooldownswipe
 {
-    width: 100% !important;
-    height: 100% !important;
-    background-color: #000000;
-    opacity: 0;
+    //width: 100% !important;
+    //height: 100% !important;
+    background-color: #ff0000;
+    //opacity: 0;
     //clip: radial(50% 50%, 6deg, 10deg);
 }
 
 .EmptyPip 
 {
-    width: 18%;
+    width: 17px;
     height: 100%;
     margin-left: 0px;
     margin-right: 0px;
-    margin-top: -2px;
     background-image: url("s2r://panorama/images/hud/pip_off_png.vtex");
     background-size: contain;
     background-repeat: no-repeat;
 }
 
+.EmptyPip.Small {
+    width: 9px;
+    margin-top: 1px;
+}
+
 .LeveledPip
 {
-    width: 13% !important;
-    height: 100% !important;
+    width: 11px !important;
+    height: 12px !important;
     margin-left: 1px;
     margin-right: 1px;
+    margin-top: 1px;
+}
+
+.LeveledPip.Small {
+    width: 7px;
 }
 
 #PipContainer
 {
-    width: 100%;
+    width: fit-children;
     height: 100%;
     flow-children: right;
     horizontal-align: center;

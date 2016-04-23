@@ -13,9 +13,12 @@
         <Panel id="AbilityFrame" class="AbilityFrame">
             <!-- Main ability button -->
             <Button id="AbilityButton"
-                hittest = "true"
+                hittest="true"
                 onmouseover="$.GetContextPanel().showTooltip();"
-                onmouseout="$.GetContextPanel().hideTooltip();" >
+                onmouseout="$.GetContextPanel().hideTooltip();"
+                onactivate="$.GetContextPanel().onLeftClick();"
+                oncontextmenu="$.GetContextPanel().onRightClick();"
+                >
 
                 <DOTAAbilityImage id="AbilityImage" />
                 <Panel class="abilitycooldowncontainer">
