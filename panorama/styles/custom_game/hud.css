@@ -144,11 +144,12 @@
 
 #cooldownswipe
 {
-    //width: 100% !important;
-    //height: 100% !important;
-    background-color: #ff0000;
-    //opacity: 0;
-    //clip: radial(50% 50%, 6deg, 10deg);
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #000000;
+    opacity: 0;
+    transition-timing-function: linear;
+    transition-property: clip;
 }
 
 .EmptyPip 

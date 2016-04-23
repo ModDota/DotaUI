@@ -71,8 +71,11 @@
         // Do the radial clip thing.
         var totalDuration = Abilities.GetCooldownLength(panel.ability);
         $("#cooldownswipe").style.opacity = "0.75";
+        $("#cooldownswipe").style.transitionDuration = totalDuration+".0s";
+        $("#cooldownswipe").style.clip = "radial(50% 50%, 0deg, 0deg)";
         $.Schedule(duration, function() {
             $("#cooldownswipe").style.opacity = "0";
+            $("#cooldownswipe").style.clip = "radial(50% 50%, 0deg, -360deg)";
         });
     }
 
