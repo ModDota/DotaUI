@@ -21,17 +21,13 @@
         // Retrieve panels we made previously to avoid deletion or excessive panels.
         if (units[unit] !== undefined) {
             abilities = units[unit];
-            for (var ab in abilities) {
-                abilities[ab].reinit();
-                abilities[ab].style.visibility = "visible";
-            }
         }
         else {
             units[unit] = {};
             abilities = units[unit];
-
-            updateVisibleAbilities();
         }
+
+        updateVisibleAbilities();
 
         abilityContainer.AddClass("AbilityLayout" + countAbilityLayout(unit));
     }
