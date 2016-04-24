@@ -12,6 +12,7 @@
     <Panel class="Ability">
         <Panel id="AbilityFrame" class="AbilityFrame">
             <!-- Main ability button -->
+            <Panel class="spacer" />
             <Button id="AbilityButton"
                 hittest="true"
                 onmouseover="$.GetContextPanel().showTooltip();"

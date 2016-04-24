@@ -45,11 +45,25 @@
     overflow: squish squish;
     pre-transform-scale2d: 1;
 }
+
 .Ability
 {
     width: 25%;
     height: 100%;
 }
+
+.AbilityLayout5 .Ability {
+    width: 20%;
+    height: 100%;
+    padding-top: 8px;
+}
+
+.AbilityLayout6 .Ability {
+    width: 17%;
+    height: 100%;
+    padding-top: 8px;
+}
+
 #AbilitiesContainer
 {
     height: 68%;
@@ -58,6 +72,17 @@
     padding-right: 4%;
     vertical-align: bottom;
 }
+
+#AbilitiesContainer.AbilityLayout5 {
+    padding-left: 4%;
+    padding-right: 0%;
+}
+
+#AbilitiesContainer.AbilityLayout6 {
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
 #AbilityFrame
 {
     width: 100%;
@@ -79,19 +104,32 @@
 }
 
 /* Preparations to move to separate file */
+
+.spacer {
+    width: 100%;
+    height: width-percentage(4%);
+    opacity: 0.2;
+}
+
 #AbilityButton 
 {
-    width: 89%;
-    height: 83%;
-    margin-left: 6%;
-    margin-top: 4%;
+    width: 90%;
+    height: width-percentage(100%);
     tooltip-body-position: 50% 100%;
     tooltip-position: left bottom;
+    horizontal-align: center;
+    //background-color: #00ff00;
+}
+
+.AbilityLayout5 #AbilityButton {
+    width: 89%;
+    margin-top: 1px;
 }
 
 #AbilityImage 
 {
     width: 100%;
+    height: width-percentage(100%);
     border-top: 3px solid #777777;
     border-left: 3px solid #636363;
     border-right: 3px solid #343434;
@@ -101,13 +139,16 @@
 #AbilityFrame.Passive #AbilityImage 
 {
     border: 0px solid black;
-    height: 98%;
 }
 
 #AbilityImage.NotLearned 
 {
     saturation: 0;
-    brightness: 0.1;
+    brightness: 0.03;
+    border-top: 3px solid #ffffff;
+    border-left: 3px solid #bbbbbb;
+    border-right: 3px solid #999999;
+    border-bottom: 3px solid #999999;
 }
 
 #AbilityImage.Active 
@@ -135,11 +176,8 @@
 
 .abilitycooldowncontainer
 {
-    width: 94%;
-    height: 92%;
-    margin-left: 3%;
-    margin-top: 4%;
-    //background-color: #ffffff88;
+    width: 100%;
+    height: width-percentage(100%);
 }
 
 #cooldownswipe
@@ -163,9 +201,14 @@
     background-repeat: no-repeat;
 }
 
+.AbilityLayout6 .EmptyPip.Small,
 .EmptyPip.Small {
-    width: 9px;
+    width: 10px;
     margin-top: 1px;
+}
+
+.AbilityLayout6 .EmptyPip {
+    width: 13px;
 }
 
 .LeveledPip
@@ -177,6 +220,7 @@
     margin-top: 1px;
 }
 
+.AbilityLayout6 .LeveledPip.Small,
 .LeveledPip.Small {
     width: 7px;
 }
@@ -193,7 +237,7 @@
 #HoverHighlight 
 {
     width: 100%;
-    height: 100%;
+    height: width-percentage(100%);
 }
 
 #AbilityButton:hover #HoverHighlight 

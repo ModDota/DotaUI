@@ -10,6 +10,9 @@
         for (var ab in abilities) {
             abilities[ab].style.visibility = "collapse";
         }
+
+        // Remove old ability layout
+        abilityContainer.RemoveClass("AbilityLayout" + Object.keys(abilities).length);
         
         // Retrieve panels we made previously to avoid deletion or excessive panels.
         if (units[unit] !== undefined) {
@@ -55,6 +58,9 @@
             units[unit] = newAbilities;
             abilities = newAbilities;
         }
+
+        $.Msg(Object.keys(abilities));
+        abilityContainer.AddClass("AbilityLayout" + Object.keys(abilities).length);
     }
 
     /* Selection changed to a unit the player controls. */
