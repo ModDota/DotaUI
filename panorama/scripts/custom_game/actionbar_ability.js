@@ -32,6 +32,14 @@
 
         // Set the level of the ability.
         panel.setLevel(Abilities.GetLevel(panel.ability));
+
+        // Set hotkey panel.
+        var hotkey = Abilities.GetKeybind(panel.ability);
+        if (Abilities.IsPassive(panel.ability)) {
+            $("#HotkeyLabel").style.visibility = "collapse";
+        } else {
+            $("#HotkeyLabel").text = hotkey;
+        }
     }
 
     /* Re-initialise when fetching this existing panel again. */
@@ -106,11 +114,22 @@
 
     /* Set the level of the ability */
     panel.setLevel = function(level) {
+        // Get the mana cost
+        var manaCost = Abilities.GetManaCost(panel.ability);
+
         // If level == 0 desaturate image with css, otherwise revert
         if (level == 0) {
             $("#AbilityImage").AddClass("NotLearned");
+            $("#ManaLabel").style.visibility = "collapse";
         } else {
             $("#AbilityImage").RemoveClass("NotLearned");
+
+            if (manaCost > 0) {
+                $("#ManaLabel").style.visibility = "visible";
+                $("#ManaLabel").text = manaCost;
+            } else {
+                $("#ManaLabel").style.visibility = "collapse";
+            }
         }
 
         panel.level = level;
