@@ -7,12 +7,13 @@
     var currentState = ABILITY_STATE_DEFAULT;
     var panel = $.GetContextPanel();
 
-    /* Initialise this ability panel with a slot and ability (like a constructor). */
-    panel.init = function(slot, ability, unit) {
+    /* Initialise this ability panel with an ability (like a constructor). */
+    panel.init = function(ability, unit) {
         // Do some bookkeeping
         panel.ability = ability;
         panel.abilityName = Abilities.GetAbilityName(ability);
         panel.ownerUnit = unit;
+        panel.level = 0;
         panel.maxLevel = Abilities.GetMaxLevel(panel.ability);
 
         panel.pips = [];
@@ -31,8 +32,6 @@
 
         // Set the level of the ability.
         panel.setLevel(Abilities.GetLevel(panel.ability));
-
-        //check cooldowns
     }
 
     /* Re-initialise when fetching this existing panel again. */
@@ -62,7 +61,7 @@
     panel.onRightClick = function() {
         if (Abilities.IsAutocast(panel.ability)) {
             //Abilities.
-            //Turn on autocast
+            //Turn on autocast - API where?!
         }
     }
 
@@ -113,6 +112,8 @@
         } else {
             $("#AbilityImage").RemoveClass("NotLearned");
         }
+
+        panel.level = level;
 
         // Set pips.
         if (panel.maxLevel < 8) {
