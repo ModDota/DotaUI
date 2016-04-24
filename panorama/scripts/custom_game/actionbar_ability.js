@@ -15,6 +15,7 @@
         panel.ownerUnit = unit;
         panel.level = 0;
         panel.maxLevel = Abilities.GetMaxLevel(panel.ability);
+        panel.learning = false;
 
         panel.pips = [];
 
@@ -46,6 +47,9 @@
     panel.reinit = function() {
         // Set the level of the ability.
         panel.setLevel(Abilities.GetLevel(panel.ability));
+
+        // Check if we can still upgrade.
+        panel.setLearnMode(panel.learning);
     }
 
     /* Show the ability tooltip */
@@ -62,7 +66,11 @@
 
     /* Left click */
     panel.onLeftClick = function() {
-        Abilities.ExecuteAbility(panel.ability, panel.ownerUnit, false);
+        if (panel.learning) {
+            Abilities.AttemptToUpgrade(panel.ability);
+        } else {
+            Abilities.ExecuteAbility(panel.ability, panel.ownerUnit, false);
+        }
     }
 
     /* Right click */
@@ -146,6 +154,20 @@
             }
         } else {
             panel.pips[0].text = level + "/" + panel.maxLevel;
+        }
+    }
+
+    /* Set if this panel is learning or not */
+    panel.setLearnMode = function(learnMode) {
+        // Make sure to cast by default.
+        panel.learning = false;
+
+        // Check if we're in learn mode (NOTE: Bug in CanAbilityBeUpgraded (inverted))
+        if (learnMode && Abilities.CanAbilityBeUpgraded(panel.ability) === AbilityLearnResult_t.ABILITY_CAN_BE_UPGRADED) {
+            $("#LearnOverlay").style.visibility = "visible";
+            panel.learning = true;
+        } else {
+            $("#LearnOverlay").style.visibility = "collapse";
         }
     }
 

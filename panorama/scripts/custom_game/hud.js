@@ -2,6 +2,7 @@
     var units = {};
     var currentUnit = -1;
     var abilities = {};
+    var learnMode = false;
 
     /* Set actionpanel for a specified unit. */
     function SetActionPanel(unit) {
@@ -53,7 +54,6 @@
         //Ability points changed
 
         //Update stats?
-        $.Msg(event);
     }
 
     function onAbilityChanged(event) {
@@ -81,7 +81,7 @@
             }
 
             if (!Abilities.IsAttributeBonus(ability) && !Abilities.IsHidden(ability)) {
-                if (ability[ability] !== undefined) {
+                if (abilities[ability] !== undefined) {
                     abilities[ability].style.visibility = "visible";
                     
                     //Reinit the ability to check for changes
@@ -104,6 +104,7 @@
         }
     }
 
+    /* Count the abilities to show up in the ability layout. */
     function countAbilityLayout(unit) {
         var count = 0;
         for (var slot = 0; slot < Entities.GetAbilityCount(currentUnit); slot++) {
@@ -122,6 +123,14 @@
 
     /* Update loop */
     function onUpdate() {
+        //Check if we are in ability learn mode
+        if (Game.IsInAbilityLearnMode() !== learnMode) {
+            learnMode = Game.IsInAbilityLearnMode();
+            for (var ab in abilities) {
+                abilities[ab].setLearnMode(learnMode);
+            }
+        }
+
         // Update all abilities.
         for (var ab in abilities) {
             abilities[ab].update();

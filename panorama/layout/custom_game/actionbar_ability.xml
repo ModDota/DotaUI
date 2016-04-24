@@ -28,11 +28,12 @@
 
                 <Panel id="PassiveMask"></Panel>
 
-                <Label id="ManaLabel" text="333"/>
-                <Label id="HotkeyLabel" text="W"/>
-
                 <!--<Panel id="HoverHighlight"></Panel>-->
                 <Panel id="HoverHighlight"></Panel>
+                <Panel id="LearnOverlay"></Panel>
+
+                <Label id="ManaLabel" text="333"/>
+                <Label id="HotkeyLabel" text="W"/>
             </Button>
 
             <!-- Ability level indicators -->
