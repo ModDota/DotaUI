@@ -92,6 +92,26 @@
             $("#cooldownswipe").style.opacity = "0";
             $("#cooldownswipe").style.clip = "radial(50% 50%, 0deg, -360deg)";
         });
+
+        // Make cooldown label visible
+        $("#CooldownLabel").text = Math.ceil(duration);
+        $("#CooldownLabel").style.visibility = "visible";
+
+        // Start the schedule loop
+        $.Schedule(duration % 1.0, panel.updateCooldown);
+    }
+
+    panel.updateCooldown = function() {
+        // Check if there is still a cooldown going on.
+        if (Abilities.IsCooldownReady(panel.ability)) {
+            $("#CooldownLabel").style.visibility = "collapse";
+            return;
+        }
+        
+        var cooldown = Abilities.GetCooldownTimeRemaining(panel.ability);
+        $("#CooldownLabel").text = Math.ceil(cooldown);
+
+        $.Schedule(1.0, panel.updateCooldown);
     }
 
     /* Add level pips. */
@@ -189,18 +209,25 @@
                 $("#AbilityImage").RemoveClass("Active");
                 $("#AbilityImage").RemoveClass("AbilityPhase");
                 $("#AbilityImage").RemoveClass("Cooldown");
+                $("#AbilityPhaseMask").style.visibility = "collapse";
+                $("#CooldownLabel").style.visibility = "collapse";
             } else if (state === ABILITY_STATE_ACTIVE) {
                 $("#AbilityImage").AddClass("Active");
                 $("#AbilityImage").RemoveClass("AbilityPhase");
                 $("#AbilityImage").RemoveClass("Cooldown");
+                $("#AbilityPhaseMask").style.visibility = "collapse";
+                $("#CooldownLabel").style.visibility = "collapse";
             } else if (state === ABILITY_STATE_ABILITY_PHASE) {
                 $("#AbilityImage").RemoveClass("Active");
                 $("#AbilityImage").AddClass("AbilityPhase");
                 $("#AbilityImage").RemoveClass("Cooldown");
+                $("#AbilityPhaseMask").style.visibility = "visible";
+                $("#CooldownLabel").style.visibility = "collapse";
             } else if (state === ABILITY_STATE_COOLDOWN) {
                 $("#AbilityImage").RemoveClass("Active");
                 $("#AbilityImage").RemoveClass("AbilityPhase");
                 $("#AbilityImage").AddClass("Cooldown");
+                $("#AbilityPhaseMask").style.visibility = "collapse";
 
                 panel.startCooldown(Abilities.GetCooldownTimeRemaining(panel.ability));
             }

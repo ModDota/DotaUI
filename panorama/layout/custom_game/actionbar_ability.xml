@@ -26,9 +26,11 @@
                     <Panel id="cooldownswipe" />
                 </Panel>
 
-                <Panel id="PassiveMask"></Panel>
+                <Label id="CooldownLabel" text="188" />
 
-                <!--<Panel id="HoverHighlight"></Panel>-->
+                <Panel id="PassiveMask"></Panel>
+                <Panel id="AbilityPhaseMask"></Panel>
+
                 <Panel id="HoverHighlight"></Panel>
                 <Panel id="LearnOverlay"></Panel>
 

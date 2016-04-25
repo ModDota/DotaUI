@@ -160,7 +160,6 @@
 
 #AbilityImage.AbilityPhase
 {
-    border-color: #00ff00;
     padding-top: 3px;
     brightness: 1.6;
 }
@@ -297,5 +296,25 @@
     background-image: url("s2r://panorama/images/hud/learnspell_png.vtex");
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    visibility: collapse;
+}
+
+#AbilityPhaseMask {
+    width: 100%;
+    height: 100%;
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #00bb00ff ), to( #00bb0000 ) );
+    opacity-mask: url("s2r://panorama/images/hud/passive_ability_border_png.vtex");
+    background-size: 100% 100%;
+    opacity: 0.9;
+    visibility: collapse;
+}
+
+#CooldownLabel {
+    horizontal-align: center;
+    vertical-align: center;
+    color: #fff;
+    font-size: 24px;
+    text-shadow: 0px 0px 2px 2.0 #ff00aa;
+    font-family: Liberation;
     visibility: collapse;
 }
