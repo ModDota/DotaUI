@@ -199,9 +199,13 @@
         // Check if we're in learn mode (NOTE: Bug in CanAbilityBeUpgraded (inverted))
         if (learnMode && Abilities.CanAbilityBeUpgraded(panel.ability) === AbilityLearnResult_t.ABILITY_CAN_BE_UPGRADED) {
             $("#LearnOverlay").style.visibility = "visible";
+            $("#AbilityImage").RemoveClass("NotLearned");
             panel.learning = true;
         } else {
             $("#LearnOverlay").style.visibility = "collapse";
+            if (panel.level == 0) {
+                $("#AbilityImage").AddClass("NotLearned");
+            }
         }
     }
 
