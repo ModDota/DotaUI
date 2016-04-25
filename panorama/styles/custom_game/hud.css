@@ -211,6 +211,27 @@
     width: 13px;
 }
 
+.AvailablePip {
+    width: 16px;
+    height: 100%;
+    margin-left: -1px;
+    margin-right: 0px;
+
+    background-image: url("s2r://panorama/images/hud/pip_outline_png.vtex");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.AbilityLayout6 .AvailablePip.Small,
+.AvailablePip.Small {
+    width: 9px;
+    margin-top: 1px;
+}
+
+.AbilityLayout6 .AvailablePip {
+    width: 13px;
+}
+
 .LeveledPip
 {
     width: 11px !important;

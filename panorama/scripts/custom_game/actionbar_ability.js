@@ -167,9 +167,23 @@
             var pipContainer = $("#PipContainer");
             for (var i = 0; i < level; i++) {
                 var pip = panel.pips[i];
-                if (pip.BHasClass("EmptyPip")) {
+                if (pip.BHasClass("EmptyPip") || pip.BHasClass("AvailablePip")) {
                     pip.RemoveClass("EmptyPip");
+                    pip.RemoveClass("AvailablePip");
                     pip.AddClass("LeveledPip");
+                }
+            }
+                            $.Msg("ola");
+
+            //Set the level + 1 pip to available if it is
+            if (level < panel.maxLevel) {
+                if (Abilities.CanAbilityBeUpgraded(panel.ability) === AbilityLearnResult_t.ABILITY_CAN_BE_UPGRADED
+                 && Entities.GetAbilityPoints(panel.ownerUnit) > 0) {
+                    panel.pips[level].RemoveClass("EmptyPip");
+                    panel.pips[level].AddClass("AvailablePip");
+                } else {
+                    panel.pips[level].RemoveClass("AvailablePip");
+                    panel.pips[level].AddClass("EmptyPip");
                 }
             }
         } else {

@@ -51,7 +51,10 @@
     }
 
     function onStatsChanged(event) {
-        //Ability points changed
+        //Ability points changed - reinit all abilities
+        for (var ab in abilities) {
+            abilities[ab].reinit();
+        }
 
         //Update stats?
     }
