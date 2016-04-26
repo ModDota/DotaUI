@@ -21,7 +21,7 @@
 
         // Set the ability image.
         $( "#AbilityImage" ).abilityname = panel.abilityName;
-        $( "#AbilityImage" ).contextEntityIndex = panel.ability;
+        $( "#AbilityImage" ).contextEntityIndex = panel.ownerUnit;
 
         // Set a special style for passive abilities
         if (Abilities.IsPassive(panel.ability)) {
@@ -50,6 +50,10 @@
 
         // Check if we can still upgrade.
         panel.setLearnMode(panel.learning);
+
+        // Update hotkey label, can change because of slot swapping
+        var hotkey = Abilities.GetKeybind(panel.ability);
+        $("#HotkeyLabel").text = hotkey;
     }
 
     /* Show the ability tooltip */
@@ -173,7 +177,6 @@
                     pip.AddClass("LeveledPip");
                 }
             }
-                            $.Msg("ola");
 
             //Set the level + 1 pip to available if it is
             if (level < panel.maxLevel) {

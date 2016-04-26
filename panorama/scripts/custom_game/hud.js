@@ -101,6 +101,11 @@
                     // Keep ability for later
                     abilities[ability] = abilityPanel;
                 }
+
+                if (slot > 0) {
+                    var previousAbility = Entities.GetAbility(currentUnit, slot - 1);
+                    abilityContainer.MoveChildAfter(abilities[ability], abilities[previousAbility]);
+                }
             }
 
             slot++;
