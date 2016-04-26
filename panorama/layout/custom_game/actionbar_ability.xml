@@ -31,7 +31,7 @@
                 <Panel id="PassiveMask"></Panel>
                 <Panel id="AbilityPhaseMask"></Panel>
 
-                <Panel id="TestMask" />
+                <Panel id="CDShineMask" />
 
                 <Panel id="SilencedMask"></Panel>
 

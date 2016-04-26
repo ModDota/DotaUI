@@ -10,7 +10,6 @@
         ABILITY_STATE_COOLDOWN = 3;
         ABILITY_STATE_MUTED = 4;
 
-    var currentState = ABILITY_STATE_DEFAULT;
     var panel = $.GetContextPanel();
 
     /* Initialise this ability panel with an ability (like a constructor). */
@@ -22,6 +21,7 @@
         panel.level = 0;
         panel.maxLevel = Abilities.GetMaxLevel(panel.ability);
         panel.learning = false;
+        panel.state = ABILITY_STATE_DEFAULT;
 
         panel.pips = [];
 
@@ -60,6 +60,16 @@
         // Update hotkey label, can change because of slot swapping
         var hotkey = Abilities.GetKeybind(panel.ability);
         $("#HotkeyLabel").text = hotkey;
+
+        // Do not play shine on panels that came off cooldown while looking away
+        if (panel.state === ABILITY_STATE_COOLDOWN && Abilities.IsCooldownReady(panel.ability)) {
+            panel.state = ABILITY_STATE_DEFAULT;
+            $("#AbilityImage").RemoveClass("Active");
+            $("#AbilityImage").RemoveClass("AbilityPhase");
+            $("#AbilityImage").RemoveClass("Cooldown");
+            $("#AbilityPhaseMask").style.visibility = "collapse";
+            $("#CooldownLabel").style.visibility = "collapse";
+        }
     }
 
     /* Show the ability tooltip */
@@ -244,7 +254,7 @@
             state = ABILITY_STATE_COOLDOWN;
         }
 
-        if (state !== currentState) {
+        if (state !== panel.state) {
             if (state === ABILITY_STATE_DEFAULT) {
                 $("#AbilityImage").RemoveClass("Active");
                 $("#AbilityImage").RemoveClass("AbilityPhase");
@@ -252,8 +262,8 @@
                 $("#AbilityPhaseMask").style.visibility = "collapse";
                 $("#CooldownLabel").style.visibility = "collapse";
 
-                if (currentState === ABILITY_STATE_COOLDOWN) {
-                    $("#TestMask").AddClass("TestAnim");
+                if (panel.state === ABILITY_STATE_COOLDOWN) {
+                    $("#CDShineMask").AddClass("CooldownEndShine");
                 }
             } else if (state === ABILITY_STATE_ACTIVE) {
                 $("#AbilityImage").AddClass("Active");
@@ -272,12 +282,12 @@
                 $("#AbilityImage").RemoveClass("AbilityPhase");
                 $("#AbilityImage").AddClass("Cooldown");
                 $("#AbilityPhaseMask").style.visibility = "collapse";
-                $("#TestMask").RemoveClass("TestAnim");
+                $("#CDShineMask").RemoveClass("CooldownEndShine");
 
                 panel.startCooldown(Abilities.GetCooldownTimeRemaining(panel.ability));
             }
 
-            currentState = state;
+            panel.state = state;
         }
     }
 })();
