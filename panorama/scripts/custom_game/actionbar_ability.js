@@ -220,9 +220,11 @@
 
     /* Toggle the silenced state of the ability */
     panel.setSilenceState = function(state) {
-        if ((state == SILENCE_ABILITIES && !Abilities.IsPassive(panel.ability)) ||
-            (state == SILENCE_PASSIVES && Abilities.IsPassive(panel.ability)) ||
-            (state == SILENCE_ALL)) {
+        /* This distinguishes between passives and actives and silence/break 
+        if ((state === SILENCE_ABILITIES && !Abilities.IsPassive(panel.ability)) ||
+            (state === SILENCE_PASSIVES && Abilities.IsPassive(panel.ability)) ||
+            (state === SILENCE_ALL)) { */
+        if (state !== SILENCE_NONE) {
             $("#SilencedMask").style.visibility = "visible";
         } else {
             $("#SilencedMask").style.visibility = "collapse";
@@ -249,6 +251,10 @@
                 $("#AbilityImage").RemoveClass("Cooldown");
                 $("#AbilityPhaseMask").style.visibility = "collapse";
                 $("#CooldownLabel").style.visibility = "collapse";
+
+                if (currentState === ABILITY_STATE_COOLDOWN) {
+                    $("#TestMask").AddClass("TestAnim");
+                }
             } else if (state === ABILITY_STATE_ACTIVE) {
                 $("#AbilityImage").AddClass("Active");
                 $("#AbilityImage").RemoveClass("AbilityPhase");
@@ -266,6 +272,7 @@
                 $("#AbilityImage").RemoveClass("AbilityPhase");
                 $("#AbilityImage").AddClass("Cooldown");
                 $("#AbilityPhaseMask").style.visibility = "collapse";
+                $("#TestMask").RemoveClass("TestAnim");
 
                 panel.startCooldown(Abilities.GetCooldownTimeRemaining(panel.ability));
             }

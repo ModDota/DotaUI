@@ -347,3 +347,46 @@
     background-size: 100% 100%;
     visibility: collapse;
 }
+
+@define animC: #ffffff88;
+
+@keyframes 'testanim'
+{
+    0%
+    {
+        opacity: 0;
+        background-color: gradient( linear, 0% 100%, 100% 0%, from( #ffffff00 ), color-stop( -0.1, animC ), color-stop( 0.0, animC ), to( #ffffff00 ) );
+    }
+
+    20%
+    {
+        opacity: 1;
+        background-color: gradient( linear, 0% 100%, 100% 0%, from( #ffffff00 ), color-stop( -0.1, animC ), color-stop( 0.0, animC ), to( #ffffff00 ) );
+    }
+
+    50%
+    {
+        background-color: gradient( linear, 0% 100%, 100% 0%, from( #ffffff00 ), color-stop( 0.45, animC ), color-stop( 0.55, animC ), to( #ffffff00 ) );
+    }
+
+    80%
+    {
+        opacity: 1;
+        background-color: gradient( linear, 0% 100%, 100% 0%, from( #ffffff00 ), color-stop( 1, animC ), color-stop( 1.1, animC ), to( #ffffff00 ) );
+    }
+
+    100%
+    {
+        opacity: 0;
+        background-color: gradient( linear, 0% 100%, 100% 0%, from( #ffffff00 ), color-stop( 1, animC ), color-stop( 1.2, animC ), to( #ffffff00 ) );
+    }
+}
+
+.TestAnim {
+    width: 100%;
+    height: 100%;
+    animation-name: testanim;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
