@@ -339,3 +339,11 @@
     font-family: Liberation;
     visibility: collapse;
 }
+
+#SilencedMask {
+    width: 100%;
+    height: 100%;
+    background-image: url("s2r://panorama/images/hud/spells_silenced_png.vtex");
+    background-size: 100% 100%;
+    visibility: collapse;
+}

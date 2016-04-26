@@ -1,8 +1,14 @@
 (function() {
+    var SILENCE_NONE = 0,
+        SILENCE_ABILITIES = 1,
+        SILENCE_PASSIVES = 2,
+        SILENCE_ALL = 3;
+
     var ABILITY_STATE_DEFAULT = 0,
         ABILITY_STATE_ACTIVE = 1,
         ABILITY_STATE_ABILITY_PHASE = 2,
         ABILITY_STATE_COOLDOWN = 3;
+        ABILITY_STATE_MUTED = 4;
 
     var currentState = ABILITY_STATE_DEFAULT;
     var panel = $.GetContextPanel();
@@ -209,6 +215,17 @@
             if (panel.level == 0) {
                 $("#AbilityImage").AddClass("NotLearned");
             }
+        }
+    }
+
+    /* Toggle the silenced state of the ability */
+    panel.setSilenceState = function(state) {
+        if ((state == SILENCE_ABILITIES && !Abilities.IsPassive(panel.ability)) ||
+            (state == SILENCE_PASSIVES && Abilities.IsPassive(panel.ability)) ||
+            (state == SILENCE_ALL)) {
+            $("#SilencedMask").style.visibility = "visible";
+        } else {
+            $("#SilencedMask").style.visibility = "collapse";
         }
     }
 

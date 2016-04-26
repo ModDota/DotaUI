@@ -1,8 +1,14 @@
 (function() {
+    var SILENCE_NONE = 0,
+        SILENCE_ABILITIES = 1,
+        SILENCE_PASSIVES = 2,
+        SILENCE_ALL = 3;
+
     var units = {};
     var currentUnit = -1;
     var abilities = {};
     var learnMode = false;
+    var silenceState = SILENCE_NONE;
 
     /* Set actionpanel for a specified unit. */
     function SetActionPanel(unit) {
@@ -18,7 +24,7 @@
 
         //Set the new current unit
         currentUnit = unit;
-        
+
         // Retrieve panels we made previously to avoid deletion or excessive panels.
         if (units[unit] !== undefined) {
             abilities = units[unit];
@@ -28,8 +34,22 @@
             abilities = units[unit];
         }
 
+        // Update abilities on the action bar (can be swapped on invoker/rubick).
         updateVisibleAbilities();
 
+        // Can not enter a unit in learn mode
+        learnMode = false;
+        for (var ab in abilities) {
+            abilities[ab].setLearnMode(learnMode);
+        }
+
+        // Set silence state
+        silenceState = getSilenceState(unit);
+        for (var ab in abilities) {
+            abilities[ab].setSilenceState(silenceState);
+        }
+
+        // Set ability layout
         abilityContainer.AddClass("AbilityLayout" + countAbilityLayout(unit));
     }
 
@@ -129,6 +149,14 @@
         return count;
     }
 
+    /* Get the silence state (abilities, passives or both) */
+    function getSilenceState(unit) {
+        var state = SILENCE_NONE;
+        if (Entities.IsSilenced(unit) || Entities.IsHexed(unit)) state += SILENCE_ABILITIES;
+        if (Entities.PassivesDisabled(unit)) state += SILENCE_PASSIVES;
+        return state
+    }
+
     /* Update loop */
     function onUpdate() {
         //Check if we are in ability learn mode
@@ -136,6 +164,15 @@
             learnMode = Game.IsInAbilityLearnMode();
             for (var ab in abilities) {
                 abilities[ab].setLearnMode(learnMode);
+            }
+        }
+
+        //Check silence state
+        var silenceS = getSilenceState(currentUnit);
+        if (silenceS !== silenceState) {
+            silenceState = silenceS;
+            for (var ab in abilities) {
+                abilities[ab].setSilenceState(silenceState);
             }
         }
 

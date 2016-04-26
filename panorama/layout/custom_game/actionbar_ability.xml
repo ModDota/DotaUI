@@ -31,6 +31,8 @@
                 <Panel id="PassiveMask"></Panel>
                 <Panel id="AbilityPhaseMask"></Panel>
 
+                <Panel id="SilencedMask"></Panel>
+
                 <Panel id="HoverHighlight"></Panel>
                 <Panel id="LearnOverlay"></Panel>
 
