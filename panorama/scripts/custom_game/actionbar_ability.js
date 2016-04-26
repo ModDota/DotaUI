@@ -34,11 +34,17 @@
             $( "#AbilityFrame" ).AddClass("Passive");
         }
 
-        // Add ability pips.
-        panel.addLevelPips();
+        // We do not want to know this for enemies - but we can
+        if (!Entities.IsEnemy(unit)) {
+            // Add ability pips.
+            panel.addLevelPips();
 
-        // Set the level of the ability.
-        panel.setLevel(Abilities.GetLevel(panel.ability));
+            // Set the level of the ability.
+            panel.setLevel(Abilities.GetLevel(panel.ability));
+        }
+
+        // Hide mana label by default
+        $("#ManaLabel").style.visibility = "collapse";
 
         // Set hotkey panel.
         var hotkey = Abilities.GetKeybind(panel.ability);
@@ -51,8 +57,11 @@
 
     /* Re-initialise when fetching this existing panel again. */
     panel.reinit = function() {
-        // Set the level of the ability.
-        panel.setLevel(Abilities.GetLevel(panel.ability));
+        //We do not want to know this for enemies - but we can
+        if (!Entities.IsEnemy(panel.unit)) {
+            // Set the level of the ability.
+            panel.setLevel(Abilities.GetLevel(panel.ability));
+        }
 
         // Check if we can still upgrade.
         panel.setLearnMode(panel.learning);
@@ -165,48 +174,52 @@
         // Get the mana cost
         var manaCost = Abilities.GetManaCost(panel.ability);
 
-        // If level == 0 desaturate image with css, otherwise revert
-        if (level == 0) {
-            $("#AbilityImage").AddClass("NotLearned");
-            $("#ManaLabel").style.visibility = "collapse";
-        } else {
-            $("#AbilityImage").RemoveClass("NotLearned");
-
-            if (manaCost > 0) {
-                $("#ManaLabel").style.visibility = "visible";
-                $("#ManaLabel").text = manaCost;
-            } else {
-                $("#ManaLabel").style.visibility = "collapse";
-            }
-        }
-
+        // Set level
         panel.level = level;
 
-        // Set pips.
-        if (panel.maxLevel < 8) {
-            var pipContainer = $("#PipContainer");
-            for (var i = 0; i < level; i++) {
-                var pip = panel.pips[i];
-                if (pip.BHasClass("EmptyPip") || pip.BHasClass("AvailablePip")) {
-                    pip.RemoveClass("EmptyPip");
-                    pip.RemoveClass("AvailablePip");
-                    pip.AddClass("LeveledPip");
+        // Only show level information for allies
+        if (!Entities.IsEnemy(panel.ownerUnit)) {
+            // If level == 0 desaturate image with css, otherwise revert
+            if (level == 0) {
+                $("#AbilityImage").AddClass("NotLearned");
+                $("#ManaLabel").style.visibility = "collapse";
+            } else {
+                $("#AbilityImage").RemoveClass("NotLearned");
+
+                if (manaCost > 0) {
+                    $("#ManaLabel").style.visibility = "visible";
+                    $("#ManaLabel").text = manaCost;
+                } else {
+                    $("#ManaLabel").style.visibility = "collapse";
                 }
             }
 
-            //Set the level + 1 pip to available if it is
-            if (level < panel.maxLevel) {
-                if (Abilities.CanAbilityBeUpgraded(panel.ability) === AbilityLearnResult_t.ABILITY_CAN_BE_UPGRADED
-                 && Entities.GetAbilityPoints(panel.ownerUnit) > 0) {
-                    panel.pips[level].RemoveClass("EmptyPip");
-                    panel.pips[level].AddClass("AvailablePip");
-                } else {
-                    panel.pips[level].RemoveClass("AvailablePip");
-                    panel.pips[level].AddClass("EmptyPip");
+            // Set pips.
+            if (panel.maxLevel < 8) {
+                var pipContainer = $("#PipContainer");
+                for (var i = 0; i < level; i++) {
+                    var pip = panel.pips[i];
+                    if (pip.BHasClass("EmptyPip") || pip.BHasClass("AvailablePip")) {
+                        pip.RemoveClass("EmptyPip");
+                        pip.RemoveClass("AvailablePip");
+                        pip.AddClass("LeveledPip");
+                    }
                 }
+
+                //Set the level + 1 pip to available if it is
+                if (level < panel.maxLevel) {
+                    if (Abilities.CanAbilityBeUpgraded(panel.ability) === AbilityLearnResult_t.ABILITY_CAN_BE_UPGRADED
+                     && Entities.GetAbilityPoints(panel.ownerUnit) > 0) {
+                        panel.pips[level].RemoveClass("EmptyPip");
+                        panel.pips[level].AddClass("AvailablePip");
+                    } else {
+                        panel.pips[level].RemoveClass("AvailablePip");
+                        panel.pips[level].AddClass("EmptyPip");
+                    }
+                }
+            } else {
+                panel.pips[0].text = level + "/" + panel.maxLevel;
             }
-        } else {
-            panel.pips[0].text = level + "/" + panel.maxLevel;
         }
     }
 
@@ -222,7 +235,7 @@
             panel.learning = true;
         } else {
             $("#LearnOverlay").style.visibility = "collapse";
-            if (panel.level == 0) {
+            if (panel.level == 0 || Entities.IsEnemy(panel.ownerUnit)) {
                 $("#AbilityImage").AddClass("NotLearned");
             }
         }

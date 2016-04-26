@@ -43,10 +43,12 @@
             abilities[ab].setLearnMode(learnMode);
         }
 
-        // Set silence state
-        silenceState = getSilenceState(unit);
-        for (var ab in abilities) {
-            abilities[ab].setSilenceState(silenceState);
+        // Set silence state only for allies
+        if (!Entities.IsEnemy(unit)){
+            silenceState = getSilenceState(unit);
+            for (var ab in abilities) {
+                abilities[ab].setSilenceState(silenceState);
+            }
         }
 
         // Set ability layout
@@ -167,18 +169,21 @@
             }
         }
 
-        //Check silence state
-        var silenceS = getSilenceState(currentUnit);
-        if (silenceS !== silenceState) {
-            silenceState = silenceS;
-            for (var ab in abilities) {
-                abilities[ab].setSilenceState(silenceState);
+        //Make ability state only visible to allies (this can be commented out to see enemy ability states!)
+        if (!Entities.IsEnemy(currentUnit)) {
+            //Check silence state
+            var silenceS = getSilenceState(currentUnit);
+            if (silenceS !== silenceState) {
+                silenceState = silenceS;
+                for (var ab in abilities) {
+                    abilities[ab].setSilenceState(silenceState);
+                }
             }
-        }
 
-        // Update all abilities.
-        for (var ab in abilities) {
-            abilities[ab].update();
+            // Update all abilities.
+            for (var ab in abilities) {
+                abilities[ab].update();
+            }
         }
 
         $.Schedule(0.005, onUpdate);
