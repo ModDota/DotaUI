@@ -4,6 +4,12 @@
         SILENCE_PASSIVES = 2,
         SILENCE_ALL = 3;
 
+    var ItemDB = {
+        587   : "default",
+        10150 : "dire",
+        10324 : "portal"
+    }
+    
     var units = {};
     var currentUnit = -1;
     var abilities = {};
@@ -83,6 +89,23 @@
 
     function onAbilityChanged(event) {
         updateVisibleAbilities();
+    }
+    
+    function onSteamInventoryChanged(event) {
+        var skinName = ItemDB[event.itemdef];
+        $.Msg(skinName);
+        if (skinName !== undefined) {
+            $("#minimapborder").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/minimapborder.png');";
+            $("#spacer_16_9").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/spacer_16_9.png');";
+            //TODO: spacer_16_10
+            //TODO: portrait
+            $("#portrait_wide").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/portrait_wide.png');";
+            $("#center_left_wide").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/center_left_wide.png');";
+            //TODO: center_left
+            $("#center_right").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/center_right.png');";
+            $.Msg($("#minimapborder").style.backgroundImage);
+        }
+        $.Msg(event);
     }
 
     function updateVisibleAbilities() {
@@ -195,6 +218,8 @@
 
     GameEvents.Subscribe("dota_portrait_unit_stats_changed", onStatsChanged);
     GameEvents.Subscribe("dota_ability_changed", onAbilityChanged);
+    //Listen for hacky inventory updates
+    GameEvents.Subscribe("inventory_updated", onSteamInventoryChanged);
 
     //Set default unit
     var unit = Players.GetQueryUnit(Players.GetLocalPlayer());
