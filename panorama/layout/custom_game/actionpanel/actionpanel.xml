@@ -1,0 +1,23 @@
+<root>
+    <styles>
+        <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+        <include src="s2r://panorama/styles/hudstyles.vcss_c" />
+        <include src="file://panorama/styles/custom_game/actionpanel/actionpanel.css" />     
+    </styles>
+
+    <scripts>
+        <include src="s2r://panorama/scripts/custom_game/actionpanel/actionpanel.js" />
+    </scripts>
+  
+    <Panel class="hudpanel" hittest="false">
+        <Panel class="hud" id="center_left_wide">
+            <Panel class="BlackBox" id="LeftStatsBox"/>
+            <Panel class="BlackBox" id="RightStatsBox"/>
+        </Panel>
+        <Panel id="center_right">
+            <Panel id="AbilitiesContainer">
+
+            </Panel>
+        </Panel>
+    </Panel>
+</root>

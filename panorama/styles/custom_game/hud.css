@@ -5,35 +5,7 @@
     //This is to move the UI up so we can do comparisons, remove in final product
     padding-bottom: 180px;
 }
-#padding
-{
-    width: 32.5%; //32.5
-}
-#center_left_wide
-{
-    width: 13% !important; 
-    height: 60% !important;
-    background-size: 100% 100%;
-    //opacity: 0.0;
-}
-#RightStatsBox
-{
-    margin-left: 2%;
-}
-.BlackBox
-{
-    width: 46%;
-    height: 65%;
-    margin-left: 8%;
-    margin-bottom: 4%;
-}
-#center_right 
-{
-    width: 24.1% !important;
-    height: 60% !important;
-    background-size: 100% 100%;
-    vertical-align: bottom;
-}
+
 .hudpanel:hover
 {
     pre-transform-scale2d: 1;
@@ -42,37 +14,7 @@
 {
     width: 100% !important;
     height: 28% !important;
-    overflow: squish squish;
+    //overflow: squish squish;
+    overflow: noclip;
     pre-transform-scale2d: 1;
-}
-
-.AbilityLayout5 .Ability {
-    width: 20%;
-    height: 100%;
-    padding-top: 8px;
-}
-
-.AbilityLayout6 .Ability {
-    width: 17%;
-    height: 100%;
-    padding-top: 8px;
-}
-
-#AbilitiesContainer
-{
-    height: 68%;
-    width: 100%;
-    padding-left: 6%;
-    padding-right: 4%;
-    vertical-align: bottom;
-}
-
-#AbilitiesContainer.AbilityLayout5 {
-    padding-left: 4%;
-    padding-right: 0%;
-}
-
-#AbilitiesContainer.AbilityLayout6 {
-    padding-left: 3%;
-    padding-right: 2%;
 }

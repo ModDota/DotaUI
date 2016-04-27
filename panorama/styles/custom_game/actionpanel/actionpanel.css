@@ -1,0 +1,60 @@
+#center_left_wide
+{
+    width: 13% !important; 
+    height: 60% !important;
+    background-size: 100% 100%;
+    //opacity: 0.0;
+}
+#RightStatsBox
+{
+    margin-left: 2%;
+}
+#ActionPanel {
+    margin-left: 32.5%;
+}
+.BlackBox
+{
+    width: 46%;
+    height: 65%;
+    margin-left: 8%;
+    margin-bottom: 4%;
+}
+#center_right 
+{
+    width: 24.1% !important;
+    height: 60% !important;
+    background-size: 100% 100%;
+    vertical-align: bottom;
+}
+
+.AbilityLayout5 .Ability {
+    width: 20%;
+    height: 100%;
+    padding-top: 8px;
+}
+
+.AbilityLayout6 .Ability {
+    width: 17%;
+    height: 100%;
+    padding-top: 8px;
+}
+
+#AbilitiesContainer
+{
+    height: 65%;
+    width: 90%;
+    padding-left: 10px;
+    padding-right: 4%;
+    vertical-align: bottom;
+    overflow: noclip;
+}
+
+#AbilitiesContainer.AbilityLayout5 {
+    padding-left: 4%;
+    padding-right: 0%;
+}
+
+#AbilitiesContainer.AbilityLayout6 {
+    padding-left: 3%;
+    padding-right: 2%;
+}
