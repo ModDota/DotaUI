@@ -113,6 +113,11 @@
         if (Abilities.IsAutocast(panel.ability)) {
             //Abilities.
             //Turn on autocast - API where?!
+            Game.PrepareUnitOrders({
+                OrderType : dotaunitorder_t.DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO,
+                AbilityIndex : panel.ability,
+                ShowEffects : true
+            });
         }
     }
 
