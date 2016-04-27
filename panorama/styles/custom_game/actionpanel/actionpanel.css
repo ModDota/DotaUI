@@ -28,13 +28,12 @@
 }
 
 .AbilityLayout5 .Ability {
-    width: 20%;
+    width: 22%;
     height: 100%;
-    padding-top: 8px;
 }
 
 .AbilityLayout6 .Ability {
-    width: 17%;
+    width: 18%;
     height: 100%;
     padding-top: 8px;
 }
@@ -50,11 +49,13 @@
 }
 
 #AbilitiesContainer.AbilityLayout5 {
-    padding-left: 4%;
+    padding-left: 0%;
     padding-right: 0%;
+    margin-left: -10px;
 }
 
 #AbilitiesContainer.AbilityLayout6 {
-    padding-left: 3%;
-    padding-right: 2%;
+    padding-left: 0%;
+    padding-right: 0%;
+    margin-left: -7px;
 }
