@@ -149,7 +149,9 @@
 
                 if (slot > 0) {
                     var previousAbility = Entities.GetAbility(currentUnit, slot - 1);
-                    abilityContainer.MoveChildAfter(abilities[ability], abilities[previousAbility]);
+                    if (abilities[previousAbility] !== undefined) {
+                        abilityContainer.MoveChildAfter(abilities[ability], abilities[previousAbility]);
+                    }
                 }
             }
 

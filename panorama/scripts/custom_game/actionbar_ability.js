@@ -21,6 +21,7 @@
         panel.level = 0;
         panel.maxLevel = Abilities.GetMaxLevel(panel.ability);
         panel.learning = false;
+        panel.autocast = false;
         panel.state = ABILITY_STATE_DEFAULT;
 
         panel.pips = [];
@@ -32,6 +33,11 @@
         // Set a special style for passive abilities
         if (Abilities.IsPassive(panel.ability)) {
             $( "#AbilityFrame" ).AddClass("Passive");
+        }
+
+        // Set a special style for autocast abilities
+        if (Abilities.IsAutocast(panel.ability)) {
+            $("#AutocastPanel").style.visibility = "visible";
         }
 
         // We do not want to know this for enemies - but we can
@@ -58,7 +64,7 @@
     /* Re-initialise when fetching this existing panel again. */
     panel.reinit = function() {
         //We do not want to know this for enemies - but we can
-        if (!Entities.IsEnemy(panel.unit)) {
+        if (!Entities.IsEnemy(panel.ownerUnit)) {
             // Set the level of the ability.
             panel.setLevel(Abilities.GetLevel(panel.ability));
         }
@@ -301,6 +307,17 @@
             }
 
             panel.state = state;
+        }
+
+        //Check autocast state
+        if (Abilities.GetAutoCastState(panel.ability) !== panel.autocast) {
+            panel.autocast = Abilities.GetAutoCastState(panel.ability);
+
+            if (panel.autocast) {
+                $("#AutocastMask").style.visibility = "visible";
+            } else {
+                $("#AutocastMask").style.visibility = "collapse";
+            }
         }
     }
 })();

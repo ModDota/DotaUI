@@ -2,7 +2,7 @@
     <styles>
         <include src="s2r://panorama/styles/dotastyles.vcss_c" />
         <include src="s2r://panorama/styles/hudstyles.vcss_c" />
-        <include src="file://panorama/styles/custom_game/hud.css" />        
+        <include src="file://panorama/styles/custom_game/actionpanel.css" />        
     </styles>
 
     <scripts>
@@ -24,6 +24,12 @@
                 <DOTAAbilityImage id="AbilityImage" />
                 <Panel class="abilitycooldowncontainer">
                     <Panel id="cooldownswipe" />
+                </Panel>
+
+                <Panel id="AutocastPanel" />
+                <Panel id="AutocastMask">
+                    <Panel id="AutocastMaskInner"></Panel>
+                    <Panel id="AutocastMaskInner2"></Panel>
                 </Panel>
 
                 <Label id="CooldownLabel" text="188" />
