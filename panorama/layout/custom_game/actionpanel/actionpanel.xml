@@ -10,6 +10,21 @@
     </scripts>
   
     <Panel class="hudpanel" hittest="false">
+        <Panel id="MinimapBorder" hittest="false">
+            <Button id="ScanButton" hittest="true" />
+        </Panel>
+        <!--<Panel class="hud" id="minimapimage"/>-->
+        <Panel id="MinimapSpacer"/>
+        <Panel class="hud" id="PortraitBorder" hittest="false">
+            <Label id="HeroName" text="Zuus" />
+            <Panel id="LevelTextBox">
+                <Label id="LevelNumber" text="25" />
+            </Panel>
+            <Panel id="XPBar" />
+            <Label id="XPLabel" text="1700/2400" />
+        </Panel>
+        <DOTAScenePanel class="hud" id="Portrait" unit="npc_dota_hero_zuus"/>
+
         <Panel class="hud" id="center_left_wide">
             <Panel class="BlackBox" id="LeftStatsBox"/>
             <Panel class="BlackBox" id="RightStatsBox"/>

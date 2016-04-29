@@ -10,21 +10,6 @@
     </scripts>
 
     <Panel class="MainPanel" hittest="false">
-        <!-- Move this to it's own file (I'd group all of this as one component)-->
-        <!--<Panel class="hud" id="minimapborder"/>
-        <Panel class="hud" id="minimapimage"/>
-        <Panel class="hud" id="spacer_16_9"/>
-        <Panel class="hud" id="portrait_wide">
-            <Panel class="TextBox">
-                <Label id="HeroName" text="Zuus" />
-            </Panel>
-            <Panel class="LevelTextBox">
-                <Label id="LevelNumber" text="25" />
-            </Panel>
-            <ProgressBar id="LevelBar"/>
-        </Panel>
-        <DOTAScenePanel class="hud" id="Portrait" unit="npc_dota_hero_zuus"/>-->
-
         <Panel id="ZooHUD" class="ZooTab" hittest="false">
             <script>
                 /* Add the different components of the HUD */
