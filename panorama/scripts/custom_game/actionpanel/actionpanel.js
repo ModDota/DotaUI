@@ -7,7 +7,8 @@
     var ItemDB = {
         587   : "default",
         10150 : "dire",
-        10324 : "portal"
+        10324 : "portal",
+        10346 : "mana_pool"
     }
     
     var units = {};
@@ -95,15 +96,17 @@
         var skinName = ItemDB[event.itemdef];
         $.Msg(skinName);
         if (skinName !== undefined) {
-            $("#minimapborder").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/minimapborder.png');";
-            $("#spacer_16_9").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/spacer_16_9.png');";
+            $("#MinimapBorder").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/minimapborder.png');";
+            //WTF DO WE DO NOW WITH DIFFERENT RESOLUTIONS!!
+            $("#MinimapSpacer").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/spacer_16_9.png');";
             //TODO: spacer_16_10
+            //WTF DO WE DO NOW WITH DIFFERENT RESOLUTIONS!!
             //TODO: portrait
-            $("#portrait_wide").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/portrait_wide.png');";
+            $("#PortraitBorder").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/portrait_wide.png');";
             $("#center_left_wide").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/center_left_wide.png');";
             //TODO: center_left
             $("#center_right").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/actionpanel/center_right.png');";
-            $.Msg($("#minimapborder").style.backgroundImage);
+            $.Msg($("#MinimapBorder").style.backgroundImage);
         }
         $.Msg(event);
     }

@@ -10,6 +10,13 @@
     </scripts>
 
     <Panel class="MainPanel" hittest="false">
+        <!-- Compile Area
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/minimapborder.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/spacer_16_9.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/portrait_wide.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/center_left_wide.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/center_right.png" hittest="false" />
+             Compile Area -->
         <Panel id="ZooHUD" class="ZooTab" hittest="false">
             <script>
                 /* Add the different components of the HUD */
