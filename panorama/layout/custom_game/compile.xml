@@ -1,0 +1,56 @@
+<root>
+    <Panel styles="visibility:collapse;">
+        <!-- TODO: Figure out the light images and get them used before adding to this file -->
+        <!-- This file is sorted by itemdef -->
+        
+        <!-- Default (itemdef: 587) -->
+        <Image src="file://panorama/images/hud/default/inventory/rocks_4_3.png" hittest="false" />
+        <Image src="file://panorama/images/hud/default/inventory/rocks_16_9.png" hittest="false" />
+        <Image src="file://panorama/images/hud/default/inventory/rocks_16_10.png" hittest="false" />
+        <!-- Dire stone (itemdef: 10150) -->
+        <Image src="file://panorama/images/hud/dire/actionpanel/minimapborder.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/actionpanel/spacer_16_9.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/actionpanel/spacer_16_10.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/actionpanel/portrait.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/actionpanel/portrait_wide.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/actionpanel/center_left.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/actionpanel/center_left_wide.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/actionpanel/center_right.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/inventory/spacer.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/inventory/rocks_4_3.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/inventory/rocks_16_9.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/inventory/rocks_16_10.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/inventory/background.png" hittest="false" />
+        <Image src="file://panorama/images/hud/dire/inventory/background_wide.png" hittest="false" />
+        <!-- Portal (itemdef: 10324) -->
+        <Image src="file://panorama/images/hud/portal/actionpanel/minimapborder.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/actionpanel/spacer_16_9.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/actionpanel/spacer_16_10.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/actionpanel/portrait.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/actionpanel/portrait_wide.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/actionpanel/center_left.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/actionpanel/center_left_wide.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/actionpanel/center_right.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/inventory/spacer.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/inventory/rocks_4_3.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/inventory/rocks_16_9.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/inventory/rocks_16_10.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/inventory/background.png" hittest="false" />
+        <Image src="file://panorama/images/hud/portal/inventory/background_wide.png" hittest="false" />
+        <!-- Mana Pool (itemdef: 10346) -->
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/minimapborder.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/spacer_16_9.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/spacer_16_10.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/portrait.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/portrait_wide.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/center_left.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/center_left_wide.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/actionpanel/center_right.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/inventory/spacer.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/inventory/rocks_4_3.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/inventory/rocks_16_9.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/inventory/rocks_16_10.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/inventory/background.png" hittest="false" />
+        <Image src="file://panorama/images/hud/mana_pool/inventory/background_wide.png" hittest="false" />
+    </Panel>
+</root>
