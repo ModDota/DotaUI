@@ -145,6 +145,104 @@
     vertical-align: bottom;
 }
 
+/* Health/Mana bars */
+#HealthBar
+{
+    width: 35.2%;
+    height: 9%;
+    margin-top: 43.8%;
+    margin-left: -36.2%;
+    z-index: 5;
+    border-radius: 10px;
+    flow-children: right;
+}
+
+#HealthBarInner
+{
+    width: 70%;
+    height: 100%;
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#83AA5A), color-stop(0.5, #156115), to(#003400));
+    border-style: solid;
+    border-width: 3px 0px 3px 0px;
+    border-color: #043404;
+    overflow: noclip;
+}
+
+#HealthBarLight
+{
+    width: height-percentage(1000%);
+    height: 100%;
+    background-color: gradient( radial, 0% 50%, 0% 0%, 50% 40%, from( #00ff00ff ), to( #00ff0000 ) );
+    opacity: 0.5;
+}
+
+@keyframes 'glowAnim' {
+    0% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.7;
+    }
+}
+
+#HealthBarGlow {
+    width: 5%;
+    margin-left: -5%;
+    height: 100%;
+    background-image: url("s2r://panorama/images/compendium/rightedgeglow_psd.vtex");
+    opacity: 2;
+    background-size: 100% 130%;
+    background-position: center bottom;
+    animation-name: glowAnim;
+    animation-duration: 0.15s;
+    animation-iteration-count: infinite;
+    hue-rotation: -100deg;
+    brightness: 2.5;
+}
+
+#ManaBar
+{
+    width: 35.2%;
+    height: 4.4%;
+    margin-top: 53%;
+    margin-left: -35.2%;
+    border-radius: 3px;
+    flow-children: right;
+}
+
+#ManaBarInner
+{
+    height: 100%;
+    width: 50%;
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#7395BD), color-stop(0.3, #34609F), color-stop(0.31, #0D448C), to(#294D84));
+}
+
+#ManaBarLight
+{
+    width: height-percentage(1000%);
+    height: 100%;
+    background-color: gradient( radial, 0% 50%, 0% 0%, 60% 80%, from( #3B9DFFFF ), to( #3B9DFF00 ) );
+    opacity: 0.6;
+}
+
+#ManaBarGlow {
+    width: 5%;
+    margin-left: -5%;
+    height: 100%;
+    background-image: url("s2r://panorama/images/compendium/rightedgeglow_psd.vtex");
+    opacity: 2;
+    background-size: 100% 130%;
+    background-position: center bottom;
+    animation-name: glowAnim;
+    animation-duration: 0.15s;
+    animation-iteration-count: infinite;
+    brightness: 2.5;
+}
+
+/* Ability section */
 .AbilityLayout5 .Ability {
     width: 22%;
     height: 100%;
