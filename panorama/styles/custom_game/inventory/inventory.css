@@ -39,3 +39,72 @@
     //opacity:0.0;
     //visibility:collapse;
 }
+#noCourier
+{
+    margin-right: 22%;
+    margin-bottom: 18.5%;
+    vertical-align: bottom;
+    horizontal-align: right;
+    
+    color: #773333;
+    font-size: 16px;
+}
+#glyph
+{
+    vertical-align: bottom;
+    horizontal-align: right;        
+}
+#gold
+{
+    width: 22%;
+    height: 10%;
+    margin-right: 22%;
+    margin-bottom: 57%;
+    vertical-align: bottom;
+    horizontal-align: right;
+}
+#goldImage
+{
+    width: 30%;
+    height: 100%;
+    horizontal-align: left;
+}
+#goldCount
+{
+    width: 70%;
+    height: 100%;
+    font-size: 21px;
+    font-family: Radiance;
+    font-weight: bold;
+    padding-left: 5%;
+    color: #fea500;
+    text-shadow: 0px 0px 2px 2.0 #000000;
+    horizontal-align: right;
+}
+#shop
+{
+    background-image: url("s2r://panorama/images/hud/hudv2_shopbutton.png");
+    background-size: 100% 100%;
+    width: 21%;
+    height: 13%;
+    margin-right: 1%;
+    margin-bottom: 57%;
+    vertical-align: bottom;
+    horizontal-align: right;
+}
+#shop.ShopActive
+{
+    background-image: url("s2r://panorama/images/hud/hudv2_shopbutton_lit.png");
+}
+#shopLabel
+{
+    width: 75%;
+    height: 75%;
+    horizontal-align: center;
+    vertical-align: bottom;
+    color: #fff;
+    text-shadow: 0px 0px 2px 2.0 #000000;
+    font-size: 21px;
+    text-align: center;
+    font-family: Goudy Trajan Medium;
+}

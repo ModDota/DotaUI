@@ -16,6 +16,17 @@
         }
         $.Msg(event);
     }
+    function onGoldChanged(event) {
+        $("#goldCount").text = Players.GetGold(Players.GetLocalPlayer()); //TODO: handle selecting allied units.
+    }
+    function onShopChanged(event) {
+        if (event.shopmask > 0) {
+            $("#shop").AddClass("ShopActive");
+        } else {
+            $("#shop").RemoveClass("ShopActive");
+        }
+        $.Msg(event);
+    }
     //Listen for hacky inventory updates
     GameEvents.Subscribe("inventory_updated", onSteamInventoryChanged);
     
@@ -24,9 +35,11 @@
     
     //Listen to gold updates
     //"dota_money_changed"
+    GameEvents.Subscribe("dota_money_changed", onGoldChanged);
     
     //Listen to shop changes (shop button glow) (should this be done globally in hud.js applied to ZooHud?)
     //"dota_player_shop_changed"
+    GameEvents.Subscribe("dota_player_shop_changed", onShopChanged);
     
     //Listen to glyph updates
     //"dota_glyph_used"
