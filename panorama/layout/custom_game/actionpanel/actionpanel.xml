@@ -25,14 +25,31 @@
         </Panel>
         <DOTAScenePanel class="hud" id="Portrait" unit="npc_dota_hero_zuus"/>
 
+        <!-- Stat container -->
         <Panel class="hud" id="center_left_wide">
             <Panel class="BlackBox" id="LeftStatsBox"/>
             <Panel class="BlackBox" id="RightStatsBox"/>
         </Panel>
+        <!-- Ability container -->
         <Panel id="center_right">
             <Panel id="AbilitiesContainer">
 
             </Panel>
+        </Panel>
+
+        <!-- Health bar -->
+        <Panel id="HealthBar">
+            <Panel id="HealthBarInner">
+                <Panel id="HealthBarLight" />
+            </Panel>
+            <Panel id="HealthBarGlow" />
+        </Panel>
+        <!-- Mana bar -->
+        <Panel id="ManaBar">
+            <Panel id="ManaBarInner">
+                <Panel id="ManaBarLight" />
+            </Panel>
+            <Panel id="ManaBarGlow" />
         </Panel>
     </Panel>
 </root>
