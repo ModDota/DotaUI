@@ -107,6 +107,7 @@
     opacity: 0;
     transition-timing-function: linear;
     transition-property: clip;
+    clip: radial(50% 50%, 0deg, -360deg);
 }
 
 .EmptyPip 
