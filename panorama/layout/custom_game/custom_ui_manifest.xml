@@ -1,0 +1,10 @@
+<root>
+    <script>
+    </script>
+        
+    <Panel>
+        <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hud.xml" />
+    </Panel>
+</root>
+
+
