@@ -1,4 +1,6 @@
 /// <reference path="../../../dota.d.ts" />
+/// <reference path="abilitypanel.ts" />
+
 (function() {
     // Bitmask enum
     enum SilenceState {
@@ -18,7 +20,7 @@
 
     let units = {};
     let currentUnit = -1;
-    let abilities = {};
+    let abilities = <{[key: number]: AbilityPanel}>{};
     let learnMode = false;
     let silenceState = SilenceState.None;
 
@@ -28,7 +30,7 @@
 
         // Get rid of the old abilities first.
         for (let ab in abilities) {
-            abilities[ab].style.visibility = "collapse";
+            abilities[ab].panel.style.visibility = "collapse";
         }
 
         // Remove old ability layout
@@ -121,7 +123,7 @@
 
         // Hide all abilities
         for (let ab in abilities) {
-            abilities[ab].style.visibility = "collapse";
+            abilities[ab].panel.style.visibility = "collapse";
         }
 
         // Show only the visible abilities
@@ -138,18 +140,14 @@
 
             if (!Abilities.IsAttributeBonus(ability) && !Abilities.IsHidden(ability)) {
                 if (abilities[ability] !== undefined) {
-                    abilities[ability].style.visibility = "visible";
+                    abilities[ability].panel.style.visibility = "visible";
 
                     // Reinit the ability to check for changes
                     abilities[ability].reinit();
                 }
                 else {
                     // Create new panel and load the layout.
-                    let abilityPanel = $.CreatePanel( "Panel", abilityContainer, "" );
-                    abilityPanel.LoadLayoutAsync( "file://{resources}/layout/custom_game/actionpanel/abilitypanel.xml", false, false );
-
-                    // Initialise the ability panel.
-                    abilityPanel.init(ability, currentUnit);
+                    let abilityPanel = new AbilityPanel(abilityContainer, ability, currentUnit);
 
                     // Keep ability for later
                     abilities[ability] = abilityPanel;
@@ -158,7 +156,7 @@
                 if (slot > 0) {
                     let previousAbility = Entities.GetAbility(currentUnit, slot - 1);
                     if (abilities[previousAbility] !== undefined) {
-                        abilityContainer.MoveChildAfter(abilities[ability], abilities[previousAbility]);
+                        abilityContainer.MoveChildAfter(abilities[ability].panel, abilities[previousAbility].panel);
                     }
                 }
             }

@@ -217,7 +217,7 @@ interface CScriptBindingPR_Abilities {
     GetLevel(entityID:number) : number;
     GetKeybind(entityID:number) : string;
     IsCooldownReady(entityID:number) : boolean;
-    GetAutoCastState(entityID:number) : number;
+    GetAutoCastState(entityID:number) : boolean;
     GetCooldownTimeRemaining(entityID:number) : number;
     GetToggleState(entityID:number) : number;
     IsInAbilityPhase(entityID:number) : boolean;
@@ -242,14 +242,23 @@ interface CScriptBindingPR_Game {
 
 interface Panel {
     LoadLayoutAsync(path:String, unknown:boolean, unknown2:boolean) : void;
+    BLoadLayoutSnippet(path: string);
     RemoveAndDeleteChildren() : void;
     AddClass(name:String) : void;
     RemoveClass(name:String) : void;
     style : CSSStyleDeclaration;
     MoveChildAfter(child:Panel, afterChild:Panel) : void;
+    FindChildTraverse(id: string): Panel;
+    BHasClass(className: string): boolean;
+    SetPanelEvent(event: string, handler: Function): void;
 }
 interface Label extends Panel {
-    text : string;
+    text: string;
+}
+
+interface AbilityImage extends Panel {
+    abilityname: string;
+    contextEntityIndex: number;
 }
 
 interface DollarStatic {

@@ -1,217 +1,146 @@
-/// <reference path="../../../dota.d.ts" />
+enum SilenceState {
+    None = 0,
+    Abilities = 1,
+    Passives = 2,
+    All = 3
+}
 
-(function() {
-    var SILENCE_NONE = 0,
-        SILENCE_ABILITIES = 1,
-        SILENCE_PASSIVES = 2,
-        SILENCE_ALL = 3;
+enum AbilityState {
+    Default = 0,
+    Active,
+    AbilityPhase,
+    Cooldown,
+    Muted
+}
 
-    var ABILITY_STATE_DEFAULT = 0,
-        ABILITY_STATE_ACTIVE = 1,
-        ABILITY_STATE_ABILITY_PHASE = 2,
-        ABILITY_STATE_COOLDOWN = 3;
-        ABILITY_STATE_MUTED = 4;
+class AbilityPanel {
+    panel: Panel;
+    ability: number;
+    abilityName: string;
+    ownerUnit: number;
+    level: number;
+    maxLevel: number;
+    learning: boolean;
+    autocast: boolean;
+    state: AbilityState;
 
-    var panel = $.GetContextPanel();
+    pips: Panel[];
 
     /* Initialise this ability panel with an ability (like a constructor). */
-    panel.init = function(ability, unit) {
-        // Do some bookkeeping
-        panel.ability = ability;
-        panel.abilityName = Abilities.GetAbilityName(ability);
-        panel.ownerUnit = unit;
-        panel.level = 0;
-        panel.maxLevel = Abilities.GetMaxLevel(panel.ability);
-        panel.learning = false;
-        panel.autocast = false;
-        panel.state = ABILITY_STATE_DEFAULT;
+    constructor(parent: Panel, ability: number, unit: number) {
+        // Create panel
+        this.panel = $.CreatePanel( "Panel", parent, "" );
+        this.panel.BLoadLayoutSnippet( "AbilityPanel" );
 
-        panel.pips = [];
+        this.panel.SetPanelEvent("onmouseover", this.showTooltip.bind(this));
+        this.panel.SetPanelEvent("onmouseout", this.hideTooltip.bind(this));
+        this.panel.SetPanelEvent("onactivate", this.onLeftClick.bind(this));
+        this.panel.SetPanelEvent("oncontextmenu", this.onRightClick.bind(this));
+
+        // Set up panel logic
+        this.ability = ability;
+        this.abilityName = Abilities.GetAbilityName(ability);
+        this.ownerUnit = unit;
+        this.level = 0;
+        this.maxLevel = Abilities.GetMaxLevel(this.ability);
+        this.learning = false;
+        this.autocast = false;
+        this.state = AbilityState.Default;
+
+        this.pips = [];
 
         // Set the ability image.
-        $( "#AbilityImage" ).abilityname = panel.abilityName;
-        $( "#AbilityImage" ).contextEntityIndex = panel.ownerUnit;
+        let image = <AbilityImage>this.panel.FindChildTraverse("AbilityImage");
+        image.abilityname = this.abilityName;
+        image.contextEntityIndex = this.ownerUnit;
 
         // Set a special style for passive abilities
-        if (Abilities.IsPassive(panel.ability)) {
-            $( "#AbilityFrame" ).AddClass("Passive");
+        if (Abilities.IsPassive(this.ability)) {
+            this.panel.FindChildTraverse("AbilityFrame").AddClass("Passive");
         }
 
         // Set a special style for autocast abilities
-        if (Abilities.IsAutocast(panel.ability)) {
-            $("#AutocastPanel").style.visibility = "visible";
+        if (Abilities.IsAutocast(this.ability)) {
+            this.panel.FindChildTraverse("AutocastPanel").style.visibility = "visible";
         }
 
         // We do not want to know this for enemies - but we can
         if (!Entities.IsEnemy(unit)) {
             // Add ability pips.
-            panel.addLevelPips();
+            this.addLevelPips();
 
             // Set the level of the ability.
-            panel.setLevel(Abilities.GetLevel(panel.ability));
+            this.setLevel(Abilities.GetLevel(this.ability));
         }
 
         // Hide mana label by default
-        $("#ManaLabel").style.visibility = "collapse";
+        this.panel.FindChildTraverse("ManaLabel").style.visibility = "collapse";
 
         // Set hotkey panel.
-        var hotkey = Abilities.GetKeybind(panel.ability);
-        if (Abilities.IsPassive(panel.ability)) {
-            $("#HotkeyLabel").style.visibility = "collapse";
+        let hotkey = Abilities.GetKeybind(this.ability);
+        if (Abilities.IsPassive(this.ability)) {
+            this.panel.FindChildTraverse("HotkeyLabel").style.visibility = "collapse";
         } else {
-            $("#HotkeyLabel").text = hotkey;
+            (<Label>this.panel.FindChildTraverse("HotkeyLabel")).text = hotkey;
         }
-    }
-
-    /* Re-initialise when fetching this existing panel again. */
-    panel.reinit = function() {
-        //We do not want to know this for enemies - but we can
-        if (!Entities.IsEnemy(panel.ownerUnit)) {
-            // Set the level of the ability.
-            panel.setLevel(Abilities.GetLevel(panel.ability));
-        }
-
-        // Check if we can still upgrade.
-        panel.setLearnMode(panel.learning);
-
-        // Update hotkey label, can change because of slot swapping
-        var hotkey = Abilities.GetKeybind(panel.ability);
-        $("#HotkeyLabel").text = hotkey;
-
-        // Do not play shine on panels that came off cooldown while looking away
-        if (panel.state === ABILITY_STATE_COOLDOWN && Abilities.IsCooldownReady(panel.ability)) {
-            panel.state = ABILITY_STATE_DEFAULT;
-            $("#AbilityImage").RemoveClass("Active");
-            $("#AbilityImage").RemoveClass("AbilityPhase");
-            $("#AbilityImage").RemoveClass("Cooldown");
-            $("#AbilityPhaseMask").style.visibility = "collapse";
-            $("#CooldownLabel").style.visibility = "collapse";
-        }
-    }
-
-    /* Show the ability tooltip */
-    panel.showTooltip = function() {
-        var abilityButton = $("#AbilityButton");
-        $.DispatchEvent("DOTAShowAbilityTooltipForEntityIndex", abilityButton, panel.abilityName, panel.ownerUnit);
-    }
-
-    /* Hide the tooltip */
-    panel.hideTooltip = function() {
-        var abilityButton = $("#AbilityButton");
-        $.DispatchEvent("DOTAHideAbilityTooltip", abilityButton);
-    }
-
-    /* Left click */
-    panel.onLeftClick = function() {
-        if (panel.learning) {
-            Abilities.AttemptToUpgrade(panel.ability);
-        } else {
-            Abilities.ExecuteAbility(panel.ability, panel.ownerUnit, false);
-        }
-    }
-
-    /* Right click */
-    panel.onRightClick = function() {
-        if (Abilities.IsAutocast(panel.ability)) {
-            //Abilities.
-            //Turn on autocast - API where?!
-            Game.PrepareUnitOrders({
-                OrderType : dotaunitorder_t.DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO,
-                AbilityIndex : panel.ability,
-                ShowEffects : true
-            });
-        }
-    }
-
-    /* Start cooldown animation based on current duration and the total duration */
-    panel.startCooldown = function(duration) {
-        // Do the radial clip thing.
-        var totalDuration = Abilities.GetCooldownLength(panel.ability);
-        $("#cooldownswipe").style.opacity = "0.75";
-        $("#cooldownswipe").style.transitionDuration = totalDuration+"s";
-        $("#cooldownswipe").style.clip = "radial(50% 50%, 0deg, 0deg)";
-        $.Schedule(duration, function() {
-            $("#cooldownswipe").style.opacity = "0";
-            $("#cooldownswipe").style.clip = "radial(50% 50%, 0deg, -360deg)";
-        });
-
-        // Make cooldown label visible
-        $("#CooldownLabel").text = Math.ceil(duration);
-        $("#CooldownLabel").style.visibility = "visible";
-
-        // Start the schedule loop
-        $.Schedule(duration % 1.0, panel.updateCooldown);
-    }
-
-    panel.updateCooldown = function() {
-        // Check if there is still a cooldown going on.
-        if (Abilities.IsCooldownReady(panel.ability)) {
-            $("#CooldownLabel").style.visibility = "collapse";
-            return;
-        }
-        
-        var cooldown = Abilities.GetCooldownTimeRemaining(panel.ability);
-        $("#CooldownLabel").text = Math.ceil(cooldown);
-
-        $.Schedule(1.0, panel.updateCooldown);
     }
 
     /* Add level pips. */
-    panel.addLevelPips = function(level) {
+    addLevelPips(): void {
         // Add pips.
-        var pipContainer = $("#PipContainer");
-        var maxLevel = panel.maxLevel;
-        if (maxLevel < 8) {
-            for (var i = 0; i < maxLevel; i++) {
-                var pip = $.CreatePanel("Panel", pipContainer, "");
-                if (i < level) {
+        let pipContainer = this.panel.FindChildTraverse("PipContainer");
+
+        if (this.maxLevel < 8) {
+            for (let i = 0; i < this.maxLevel; i++) {
+                let pip = $.CreatePanel("Panel", pipContainer, "");
+                if (i < this.level) {
                     pip.AddClass("LeveledPip");
                 } else {
                     pip.AddClass("EmptyPip");
                 }
-                if (maxLevel > 5) {
+                if (this.maxLevel > 5) {
                     pip.AddClass("Small");
                 }
-                panel.pips.push(pip);
+                this.pips.push(pip);
             }
         } else {
-            //Add pips for levels > 8
-            var pipLabel = $.CreatePanel("Label", pipContainer, "");
-            pipLabel.text = "0/"+maxLevel;
-            panel.pips[0] = pipLabel;
+            // Add pips for levels > 8
+            let pipLabel = <Label>$.CreatePanel("Label", pipContainer, "");
+            pipLabel.text = "0/" + this.maxLevel;
+            this.pips[0] = pipLabel;
         }
     }
 
     /* Set the level of the ability */
-    panel.setLevel = function(level) {
+    setLevel(level: number): void {
         // Get the mana cost
-        var manaCost = Abilities.GetManaCost(panel.ability);
+        let manaCost = Abilities.GetManaCost(this.ability);
 
         // Set level
-        panel.level = level;
+        this.level = level;
 
         // Only show level information for allies
-        if (!Entities.IsEnemy(panel.ownerUnit)) {
+        if (!Entities.IsEnemy(this.ownerUnit)) {
             // If level == 0 desaturate image with css, otherwise revert
-            if (level == 0) {
-                $("#AbilityImage").AddClass("NotLearned");
-                $("#ManaLabel").style.visibility = "collapse";
+            if (level === 0) {
+                this.panel.FindChildTraverse("AbilityImage").AddClass("NotLearned");
+                this.panel.FindChildTraverse("ManaLabel").style.visibility = "collapse";
             } else {
-                $("#AbilityImage").RemoveClass("NotLearned");
+                this.panel.FindChildTraverse("AbilityImage").RemoveClass("NotLearned");
 
                 if (manaCost > 0) {
-                    $("#ManaLabel").style.visibility = "visible";
-                    $("#ManaLabel").text = manaCost;
+                    this.panel.FindChildTraverse("ManaLabel").style.visibility = "visible";
+                    (<Label>this.panel.FindChildTraverse("ManaLabel")).text = String(manaCost);
                 } else {
-                    $("#ManaLabel").style.visibility = "collapse";
+                    this.panel.FindChildTraverse("ManaLabel").style.visibility = "collapse";
                 }
             }
 
             // Set pips.
-            if (panel.maxLevel < 8) {
-                var pipContainer = $("#PipContainer");
-                for (var i = 0; i < level; i++) {
-                    var pip = panel.pips[i];
+            if (this.maxLevel < 8) {
+                let pipContainer = this.panel.FindChildTraverse("PipContainer");
+                for (let i = 0; i < level; i++) {
+                    let pip = this.pips[i];
                     if (pip.BHasClass("EmptyPip") || pip.BHasClass("AvailablePip")) {
                         pip.RemoveClass("EmptyPip");
                         pip.RemoveClass("AvailablePip");
@@ -219,112 +148,205 @@
                     }
                 }
 
-                //Set the level + 1 pip to available if it is
-                if (level < panel.maxLevel) {
-                    if (Abilities.CanAbilityBeUpgraded(panel.ability) === AbilityLearnResult_t.ABILITY_CAN_BE_UPGRADED
-                     && Entities.GetAbilityPoints(panel.ownerUnit) > 0) {
-                        panel.pips[level].RemoveClass("EmptyPip");
-                        panel.pips[level].AddClass("AvailablePip");
+                // Set the level + 1 pip to available if it is
+                if (level < this.maxLevel) {
+                    if (Abilities.CanAbilityBeUpgraded(this.ability) === AbilityLearnResult_t.ABILITY_CAN_BE_UPGRADED
+                     && Entities.GetAbilityPoints(this.ownerUnit) > 0) {
+                        this.pips[level].RemoveClass("EmptyPip");
+                        this.pips[level].AddClass("AvailablePip");
                     } else {
-                        panel.pips[level].RemoveClass("AvailablePip");
-                        panel.pips[level].AddClass("EmptyPip");
+                        this.pips[level].RemoveClass("AvailablePip");
+                        this.pips[level].AddClass("EmptyPip");
                     }
                 }
             } else {
-                panel.pips[0].text = level + "/" + panel.maxLevel;
+                (<Label>this.pips[0]).text = level + "/" + this.maxLevel;
             }
         }
     }
 
-    /* Set if this panel is learning or not */
-    panel.setLearnMode = function(learnMode) {
+    /* Re-initialise when fetching this existing panel again. */
+    reinit(): void {
+        // We do not want to know this for enemies - but we can
+        if (!Entities.IsEnemy(this.ownerUnit)) {
+            // Set the level of the ability.
+            this.setLevel(Abilities.GetLevel(this.ability));
+        }
+
+        // Check if we can still upgrade.
+        this.setLearnMode(this.learning);
+
+        // Update hotkey label, can change because of slot swapping
+        let hotkey = Abilities.GetKeybind(this.ability);
+        (<Label>this.panel.FindChildTraverse("HotkeyLabel")).text = hotkey;
+
+        // Do not play shine on panels that came off cooldown while looking away
+        if (this.state === AbilityState.Cooldown && Abilities.IsCooldownReady(this.ability)) {
+            this.state = AbilityState.Default;
+            this.panel.FindChildTraverse("AbilityImage").RemoveClass("Active");
+            this.panel.FindChildTraverse("AbilityImage").RemoveClass("AbilityPhase");
+            this.panel.FindChildTraverse("AbilityImage").RemoveClass("Cooldown");
+            this.panel.FindChildTraverse("AbilityPhaseMask").style.visibility = "collapse";
+            this.panel.FindChildTraverse("CooldownLabel").style.visibility = "collapse";
+        }
+    }
+
+    setLearnMode(learnMode: boolean): void {
         // Make sure to cast by default.
-        panel.learning = false;
+        this.learning = false;
 
         // Check if we're in learn mode (NOTE: Bug in CanAbilityBeUpgraded (inverted))
-        if (learnMode && Abilities.CanAbilityBeUpgraded(panel.ability) === AbilityLearnResult_t.ABILITY_CAN_BE_UPGRADED) {
-            $("#LearnOverlay").style.visibility = "visible";
-            $("#AbilityImage").RemoveClass("NotLearned");
-            panel.learning = true;
+        if (learnMode && Abilities.CanAbilityBeUpgraded(this.ability) === AbilityLearnResult_t.ABILITY_CAN_BE_UPGRADED) {
+            this.panel.FindChildTraverse("LearnOverlay").style.visibility = "visible";
+            this.panel.FindChildTraverse("AbilityImage").RemoveClass("NotLearned");
+            this.learning = true;
         } else {
-            $("#LearnOverlay").style.visibility = "collapse";
-            if (panel.level == 0 || Entities.IsEnemy(panel.ownerUnit)) {
-                $("#AbilityImage").AddClass("NotLearned");
+            this.panel.FindChildTraverse("LearnOverlay").style.visibility = "collapse";
+            if (this.level === 0 || Entities.IsEnemy(this.ownerUnit)) {
+                this.panel.FindChildTraverse("AbilityImage").AddClass("NotLearned");
             }
         }
     }
 
-    /* Toggle the silenced state of the ability */
-    panel.setSilenceState = function(state) {
-        /* This distinguishes between passives and actives and silence/break 
-        if ((state === SILENCE_ABILITIES && !Abilities.IsPassive(panel.ability)) ||
-            (state === SILENCE_PASSIVES && Abilities.IsPassive(panel.ability)) ||
-            (state === SILENCE_ALL)) { */
-        if (state !== SILENCE_NONE) {
-            $("#SilencedMask").style.visibility = "visible";
+    /* Show the ability tooltip */
+    showTooltip(): void {
+        let abilityButton = this.panel.FindChildTraverse("AbilityButton");
+        $.DispatchEvent("DOTAShowAbilityTooltipForEntityIndex", abilityButton, this.abilityName, this.ownerUnit);
+    }
+
+    /* Hide the tooltip */
+    hideTooltip(): void {
+        let abilityButton = this.panel.FindChildTraverse("AbilityButton");
+        $.DispatchEvent("DOTAHideAbilityTooltip", abilityButton);
+    }
+
+    onLeftClick(): void {
+        if (this.learning) {
+            Abilities.AttemptToUpgrade(this.ability);
         } else {
-            $("#SilencedMask").style.visibility = "collapse";
+            Abilities.ExecuteAbility(this.ability, this.ownerUnit, false);
         }
     }
 
-    /* Check for changes in the ability state */
-    panel.update = function() {
-        var state = ABILITY_STATE_DEFAULT;
-        if (Abilities.GetLocalPlayerActiveAbility() === panel.ability) {
-            state = ABILITY_STATE_ACTIVE;
+    onRightClick(): void {
+        if (Abilities.IsAutocast(this.ability)) {
+            // Abilities.
+            // Turn on autocast
+            Game.PrepareUnitOrders({
+                OrderType : dotaunitorder_t.DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO,
+                AbilityIndex : this.ability,
+                ShowEffects : true
+            });
         }
-        else if (Abilities.IsInAbilityPhase(panel.ability) || Abilities.GetToggleState(panel.ability)) {
-            state = ABILITY_STATE_ABILITY_PHASE;
-        }
-        else if (!Abilities.IsCooldownReady(panel.ability)) {
-            state = ABILITY_STATE_COOLDOWN;
+    }
+
+    startCooldown(duration: number): void {
+        // Do the radial clip thing.
+        let totalDuration = Abilities.GetCooldownLength(this.ability);
+        let cooldownPanel = this.panel.FindChildTraverse("cooldownswipe");
+        cooldownPanel.style.opacity = "0.75";
+        cooldownPanel.style.transitionDuration = totalDuration + "s";
+        cooldownPanel.style.clip = "radial(50% 50%, 0deg, 0deg)";
+
+        // Schedule hiding of the panel
+        $.Schedule(duration, function() {
+            cooldownPanel.style.opacity = "0";
+            cooldownPanel.style.clip = "radial(50% 50%, 0deg, -360deg)";
+        });
+
+        // Make cooldown label visible
+        let cooldownLabel = <Label>this.panel.FindChildTraverse("CooldownLabel");
+        cooldownLabel.text = String(Math.ceil(duration));
+        cooldownLabel.style.visibility = "visible";
+
+        // Start the schedule loop
+        $.Schedule(duration % 1.0, this.updateCooldown.bind(this));
+    }
+
+    updateCooldown() {
+        if (Abilities.IsCooldownReady(this.ability)) {
+            this.panel.FindChildTraverse("CooldownLabel").style.visibility = "collapse";
+            return;
         }
 
-        if (state !== panel.state) {
-            if (state === ABILITY_STATE_DEFAULT) {
-                $("#AbilityImage").RemoveClass("Active");
-                $("#AbilityImage").RemoveClass("AbilityPhase");
-                $("#AbilityImage").RemoveClass("Cooldown");
-                $("#AbilityPhaseMask").style.visibility = "collapse";
-                $("#CooldownLabel").style.visibility = "collapse";
+        let cooldown = Abilities.GetCooldownTimeRemaining(this.ability);
+        (<Label>this.panel.FindChildTraverse("CooldownLabel")).text = String(Math.ceil(cooldown));
 
-                if (panel.state === ABILITY_STATE_COOLDOWN) {
-                    $("#CDShineMask").AddClass("CooldownEndShine");
+        $.Schedule(1.0, this.updateCooldown.bind(this));
+    }
+
+    setSilenceState(state: SilenceState) {
+        let silenceMask = this.panel.FindChildTraverse("SilencedMask");
+        if (state !== SilenceState.None) {
+            silenceMask.style.visibility = "visible";
+        } else {
+            silenceMask.style.visibility = "collapse";
+        }
+    }
+
+    update() {
+        let state = AbilityState.Default;
+        if (Abilities.GetLocalPlayerActiveAbility() === this.ability) {
+            state = AbilityState.Active;
+        }
+        else if (Abilities.IsInAbilityPhase(this.ability) || Abilities.GetToggleState(this.ability)) {
+            state = AbilityState.AbilityPhase;
+        }
+        else if (!Abilities.IsCooldownReady(this.ability)) {
+            state = AbilityState.Cooldown;
+        }
+
+        let abilityImage = this.panel.FindChildTraverse("AbilityImage");
+        let abilityPhaseMask = this.panel.FindChildTraverse("AbilityPhaseMask");
+        let cooldownLabel = this.panel.FindChildTraverse("CooldownLabel");
+        let cdShineMask = this.panel.FindChildTraverse("CDShineMask");
+        let autocastMask = this.panel.FindChildTraverse("AutocastMask");
+
+        if (state !== this.state) {
+            if (state === AbilityState.Default) {
+                abilityImage.RemoveClass("Active");
+                abilityImage.RemoveClass("AbilityPhase");
+                abilityImage.RemoveClass("Cooldown");
+                abilityPhaseMask.style.visibility = "collapse";
+                cooldownLabel.style.visibility = "collapse";
+
+                if (this.state === AbilityState.Cooldown) {
+                    cdShineMask.AddClass("CooldownEndShine");
                 }
-            } else if (state === ABILITY_STATE_ACTIVE) {
-                $("#AbilityImage").AddClass("Active");
-                $("#AbilityImage").RemoveClass("AbilityPhase");
-                $("#AbilityImage").RemoveClass("Cooldown");
-                $("#AbilityPhaseMask").style.visibility = "collapse";
-                $("#CooldownLabel").style.visibility = "collapse";
-            } else if (state === ABILITY_STATE_ABILITY_PHASE) {
-                $("#AbilityImage").RemoveClass("Active");
-                $("#AbilityImage").AddClass("AbilityPhase");
-                $("#AbilityImage").RemoveClass("Cooldown");
-                $("#AbilityPhaseMask").style.visibility = "visible";
-                $("#CooldownLabel").style.visibility = "collapse";
-            } else if (state === ABILITY_STATE_COOLDOWN) {
-                $("#AbilityImage").RemoveClass("Active");
-                $("#AbilityImage").RemoveClass("AbilityPhase");
-                $("#AbilityImage").AddClass("Cooldown");
-                $("#AbilityPhaseMask").style.visibility = "collapse";
-                $("#CDShineMask").RemoveClass("CooldownEndShine");
+            } else if (state === AbilityState.Active) {
+                abilityImage.AddClass("Active");
+                abilityImage.RemoveClass("AbilityPhase");
+                abilityImage.RemoveClass("Cooldown");
+                abilityPhaseMask.style.visibility = "collapse";
+                cooldownLabel.style.visibility = "collapse";
+            } else if (state === AbilityState.AbilityPhase) {
+                abilityImage.RemoveClass("Active");
+                abilityImage.AddClass("AbilityPhase");
+                abilityImage.RemoveClass("Cooldown");
+                abilityPhaseMask.style.visibility = "visible";
+                cooldownLabel.style.visibility = "collapse";
+            } else if (state === AbilityState.Cooldown) {
+                abilityImage.RemoveClass("Active");
+                abilityImage.RemoveClass("AbilityPhase");
+                abilityImage.AddClass("Cooldown");
+                abilityPhaseMask.style.visibility = "collapse";
+                cdShineMask.RemoveClass("CooldownEndShine");
 
-                panel.startCooldown(Abilities.GetCooldownTimeRemaining(panel.ability));
+                this.startCooldown(Abilities.GetCooldownTimeRemaining(this.ability));
             }
 
-            panel.state = state;
+            this.state = state;
         }
 
-        //Check autocast state
-        if (Abilities.GetAutoCastState(panel.ability) !== panel.autocast) {
-            panel.autocast = Abilities.GetAutoCastState(panel.ability);
+        // Check autocast state
+        if (Abilities.GetAutoCastState(this.ability) !== this.autocast) {
+            this.autocast = Abilities.GetAutoCastState(this.ability);
 
-            if (panel.autocast) {
-                $("#AutocastMask").style.visibility = "visible";
+            if (this.autocast) {
+                autocastMask.style.visibility = "visible";
             } else {
-                $("#AutocastMask").style.visibility = "collapse";
+                autocastMask.style.visibility = "collapse";
             }
         }
     }
-})();
+}

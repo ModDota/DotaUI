@@ -2,12 +2,58 @@
     <styles>
         <include src="s2r://panorama/styles/dotastyles.vcss_c" />
         <include src="s2r://panorama/styles/hudstyles.vcss_c" />
+        <include src="file://panorama/styles/custom_game/actionpanel/abilitypanel.css" />     
         <include src="file://panorama/styles/custom_game/actionpanel/actionpanel.css" />     
     </styles>
 
     <scripts>
+        <include src="s2r://panorama/scripts/custom_game/actionpanel/abilitypanel.js" />
         <include src="s2r://panorama/scripts/custom_game/actionpanel/actionpanel.js" />
     </scripts>
+
+    <snippets>
+        <snippet name="AbilityPanel">
+            <Panel class="Ability">
+                <Panel id="AbilityFrame" class="AbilityFrame">
+                    <!-- Main ability button -->
+                    <Panel class="spacer" />
+                    <Button id="AbilityButton" hittest="true">
+
+                        <DOTAAbilityImage id="AbilityImage" />
+                        <Panel class="abilitycooldowncontainer">
+                            <Panel id="cooldownswipe" />
+                        </Panel>
+
+                        <Panel id="AutocastPanel" />
+                        <Panel id="AutocastMask">
+                            <Panel id="AutocastMaskInner"></Panel>
+                            <Panel id="AutocastMaskInner2"></Panel>
+                        </Panel>
+
+                        <Label id="CooldownLabel" text="188" />
+
+                        <Panel id="PassiveMask"></Panel>
+                        <Panel id="AbilityPhaseMask"></Panel>
+
+                        <Panel id="CDShineMask" />
+
+                        <Panel id="SilencedMask"></Panel>
+
+                        <Panel id="HoverHighlight"></Panel>
+                        <Panel id="LearnOverlay"></Panel>
+
+                        <Label id="ManaLabel" text="333"/>
+                        <Label id="HotkeyLabel" text="W"/>
+                    </Button>
+
+                    <!-- Ability level indicators -->
+                    <Panel id="PipContainer">
+                        <!-- <Panel class="LeveledPip"/> or <Panel class="EmptyPip"/> Inserted by code here. -->
+                    </Panel>
+                </Panel>
+            </Panel>
+        </snippet>
+    </snippets>
   
     <Panel class="hudpanel" hittest="false">
         <Panel id="MinimapBorder" hittest="false">
