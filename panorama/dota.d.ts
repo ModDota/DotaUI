@@ -330,5 +330,6 @@ declare var $ : DollarStatic;
 declare var GameEvents : CDOTA_PanoramaScript_GameEvents;
 declare var Players : CScriptBindingPR_Players;
 declare var Abilities : CScriptBindingPR_Abilities;
+declare var Items : CScriptBindingPR_Items;
 declare var Entities : CScriptBindingPR_Entities;
 declare var Game : CScriptBindingPR_Game;

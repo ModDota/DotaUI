@@ -12,7 +12,6 @@ enum AbilityState {
     Cooldown,
     Muted
 }
-
 class AbilityPanel {
     panel: Panel;
     ability: number;

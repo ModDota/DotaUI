@@ -34,10 +34,8 @@ class ItemPanel {
             this.unit = Players.GetLocalPlayerPortraitUnit();
         }
         this.item = Entities.GetItemInSlot(this.unit, this.slot);
-        $.Msg(this.item);
         this.itemName = Abilities.GetAbilityName(this.item);
         let itemImage = <Image>this.panel.FindChildTraverse("bg");
         itemImage.SetImage("s2r://panorama/images/items/" + ((this.item == -1) ? "emptyitembg" : Items.GetAbilityTextureSF(this.item)) + ".png");
-        $.Msg(this.slot + ": s2r://panorama/images/images/items/" + ((this.item == -1) ? "emptyitembg" : Items.GetAbilityTextureSF(this.item)) + ".png");
     }
 }

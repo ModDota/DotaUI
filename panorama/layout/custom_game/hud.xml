@@ -8,7 +8,6 @@
     <scripts>
         <include src="s2r://panorama/scripts/custom_game/hud.js" />
     </scripts>
-
     <Panel class="MainPanel" hittest="false">
         <Panel id="ZooHUD" class="ZooTab" hittest="false">
             <script>
