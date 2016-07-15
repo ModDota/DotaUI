@@ -207,6 +207,10 @@ interface CScriptBindingPR_Entities {
     GetAbility(entityID:number, slot:number) : number;
     GetAbilityPoints(entityID:number) : number;
     GetItemInSlot(entityID:number, slot:number) : number;
+    GetHealth(entityID:number) : number;
+    GetMaxHealth(entityID:number) : number;
+    GetMana(entityID:number) : number;
+    GetMaxMana(entityID:number) : number;
 }
 interface CScriptBindingPR_Abilities {
     GetAbilityName(entityID:number) : string;
