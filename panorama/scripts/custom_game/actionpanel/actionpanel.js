@@ -168,6 +168,8 @@
                 abilities[ab].setLearnMode(learnMode);
             }
         }
+        $("#HealthBarInner").style.width = (Entities.GetHealth(currentUnit) / Entities.GetMaxHealth(currentUnit)) * 100 + "%";
+        $("#ManaBarInner").style.width = (Entities.GetMana(currentUnit) / Entities.GetMaxMana(currentUnit)) * 100 + "%";
         // Make ability state only visible to allies (this can be commented out to see enemy ability states!)
         if (!Entities.IsEnemy(currentUnit)) {
             // Check silence state
