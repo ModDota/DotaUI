@@ -1,0 +1,20 @@
+.ItemSlot {
+    margin-left: 6px;
+}
+#bg {
+    width: 70px;
+    height: 52px;
+    background-image: url("s2r://panorama/images/items/emptybgitem.png");
+}
+#row0 {
+    flow-children: right;
+    x: 7px;
+    y: 152px;
+    vertical-align: top;
+    horizontal-align: left;
+}
+#row1 {
+    flow-children: right;
+    x: 7px;
+    y: 212px;
+}

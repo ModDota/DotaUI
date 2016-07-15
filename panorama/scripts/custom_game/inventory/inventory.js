@@ -1,4 +1,5 @@
 /// <reference path="../../../dota.d.ts" />
+/// <reference path="itemslot.ts" />
 (function () {
     var ItemDB = {
         587: "default",
@@ -17,6 +18,12 @@
         }
         $.Msg(event);
     }
+    function onInventoryChanged(event) {
+        for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
+            var item = items_1[_i];
+            item.update();
+        }
+    }
     function onGoldChanged(event) {
         $("#goldCount").text = Players.GetGold(Players.GetLocalPlayer()).toString(); //TODO: handle selecting allied units.
     }
@@ -33,6 +40,8 @@
     GameEvents.Subscribe("inventory_updated", onSteamInventoryChanged);
     //Listen to inventory updates
     //"dota_inventory_changed"
+    GameEvents.Subscribe("dota_inventory_changed", onInventoryChanged);
+    GameEvents.Subscribe("dota_inventory_item_changed", onInventoryChanged);
     //Listen to gold updates
     //"dota_money_changed"
     GameEvents.Subscribe("dota_money_changed", onGoldChanged);
@@ -41,4 +50,18 @@
     GameEvents.Subscribe("dota_player_shop_changed", onShopChanged);
     //Listen to glyph updates
     //"dota_glyph_used"
+    var items = [];
+    for (var i = 0; i < 12; i++) {
+        //ROW 0 unless otherwise specified
+        var parent_1 = $("#row0");
+        if (i > 5) {
+            //STASH
+            continue; //TODO: make
+        }
+        else if (i > 2) {
+            //ROW 1
+            parent_1 = $("#row1");
+        }
+        items[i] = new ItemPanel(parent_1, i);
+    }
 })();

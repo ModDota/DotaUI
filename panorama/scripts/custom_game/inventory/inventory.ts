@@ -1,4 +1,6 @@
 /// <reference path="../../../dota.d.ts" />
+/// <reference path="itemslot.ts" />
+
 
 (function() {
     var ItemDB = {
@@ -18,6 +20,11 @@
         }
         $.Msg(event);
     }
+    function onInventoryChanged(event) {
+        for (let item of items) {
+            item.update();
+        }
+    }
     function onGoldChanged(event) {
         (<Label>$("#goldCount")).text = Players.GetGold(Players.GetLocalPlayer()).toString(); //TODO: handle selecting allied units.
     }
@@ -34,6 +41,8 @@
     
     //Listen to inventory updates
     //"dota_inventory_changed"
+    GameEvents.Subscribe("dota_inventory_changed", onInventoryChanged);
+    GameEvents.Subscribe("dota_inventory_item_changed", onInventoryChanged);
     
     //Listen to gold updates
     //"dota_money_changed"
@@ -45,4 +54,19 @@
     
     //Listen to glyph updates
     //"dota_glyph_used"
+
+
+    let items:ItemPanel[] = [];
+    for (let i = 0; i < 12; i++) {
+        //ROW 0 unless otherwise specified
+        let parent = $("#row0");
+        if (i > 5) {
+            //STASH
+            continue; //TODO: make
+        } else if (i > 2) {
+            //ROW 1
+            parent = $("#row1");
+        }
+        items[i] = new ItemPanel(parent, i);
+    }
 })();

@@ -206,6 +206,7 @@ interface CScriptBindingPR_Entities {
     GetAbilityCount(entityID:number) : number;
     GetAbility(entityID:number, slot:number) : number;
     GetAbilityPoints(entityID:number) : number;
+    GetItemInSlot(entityID:number, slot:number) : number;
 }
 interface CScriptBindingPR_Abilities {
     GetAbilityName(entityID:number) : string;
@@ -228,7 +229,9 @@ interface CScriptBindingPR_Abilities {
     ExecuteAbility(entityID:number, caster:number, quickCast:boolean) : void;
     AttemptToUpgrade(entityID:number) : void;
 }
-//TODO: Items
+interface CScriptBindingPR_Items {
+    GetAbilityTextureSF(entityID:number): string;
+}
 
 interface PrepareUnitOrdersArgument {
     OrderType : dotaunitorder_t;
@@ -255,9 +258,20 @@ interface Panel {
 interface Label extends Panel {
     text: string;
 }
-
-interface AbilityImage extends Panel {
+interface Image extends Panel {
+    /**
+     * Sets the image of this Image.
+     * Example: image.SetImage("s2r://panorama/images/hud/hudv2_iconglyph.png")
+     */
+    SetImage(path:string): void;
+    SetScaling(scale:string): void;
+}
+interface AbilityImage extends Image {
     abilityname: string;
+    contextEntityIndex: number;
+}
+interface ItemImage extends Image {
+    itemname: string;
     contextEntityIndex: number;
 }
 

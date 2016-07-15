@@ -2,16 +2,29 @@
     <styles>
         <include src="s2r://panorama/styles/dotastyles.vcss_c" />
         <include src="s2r://panorama/styles/hudstyles.vcss_c" />
+        <include src="file://panorama/styles/custom_game/inventory/itemslot.css" />
         <include src="file://panorama/styles/custom_game/inventory/inventory.css" />     
     </styles>
 
     <scripts>
-        <include src="s2r://panorama/scripts/custom_game/inventory/inventory.js" />
+        <include src="file://panorama/scripts/custom_game/inventory/itemslot.js" />
+        <include src="file://panorama/scripts/custom_game/inventory/inventory.js" />
     </scripts>
+    <snippets>
+        <snippet name="itemSlot">
+            <Panel class="ItemSlot">
+                <Image id="bg" src="raw://resource/flash3/images/items/emptyitembg.png" />
+            </Panel>
+        </snippet>
+    </snippets>
     <Panel class="inventory" hittest="false">
         <Image id="rocks" />
         <Image id="spacer" />
         <Panel id="background">
+            <Panel id="items">
+                <Panel id="row0"/>
+                <Panel id="row1"/>
+            </Panel>
             <Label id="noCourier" text="#DOTA_No_Courier"/>
             <Image id="glyph" src="s2r://panorama/images/hud/hudv2_iconglyph.png" />
             <Panel id="gold">
