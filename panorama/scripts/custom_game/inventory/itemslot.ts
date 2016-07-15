@@ -14,14 +14,7 @@ class ItemPanel {
     itemName:string;
 
     state: ItemState;
-    testing :boolean;
-
-    test() {
-        (<ItemImage>this.panel.FindChildTraverse("bg")).itemname = this.testing ? "" : this.itemName;
-        $.Msg("Updating");
-        this.testing = !this.testing;
-        $.Schedule(10, this.test.bind(this));
-    }
+    
     constructor(parent: Panel, slot:number) {
         this.slot = slot;
         this.panel = $.CreatePanel( "Panel", parent, "" );

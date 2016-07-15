@@ -13,12 +13,6 @@ var ItemPanel = (function () {
         this.panel.BLoadLayoutSnippet("itemSlot");
         this.update();
     }
-    ItemPanel.prototype.test = function () {
-        this.panel.FindChildTraverse("bg").itemname = this.testing ? "" : this.itemName;
-        $.Msg("Updating");
-        this.testing = !this.testing;
-        $.Schedule(10, this.test.bind(this));
-    };
     ItemPanel.prototype.update = function () {
         this.unit = Players.GetQueryUnit(Players.GetLocalPlayer());
         if (this.unit === -1) {
