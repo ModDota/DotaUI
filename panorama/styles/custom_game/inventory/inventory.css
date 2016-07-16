@@ -39,6 +39,49 @@
     //opacity:0.0;
     //visibility:collapse;
 }
+#stats {
+    width: 100%;
+    height: 100%;
+}
+#stats.Hidden {
+    opacity: 0.0;
+}
+#kda {
+    margin-left: 56.4%;
+    margin-bottom: 6.2%;
+    vertical-align: bottom;
+    horizontal-align: left;
+
+    font-size: 15px;
+    color: #666666;
+}
+#lhd {
+    margin-left: 56.4%;
+    margin-bottom: 2%;
+    vertical-align: bottom;
+    horizontal-align: left;
+
+    font-size: 15px;
+    color: #666666;
+}
+#kda-value {
+    margin-left: 69.4%;
+    margin-bottom: 6.2%;
+    vertical-align: bottom;
+    horizontal-align: left;
+
+    font-size: 14px;
+    color: offWhite;
+}
+#lhd-value {
+    margin-left: 69.4%;
+    margin-bottom: 2%;
+    vertical-align: bottom;
+    horizontal-align: left;
+
+    font-size: 14px;
+    color: offWhite;
+}
 #noCourier
 {
     margin-right: 22%;

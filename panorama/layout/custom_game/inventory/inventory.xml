@@ -26,6 +26,12 @@
                 <Panel id="row1"/>
             </Panel>
             <Label id="noCourier" text="#DOTA_No_Courier"/>
+            <Panel id="stats" hittest="false">
+                <Label id="kda" text="#DOTA_Inventory_KDA" />
+                <Label id="kda-value" text="{d:kills} / {d:deaths} / {d:assists}" />
+                <Label id="lhd" text="#DOTA_Inventory_LHD" />
+                <Label id="lhd-value" text="{d:lasthits} / {d:denies}" />
+            </Panel>
             <Image id="glyph" src="s2r://panorama/images/hud/hudv2_iconglyph.png" />
             <Panel id="gold">
                 <Image id="goldImage" src="s2r://panorama/images/hud/icon_gold.psd" />

@@ -10,6 +10,7 @@
         10324 : "portal",
         10346 : "mana_pool"
     }
+    let currentUnit = Players.GetLocalPlayerPortraitUnit();
     function onSteamInventoryChanged(event) {
         var skinName = ItemDB[event.itemdef];
         $.Msg(skinName);
@@ -20,6 +21,17 @@
             $("#background").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/inventory/background_wide.png');";
         }
         $.Msg(event);
+    }
+    function onUnitChanged(event) {
+        onInventoryChanged(event);
+        if (Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()) != Players.GetLocalPlayerPortraitUnit()) {
+            //$.Msg(Players.GetQueryUnit(Players.GetLocalPlayer()), " = ", Players.GetLocalPlayerPortraitUnit());
+            $("#stats").SetHasClass("Hidden", true);
+        } else {
+            $.Msg(Players.GetQueryUnit(Players.GetLocalPlayer()), " != ", Players.GetLocalPlayerPortraitUnit());
+            $("#stats").SetHasClass("Hidden", false);
+        }
+        currentUnit = Players.GetQueryUnit(Players.GetLocalPlayer());
     }
     function onInventoryChanged(event) {
         for (let item of items) {
@@ -44,7 +56,19 @@
     //"dota_inventory_changed"
     GameEvents.Subscribe("dota_inventory_changed", onInventoryChanged);
     GameEvents.Subscribe("dota_inventory_item_changed", onInventoryChanged);
-    
+    GameEvents.Subscribe("dota_player_update_selected_unit", onUnitChanged);
+    GameEvents.Subscribe("dota_player_update_query_unit", onUnitChanged);
+    function onEntityKilled(event) {
+        $("#lhd-value").SetDialogVariableInt("lasthits", Players.GetLastHits(Players.GetLocalPlayer()));
+        $("#lhd-value").SetDialogVariableInt("denies", Players.GetDenies(Players.GetLocalPlayer()));
+    }
+    GameEvents.Subscribe("entity_killed", onEntityKilled);
+    function onHeroDeath(event) {
+        $("#kda-value").SetDialogVariableInt("kills", Players.GetKills(Players.GetLocalPlayer()));
+        $("#kda-value").SetDialogVariableInt("deaths", Players.GetDeaths(Players.GetLocalPlayer()));
+        $("#kda-value").SetDialogVariableInt("assists", Players.GetAssists(Players.GetLocalPlayer()));
+    }
+    GameEvents.Subscribe("dota_player_kill", onHeroDeath);
     //Listen to gold updates
     //"dota_money_changed"
     GameEvents.Subscribe("dota_money_changed", onGoldChanged);
@@ -55,7 +79,8 @@
     
     //Listen to glyph updates
     //"dota_glyph_used"
-
+    onEntityKilled(null);
+    onHeroDeath(null);
 
     let items:ItemPanel[] = [];
     for (let i = 0; i < 12; i++) {
