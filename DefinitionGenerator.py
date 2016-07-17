@@ -1,69 +1,73 @@
 import sys
 import re
-input = """integer Players.GetMaxPlayers()Get the maximum number of players in the game.
-integer Players.GetMaxTeamPlayers()Get the maximum number of players on teams.
-integer Players.GetLocalPlayer()Get the local player ID.
-boolean Players.IsValidPlayerID( integer iPlayerID )Is the nth player a valid player?
-cstring Players.GetPlayerName( integer iPlayerID )Return the name of a player.
-integer Players.GetPlayerHeroEntityIndex( integer iPlayerID )Get the entity index of the hero controlled by this player.
-js_array Players.GetSelectedEntities( integer iPlayerID )Get the entities this player has selected.
-integer Players.GetQueryUnit( integer iPlayerID )Get the entities this player is querying.
-integer Players.GetLocalPlayerPortraitUnit()Get local player current portrait unit. (ie. Player's hero or primary selected unit.)
-boolean Players.CanPlayerBuyback( integer iPlayerID )Can the player buy back?
-boolean Players.HasCustomGameTicketForPlayerID( integer iPlayerID )Does this player have a custom game ticket?
-integer Players.GetAssists( integer iPlayerID )The number of assists credited to a player.
-integer Players.GetClaimedDenies( integer iPlayerID )
-integer Players.GetClaimedMisses( integer iPlayerID )
-integer Players.GetDeaths( integer iPlayerID )The number of deaths a player has suffered.
-integer Players.GetDenies( integer iPlayerID )The number of denies credited to a player.
-integer Players.GetGold( integer iPlayerID )The amount of gold a player has.
-integer Players.GetKills( integer iPlayerID )The number of kills credited to a player.
-integer Players.GetLastBuybackTime( integer iPlayerID )
-integer Players.GetLastHitMultikill( integer iPlayerID )
-integer Players.GetLastHits( integer iPlayerID )The number of last hits credited to a player.
-integer Players.GetLastHitStreak( integer iPlayerID )
-integer Players.GetLevel( integer iPlayerID )The current level of a player.
-integer Players.GetMisses( integer iPlayerID )
-integer Players.GetNearbyCreepDeaths( integer iPlayerID )
-integer Players.GetReliableGold( integer iPlayerID )Total reliable gold for this player.
-integer Players.GetRespawnSeconds( integer iPlayerID )
-integer Players.GetStreak( integer iPlayerID )
-integer Players.GetTotalEarnedGold( integer iPlayerID )Total gold earned in this game by this player.
-integer Players.GetTotalEarnedXP( integer iPlayerID )Total xp earned in this game by this player.
-integer Players.GetUnreliableGold( integer iPlayerID )Total unreliable gold for this player.
-integer Players.GetTeam( integer iPlayerID )Get the team this player is on.
-float Players.GetGoldPerMin( integer iPlayerID )Average gold earned per minute for this player.
-float Players.GetXPPerMin( integer iPlayerID )Average xp earned per minute for this player.
-cstring Players.GetPlayerSelectedHero( integer iPlayerID )Return the name of the hero a player is controlling.
-unsigned Players.GetPlayerColor( integer iPlayerID )Get the player color.
-boolean Players.IsSpectator( integer iPlayerID )Is this player a spectator.
-void Players.PlayerPortraitClicked( integer nClickedPlayerID, boolean bHoldingCtrl, boolean bHoldingAlt ).
-void Players.BuffClicked( integer nEntity, integer nBuffSerial, boolean bAlert )."""
+input = """boolean Items.ShouldDisplayCharges( integer nEntityIndex )
+boolean Items.AlwaysDisplayCharges( integer nEntityIndex )
+boolean Items.ShowSecondaryCharges( integer nEntityIndex )
+boolean Items.CanBeSoldByLocalPlayer( integer nEntityIndex )
+boolean Items.CanDoubleTapCast( integer nEntityIndex )
+boolean Items.ForceHideCharges( integer nEntityIndex )
+boolean Items.IsAlertableItem( integer nEntityIndex )
+boolean Items.IsCastOnPickup( integer nEntityIndex )
+boolean Items.IsDisassemblable( integer nEntityIndex )
+boolean Items.IsDroppable( integer nEntityIndex )
+boolean Items.IsInnatelyDisassemblable( integer nEntityIndex )
+boolean Items.IsKillable( integer nEntityIndex )
+boolean Items.IsMuted( integer nEntityIndex )
+boolean Items.IsPermanent( integer nEntityIndex )
+boolean Items.IsPurchasable( integer nEntityIndex )
+boolean Items.IsRecipe( integer nEntityIndex )
+boolean Items.IsRecipeGenerated( integer nEntityIndex )
+boolean Items.IsSellable( integer nEntityIndex )
+boolean Items.IsStackable( integer nEntityIndex )
+boolean Items.ProRatesChargesWhenSelling( integer nEntityIndex )
+boolean Items.RequiresCharges( integer nEntityIndex )
+integer Items.CanBeExecuted( integer nEntityIndex )
+integer Items.GetCost( integer nEntityIndex )
+integer Items.GetCurrentCharges( integer nEntityIndex )
+integer Items.GetSecondaryCharges( integer nEntityIndex )
+integer Items.GetDisplayedCharges( integer nEntityIndex )
+integer Items.GetInitialCharges( integer nEntityIndex )
+integer Items.GetItemColor( integer nEntityIndex )
+integer Items.GetShareability( integer nEntityIndex )
+cstring Items.GetAbilityTextureSF( integer nEntityIndex )
+float Items.GetAssembledTime( integer nEntityIndex )
+float Items.GetPurchaseTime( integer nEntityIndex )
+integer Items.GetPurchaser( integer nItemID )
+boolean Items.LocalPlayerDisassembleItem( integer nItem )Attempt to have the local player disassemble the specified item. Returns false if the order wasn't issued.
+boolean Items.LocalPlayerDropItemFromStash( integer nItem )Attempt to have the local player drop the specified item from its stash. Returns false if the order wasn't issued.
+boolean Items.LocalPlayerItemAlertAllies( integer nItem )Attempt to have the local player alert allies about the specified item. Returns false if the order wasn't issued.
+boolean Items.LocalPlayerMoveItemToStash( integer nItem )Attempt to have the local player move the specified item to its stash. Returns false if the order wasn't issued.
+boolean Items.LocalPlayerSellItem( integer nItem )Attempt to have the local player sell the specified item. Returns false if the order wasn't issued."""
 
 conversion = {
     "integer" : "number",
     "float" : "number",
     "cstring" : "string",
     "boolean" : "boolean",
-    "js_array" : "any[]",
-    "unsigned" : "number", #WTF
+    "js_array" : "error[]",
+    "js_object" : "error[]",
+    "js_value" : "error",
+    "unsigned" : "error", #WTF
+    "int64" : "error",
+    "float64" : "error",
+    "js_raw_args" : "error",
     "void" : "void"
 }
 
 regex = re.compile("^(?P<return>\w+) (?P<class>\w+)\.(?P<function>\w+)\((?P<args>[^)]+?)?\)(?P<comment>.*)", re.MULTILINE)
 for match in regex.finditer(input):
     info = match.groupdict()
-    print("/**")
-    print(" * " + info["comment"])
-    print("**/")
+    print("    /**")
+    print("     * " + info["comment"])
+    print("     */")
     arg = info["args"]
     arguments = ""
     if arg:
         args = arg.split(",")
         for argument in args:
             innerArg = argument.split(" ")
-            arguments = arguments + innerArg[2] + " : " + conversion[innerArg[1]] + ", "
+            arguments = arguments + innerArg[2] + ": " + conversion[innerArg[1]] + ", "
         arguments = arguments[:-2]
     returnType = conversion[info["return"]]
-    print("{function}({arg}) : {returnType};".format(arg=arguments, returnType=returnType, **info))
+    print("    {function}({arg}): {returnType};".format(arg=arguments, returnType=returnType, **info))
     print("")
