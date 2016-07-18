@@ -2079,6 +2079,7 @@ declare enum AbilityLearnResult_t {
 }
 
 declare var $ : DollarStatic;
+declare var GameUI : CDOTA_PanoramaScript_GameUI;
 declare var GameEvents : CDOTA_PanoramaScript_GameEvents;
 declare var Players : CScriptBindingPR_Players;
 declare var Abilities : CScriptBindingPR_Abilities;

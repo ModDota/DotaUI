@@ -25,7 +25,16 @@
                 <Panel id="row0"/>
                 <Panel id="row1"/>
             </Panel>
-            <Label id="noCourier" text="#DOTA_No_Courier"/>
+            <Panel id="courier">
+                <Label id="noCourier" text="#DOTA_No_Courier"/>
+                <Panel id="deadCourier" onmouseover="econHover('#deadCourier')" onmouseout="econHoverEnd()">
+                    <Panel id="deadCourierImage" />
+                    <Label id="deadCourierTimer" />
+                </Panel>
+                <Panel id="courierStatus" onactivate="statusClicked()" onmouseover="econHover('#courierStatus')" onmouseout="econHoverEnd()"/>
+                <Panel id="courierBurst" onactivate="burstClicked()" />
+                <Panel id="courierDelivery" onactivate="deliverClicked()" onmouseover="DOTAShowTextTooltip('#DOTA_CourierDeliver')" onmouseout="DOTAHideTextTooltip()"/>
+            </Panel>
             <Panel id="stats" hittest="false">
                 <Label id="kda" text="#DOTA_Inventory_KDA" />
                 <Label id="kda-value" text="{d:kills} / {d:deaths} / {d:assists}" />
