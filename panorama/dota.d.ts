@@ -1528,6 +1528,77 @@ interface CScriptBindingPR_Abilities {
      */
     GetKeybind(nAbilityEntIndex: abilityID): string;
 }
+interface CScriptBindingPR_Buffs {
+    /**
+     * Returns the name of the modifier.
+     */
+    GetName(nEntityIndex: entityID, nBuffIndex: buffID): string;
+
+    /**
+     * Returns the classname of the modifier.
+     */
+    GetClass(nEntityIndex: entityID, nBuffIndex: buffID): string;
+
+    /**
+     * Returns the modifier icon texture.
+     */
+    GetTexture(nEntityIndex: entityID, nBuffIndex: buffID): string;
+
+    /**
+     * Returns the total duration of the modifier.
+     */
+    GetDuration(nEntityIndex: entityID, nBuffIndex: buffID): number;
+
+    /**
+     * Returns the time at which the modifier will expire.
+     */
+    GetDieTime(nEntityIndex: entityID, nBuffIndex: buffID): number;
+
+    /**
+     * Returns the time until the modifier expires.
+     */
+    GetRemainingTime(nEntityIndex: entityID, nBuffIndex: buffID): number;
+
+    /**
+     * Returns the time elapsed since the creation of the modifier.
+     */
+    GetElapsedTime(nEntityIndex: entityID, nBuffIndex: buffID): number;
+
+    /**
+     * Returns the time at which the modifier was created.
+     */
+    GetCreationTime(nEntityIndex: entityID, nBuffIndex: buffID): number;
+
+    /**
+     * Returns the keybind (as a string) for the specified ability.
+     */
+    GetStackCount(nEntityIndex: entityID, nBuffIndex: buffID): number;
+
+    /**
+     * Returns true if the modifier is a debuff (red icon), false otherwise.
+     */
+    IsDebuff(nEntityIndex: entityID, nBuffIndex: buffID): boolean;
+
+    /**
+     * Returns the keybind (as a string) for the specified ability.
+     */
+    IsHidden(nEntityIndex: entityID, nBuffIndex: buffID): boolean;
+
+    /**
+     * Returns the entity that created the modifier (possibly on another entity).
+     */
+    GetCaster(nEntityIndex: entityID, nBuffIndex: buffID): entityID;
+
+    /**
+     * Returns the entity to which the modifier is applied.
+     */
+    GetParent(nEntityIndex: entityID, nBuffIndex: buffID): entityID;
+
+    /**
+     * Returns the ability associated with the modifier.
+     */
+    GetAbility(nEntityIndex: entityID, nBuffIndex: buffID): abilityID;
+}
 interface CScriptBindingPR_Items {
     /**
      *
@@ -2088,6 +2159,7 @@ declare var GameUI: CDOTA_PanoramaScript_GameUI;
 declare var GameEvents: CDOTA_PanoramaScript_GameEvents;
 declare var Players: CScriptBindingPR_Players;
 declare var Abilities: CScriptBindingPR_Abilities;
+declare var Buffs: CScriptBindingPR_Buffs;
 declare var Items: CScriptBindingPR_Items;
 declare var Entities: CScriptBindingPR_Entities;
 declare var Game: CScriptBindingPR_Game;
