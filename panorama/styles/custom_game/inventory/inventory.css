@@ -195,6 +195,7 @@
     margin-bottom: 57%;
     vertical-align: bottom;
     horizontal-align: right;
+    tooltip-position: top right left bottom;
 }
 #goldImage
 {

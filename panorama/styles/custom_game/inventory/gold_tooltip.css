@@ -1,0 +1,30 @@
+#Contents.GoldTooltip {
+    flow-children: down;
+}
+
+#buybackCooldown {
+    margin-top: 20px;
+}
+#goldImage {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+#BuybackCostContainer {
+    flow-children: right;
+}
+#buybackCostExtra.Surplus {
+    color: #00FF00;
+}
+#buybackCostExtra {
+    color: #FF0000;
+}
+
+#reliable,
+#unreliable,
+#deathCost,
+#buybackCost,
+#buybackCooldown
+{
+    color: offWhite;
+}

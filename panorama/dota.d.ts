@@ -2071,6 +2071,7 @@ interface DollarStatic {
     GetContextPanel(): Panel;
     Schedule(time: number, callback: Function);
     DispatchEvent(event: string, reference?: Panel, ...args: any[]);
+    Localize(token:string, parent?:Panel);
 }
 
 interface Panel {
