@@ -18,6 +18,7 @@ type abilityID = number;
 type buffID = number;
 type entityID = number;
 type itemID = number;
+type particleID = number;
 
 interface CDOTA_PanoramaScript_GameEvents {
     /**
@@ -2080,6 +2081,45 @@ interface CScriptBindingPR_Game {
     IsInAbilityLearnMode(): boolean;
 }
 
+interface CScriptBindingPR_Particles {
+    /**
+     * Create a particle from a file with an attachment and an owning entity.
+     */
+    CreateParticle(particleName: string, particleAttach: ParticleAttachment_t, owningEntity: entityID): particleID;
+
+    /**
+     * Release the index of a particle, will make the particle in-accessible from script. This allows another particle
+     * to reuse the freed particle index.
+     */
+    ReleaseParticleIndex(particle: particleID): void;
+
+    /**
+     * Destroy a particle. Setting the immediate boolean to true will prevent the endcap from playing.
+     */
+    DestroyParticleEffect(particle: particleID, immediate: boolean): void;
+
+    /**
+     * Set a particle's control point to a vector value.
+     */
+    SetParticleControl(particle: particleID, controlPoint: number, value: [number, number, number]): void;
+
+    /**
+     * Set a particle's forward control point to a vector value.
+     */
+    SetParticleControlForward(particle: particleID, controlPoint: number, value: [number, number, number]): void;
+
+    /**
+     * Unknown use, any info welcome.
+     */
+    SetParticleAlwaysSimulate(particle: particleID): void;
+
+    /**
+     * Set a particle's control point to an entity's attachment. Most common example is:
+     * Particles.SetPerticleControlEnt(particle, controlPoint, entity, ParticleAttachment_t.PATTACH_POINT_FOLLOW, "attach_hitloc", [0,0,0], true);
+     */
+    SetParticleControlEnt(particle: particleID, controlPoint: number, entity: entityID, particleAttach: ParticleAttachment_t, attachmentName: string, offset: [number, number, number], unknown: boolean): void;
+}
+
 interface DollarStatic {
     (selector: string) : Panel;
     CreatePanel(type: string, root: Panel, name: string): Panel;
@@ -2126,6 +2166,10 @@ interface ItemImage extends Image {
     itemname: string;
     contextEntityIndex: number;
 }
+
+/*
+    DotA 2 Panorama Enums
+*/
 
 declare enum DOTA_GameState {
     DOTA_GAMERULES_STATE_INIT = 0,
@@ -3148,3 +3192,4 @@ declare var Buffs: CScriptBindingPR_Buffs;
 declare var Items: CScriptBindingPR_Items;
 declare var Entities: CScriptBindingPR_Entities;
 declare var Game: CScriptBindingPR_Game;
+declare var Particles: CScriptBindingPR_Particles;
