@@ -1,3 +1,19 @@
+/*
+    Typescript definition file of the DotA 2 Panorama API.
+
+    This file contains information on the API and how it should be used. This file can be used
+    just as reference, or when writing Typescript to compile into Panorama JS.
+
+    To use this file with typescript for Panorama, install typescript and reference this file
+    (make sure the path is correct):
+
+    /// <reference path="../../../dota.d.ts" />
+
+    Any javascript compiled from this typescript should be Panorama-compatible and run in Panorama.
+    Issues or bugs in the definitions can be reported by making an issue on GitHub:
+    https://github.com/ModDota/DotaUI.
+*/
+
 type abilityID = number;
 type buffID = number;
 type entityID = number;
