@@ -98,7 +98,7 @@ interface CDOTA_PanoramaScript_GameUI {
     /**
      * Get the current UI click interaction mode.
      */
-    GetClickBehaviors(): number;
+    GetClickBehaviors(): CLICK_BEHAVIORS;
 
     /**
      * Select a unit, adding it to the group or replacing the current selection.
@@ -214,12 +214,12 @@ interface CScriptBindingPR_Players {
     /**
      * Get the entities this player is querying.
      */
-    GetQueryUnit(iPlayerID: number): number;
+    GetQueryUnit(iPlayerID: number): entityID;
 
     /**
      * Get local player current portrait unit. (ie. Player's hero or primary selected unit.)
      */
-    GetLocalPlayerPortraitUnit(): number;
+    GetLocalPlayerPortraitUnit(): entityID;
 
     /**
      * Can the player buy back?
@@ -334,7 +334,7 @@ interface CScriptBindingPR_Players {
     /**
      * Get the team this player is on.
      */
-    GetTeam(iPlayerID: number): number;
+    GetTeam(iPlayerID: number): DOTATeam_t;
 
     /**
      * Average gold earned per minute for this player.
@@ -369,7 +369,7 @@ interface CScriptBindingPR_Players {
     /**
      * .
      */
-    BuffClicked(nEntity: number, nBuffSerial: number, bAlert: boolean): void;
+    BuffClicked(nEntity: entityID, nBuffSerial: number, bAlert: boolean): void;
 }
 interface CScriptBindingPR_Entities {
     /**
@@ -865,7 +865,7 @@ interface CScriptBindingPR_Entities {
     /**
      * 
      */
-    GetStates(nEntityIndex: entityID): number;
+    GetStates(nEntityIndex: entityID): modifierstate[];
 
     /**
      * 
@@ -875,7 +875,7 @@ interface CScriptBindingPR_Entities {
     /**
      * 
      */
-    GetTeamNumber(nEntityIndex: entityID): number;
+    GetTeamNumber(nEntityIndex: entityID): DOTATeam_t;
 
     /**
      * 
@@ -983,7 +983,7 @@ interface CScriptBindingPR_Entities {
     GetProjectileCollisionSize(nEntityIndex: entityID): number;
 
     /**
-     * 
+     * Returns the radius of the bounding ring of the unit.
      */
     GetRingRadius(nEntityIndex: entityID): number;
 
@@ -1070,17 +1070,17 @@ interface CScriptBindingPR_Entities {
     /**
      * 
      */
-    InState(nEntityIndex: entityID, nState: number): boolean;
+    InState(nEntityIndex: entityID, nState: modifierstate): boolean;
 
     /**
      * 
      */
-    GetArmorForDamageType(nEntityIndex: entityID, iDamageType: number): number;
+    GetArmorForDamageType(nEntityIndex: entityID, iDamageType: DAMAGE_TYPES): number;
 
     /**
      * 
      */
-    GetArmorReductionForDamageType(nEntityIndex: entityID, iDamageType: number): number;
+    GetArmorReductionForDamageType(nEntityIndex: entityID, iDamageType: DAMAGE_TYPES): number;
 
     /**
      * 
@@ -1481,7 +1481,7 @@ interface CScriptBindingPR_Abilities {
     /**
      * Get the local player's current active ability. (Pre-cast targetting state.)
      */
-    GetLocalPlayerActiveAbility(): number;
+    GetLocalPlayerActiveAbility(): abilityID;
 
     /**
      * 
@@ -1743,7 +1743,7 @@ interface CScriptBindingPR_Items {
     /**
      *
      */
-    GetShareability(nEntityIndex: itemID): number;
+    GetShareability(nEntityIndex: itemID): EShareAbility;
 
     /**
      *
@@ -1794,9 +1794,9 @@ interface CScriptBindingPR_Items {
 interface PrepareUnitOrdersArgument {
     OrderType?: dotaunitorder_t;
     TargetIndex?: number;
-    Position?: any; //TODO: vector type
+    Position?: [number, number, number];
     AbilityIndex?: number;
-    OrderIssuer?: any; //TODO: OrderIssuer_t
+    OrderIssuer?: any; // TODO: OrderIssuer_t - not in enums, entityID?
     UnitIndex?: number;
     QueueBehavior?: OrderQueueBehavior_t;
     ShowEffects?: boolean;
@@ -1886,22 +1886,22 @@ interface CScriptBindingPR_Game {
     /**
      *
      */
-    GetState(): number;
+    GetState(): DOTA_GameState;
 
     /**
      *
      */
-    GameStateIs(nState: number): boolean;
+    GameStateIs(nState: DOTA_GameState): boolean;
 
     /**
      *
      */
-    GameStateIsBefore(nState: number): boolean;
+    GameStateIsBefore(nState: DOTA_GameState): boolean;
 
     /**
      *
      */
-    GameStateIsAfter(nState: number): boolean;
+    GameStateIsAfter(nState: DOTA_GameState): boolean;
 
     /**
      *
@@ -1916,7 +1916,7 @@ interface CScriptBindingPR_Game {
     /**
      * Assign the local player to the specified team
      */
-    PlayerJoinTeam(nTeamID: number): void;
+    PlayerJoinTeam(nTeamID: DOTATeam_t): void;
 
     /**
      * Assign the currently unassigned players to teams
@@ -1961,7 +1961,7 @@ interface CScriptBindingPR_Game {
     /**
      * Get all team IDs
      */
-    GetAllTeamIDs(): number[];
+    GetAllTeamIDs(): DOTATeam_t[];
 
     /**
      * Get all player IDs
@@ -2011,7 +2011,7 @@ interface CScriptBindingPR_Game {
     /**
      * Get player IDs for the given team
      */
-    GetPlayerIDsOnTeam(nTeam: number): number[];
+    GetPlayerIDsOnTeam(nTeam: DOTATeam_t): number[];
 
     /**
      *
@@ -2046,7 +2046,7 @@ interface CScriptBindingPR_Game {
     /**
      * Order a unit to drop the specified item at the current cursor location.
      */
-    DropItemAtCursor(nControlledUnitEnt: number, nItemEnt: number): void;
+    DropItemAtCursor(nControlledUnitEnt: entityID, nItemEnt: itemID): void;
 
     /**
      *
@@ -2071,7 +2071,7 @@ interface DollarStatic {
     GetContextPanel(): Panel;
     Schedule(time: number, callback: Function);
     DispatchEvent(event: string, reference?: Panel, ...args: any[]);
-    Localize(token:string, parent?:Panel);
+    Localize(token: string, parent?: Panel);
 }
 
 interface Panel {
