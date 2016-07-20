@@ -5,6 +5,13 @@
     width: 30%;
     height: 27%;
 }
+#hittest
+{
+    vertical-align: bottom;
+    horizontal-align: right;
+    width: 97.5%;
+    height: 57%;
+}
 #background
 {
     /* Remember to add 4:3 aspect ratio system in later */

@@ -22,10 +22,11 @@
         </snippet>
     </snippets>
     <Panel class="inventory" hittest="false">
-        <Image id="rocks" />
-        <Image id="spacer" />
-        <Panel id="background">
-            <Panel id="items">
+        <Panel id="hittest" />
+        <Image id="rocks" hittest="false" />
+        <Image id="spacer" hittest="false" />
+        <Panel id="background" hittest="false">
+            <Panel id="items" hittest="false" >
                 <Panel id="row0"/>
                 <Panel id="row1"/>
             </Panel>
@@ -46,11 +47,11 @@
                 <Label id="lhd-value" text="{d:lasthits} / {d:denies}" />
             </Panel>
             <Image id="glyph" src="s2r://panorama/images/hud/hudv2_iconglyph.png" />
-            <Panel id="gold" onmouseover="UIShowCustomLayoutParametersTooltip( GoldTooltip, file://{resources}/layout/custom_game/inventory/gold_tooltip.xml)" onmouseout="UIHideCustomLayoutTooltip(GoldTooltip)">
+            <Panel id="gold" hittest="true" onmouseover="UIShowCustomLayoutParametersTooltip( GoldTooltip, file://{resources}/layout/custom_game/inventory/gold_tooltip.xml)" onmouseout="UIHideCustomLayoutTooltip(GoldTooltip)">
                 <Image id="goldImage" src="s2r://panorama/images/hud/icon_gold.psd" />
                 <Label id="goldCount" text="99999" />
             </Panel>
-            <Panel id="shop" class="ShopActive">
+            <Panel id="shop" class="ShopActive" hittest="true" >
                 <Label id="shopLabel" text="#DOTA_HUDShop" />
             </Panel>
         </Panel>
