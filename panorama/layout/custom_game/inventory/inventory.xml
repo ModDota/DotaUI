@@ -14,6 +14,10 @@
         <snippet name="itemSlot">
             <Panel class="ItemSlot">
                 <Image id="bg" src="raw://resource/flash3/images/items/emptyitembg.png" />
+                <Panel id="hover" />
+                <Label id="primary" text="0" />
+                <Label id="secondary" text="0"/>
+                <Label id="hotkey" text="E" />
             </Panel>
         </snippet>
     </snippets>

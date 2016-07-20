@@ -17,6 +17,8 @@ class ItemPanel {
 
     state: ItemState;
 
+    keybind: string = "";
+
     constructor(parent: Panel, slot:number) {
         this.slot = slot;
         this.panel = $.CreatePanel( "Panel", parent, "" );
@@ -30,6 +32,32 @@ class ItemPanel {
         }
         this.item = Entities.GetItemInSlot(this.unit, this.slot);
         this.itemName = Abilities.GetAbilityName(this.item);
+        if (this.keybind == "") {
+           this.keybind = Abilities.GetKeybind(this.item);
+           (<Label>this.panel.FindChildTraverse("hotkey")).text = this.keybind;
+        }
+
+
+        this.panel.SetHasClass("Muted", Items.IsMuted(this.item));
+        this.panel.SetHasClass("Primary", Items.ShouldDisplayCharges(this.item));
+        this.panel.SetHasClass("Secondary", Items.ShowSecondaryCharges(this.item));
+
+        //Due to the native of inverting IsPassive, need to do empty checks first.
+        if (this.item == -1) {
+            this.panel.RemoveClass("Active");
+        } else {
+            this.panel.SetHasClass("Active", !Abilities.IsPassive(this.item));
+        }
+
+        //WTF Valve, why not just have secondary being secondary and primary being primary!
+        if (Abilities.GetToggleState(this.item)) {
+            (<Label>this.panel.FindChildTraverse("primary")).text = Items.GetDisplayedCharges(this.item).toString();
+            (<Label>this.panel.FindChildTraverse("secondary")).text = Items.GetSecondaryCharges(this.item).toString();
+        }  else {
+            (<Label>this.panel.FindChildTraverse("secondary")).text = Items.GetDisplayedCharges(this.item).toString();
+            (<Label>this.panel.FindChildTraverse("primary")).text = Items.GetSecondaryCharges(this.item).toString();
+        }
+
         let itemImage = <Image>this.panel.FindChildTraverse("bg");
         itemImage.SetImage("s2r://panorama/images/items/" + ((this.item == -1) ? "emptyitembg" : Items.GetAbilityTextureSF(this.item)) + ".png");
     }
