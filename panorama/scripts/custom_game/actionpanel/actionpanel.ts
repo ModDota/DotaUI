@@ -100,22 +100,17 @@
     }
 
     function onSteamInventoryChanged(event) {
-        let skinName = ItemDB[event.itemdef];
-        $.Msg(skinName);
+        let skinName = (<any>GameUI.CustomUIConfig()).itemdef[event.itemdef];
         if (skinName !== undefined) {
-            $("#MinimapBorder").style.backgroundImage = "url('s2r://panorama/images/hud/" + skinName + "/actionpanel/minimapborder.png');";
-            // WTF DO WE DO NOW WITH DIFFERENT RESOLUTIONS!!
-            $("#MinimapSpacer").style.backgroundImage = "url('s2r://panorama/images/hud/" + skinName + "/actionpanel/spacer_16_9.png');";
             // TODO: spacer_16_10
-            // WTF DO WE DO NOW WITH DIFFERENT RESOLUTIONS!!
+            (<Image>$("#MinimapBorder")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/minimapborder.png`);
+            (<Image>$("#MinimapSpacer")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/spacer_16_9.png`);
+            (<Image>$("#PortraitBorder")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/portrait_wide.png`);
             // TODO: portrait
-            $("#PortraitBorder").style.backgroundImage = "url('s2r://panorama/images/hud/" + skinName + "/actionpanel/portrait_wide.png');";
-            $("#center_left_wide").style.backgroundImage = "url('s2r://panorama/images/hud/" + skinName + "/actionpanel/center_left_wide.png');";
+            (<Image>$("#center_left_wide")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/center_left_wide.png`);
             // TODO: center_left
-            $("#center_right").style.backgroundImage = "url('s2r://panorama/images/hud/" + skinName + "/actionpanel/center_right.png');";
-            $.Msg($("#MinimapBorder").style.backgroundImage);
+            (<Image>$("#center_right")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/center_right.png`);        
         }
-        $.Msg(event);
     }
 
     function updateVisibleAbilities() {

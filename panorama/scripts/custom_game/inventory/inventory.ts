@@ -34,13 +34,13 @@ let currentUnit = Players.GetLocalPlayerPortraitUnit();
 let currentCourier = -1;
 let courierDeathTime = 0;
 function onSteamInventoryChanged(event) {
-    var skinName = ItemDB[event.itemdef];
+    let skinName = (<any>GameUI.CustomUIConfig()).itemdef[event.itemdef];
     $.Msg(skinName);
     if (skinName !== undefined) {
-        $("#spacer").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/inventory/spacer.png');";
+        (<Image>$("#spacer")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/inventory/spacer.png`);
         //WTF DO WE DO NOW WITH DIFFERENT RESOLUTIONS!!
-        $("#rocks").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/inventory/rocks_16_9.png');";
-        $("#background").style.backgroundImage = "url('s2r://panorama/images/hud/"+skinName+"/inventory/background_wide.png');";
+        (<Image>$("#rocks")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/inventory/rocks_16_9.png`);
+        (<Image>$("#background")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/inventory/background_wide.png`);
     }
     $.Msg(event);
 }

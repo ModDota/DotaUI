@@ -23,9 +23,9 @@
     </snippets>
     <Panel class="inventory" hittest="false">
         <Panel id="hittest" />
-        <Image id="rocks" hittest="false" />
-        <Image id="spacer" hittest="false" />
-        <Panel id="background" hittest="false">
+        <Image id="rocks" src="raw://resource/flash3/images/hud_skins/default/inventory/rocks_16_9.png" hittest="false" />
+        <Image id="spacer" src="raw://resource/flash3/images/hud_skins/default/inventory/spacer.png" hittest="false" />
+        <Image id="background" src="raw://resource/flash3/images/hud_skins/default/inventory/background_wide.png" hittest="false">
             <Panel id="items" hittest="false" >
                 <Panel id="row0"/>
                 <Panel id="row1"/>
@@ -54,6 +54,6 @@
             <Panel id="shop" class="ShopActive" hittest="true" >
                 <Label id="shopLabel" text="#DOTA_HUDShop" />
             </Panel>
-        </Panel>
+        </Image>
     </Panel>
 </root>

@@ -56,32 +56,32 @@
     </snippets>
   
     <Panel class="hudpanel" hittest="false">
-        <Panel id="MinimapBorder" hittest="false">
+        <Image id="MinimapBorder" hittest="false" src="raw://resource/flash3/images/hud_skins/default/actionpanel/minimapborder.png">
             <Button id="ScanButton" hittest="true" />
-        </Panel>
+        </Image>
         <!--<Panel class="hud" id="minimapimage"/>-->
-        <Panel id="MinimapSpacer"/>
-        <Panel class="hud" id="PortraitBorder" hittest="false">
+        <Image id="MinimapSpacer" src="raw://resource/flash3/images/hud_skins/default/actionpanel/spacer_16_9.png" />
+        <Image class="hud" id="PortraitBorder" hittest="false" src="raw://resource/flash3/images/hud_skins/default/actionpanel/portrait_wide.png">
             <Label id="HeroName" text="Zuus" />
             <Panel id="LevelTextBox">
                 <Label id="LevelNumber" text="25" />
             </Panel>
             <Panel id="XPBar" />
             <Label id="XPLabel" text="1700/2400" />
-        </Panel>
+        </Image>
         <DOTAScenePanel class="hud" id="Portrait" unit="npc_dota_hero_zuus"/>
 
         <!-- Stat container -->
-        <Panel class="hud" id="center_left_wide">
+        <Image class="hud" id="center_left_wide" src="raw://resource/flash3/images/hud_skins/default/actionpanel/center_left_wide.png">
             <Panel class="BlackBox" id="LeftStatsBox"/>
             <Panel class="BlackBox" id="RightStatsBox"/>
-        </Panel>
+        </Image>
         <!-- Ability container -->
-        <Panel id="center_right">
+        <Image id="center_right" src="raw://resource/flash3/images/hud_skins/default/actionpanel/center_right.png">
             <Panel id="AbilitiesContainer">
 
             </Panel>
-        </Panel>
+        </Image>
 
         <!-- Health bar -->
         <Panel id="HealthBar">
