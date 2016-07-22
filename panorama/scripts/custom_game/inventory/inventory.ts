@@ -37,10 +37,10 @@ function onSteamInventoryChanged(event) {
     let skinName = (<any>GameUI.CustomUIConfig()).itemdef[event.itemdef];
     $.Msg(skinName);
     if (skinName !== undefined) {
-        (<Image>$("#spacer")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/inventory/spacer.png`);
+        (<ImagePanel>$("#spacer")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/inventory/spacer.png`);
         //WTF DO WE DO NOW WITH DIFFERENT RESOLUTIONS!!
-        (<Image>$("#rocks")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/inventory/rocks_16_9.png`);
-        (<Image>$("#background")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/inventory/background_wide.png`);
+        (<ImagePanel>$("#rocks")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/inventory/rocks_16_9.png`);
+        (<ImagePanel>$("#background")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/inventory/background_wide.png`);
     }
     $.Msg(event);
 }
@@ -74,7 +74,7 @@ function onInventoryChanged(event) {
     }
 }
 function onGoldChanged(event) {
-    (<Label>$("#goldCount")).text = Players.GetGold(Players.GetLocalPlayer()).toString(); //TODO: handle selecting allied units.
+    (<LabelPanel>$("#goldCount")).text = Players.GetGold(Players.GetLocalPlayer()).toString(); //TODO: handle selecting allied units.
 }
 function onShopChanged(event) {
     if (event.shopmask > 0) {
@@ -108,7 +108,7 @@ GameEvents.Subscribe("dota_player_kill", onHeroDeath);
 GameEvents.Subscribe("dota_money_changed", onGoldChanged);
 function onCourierDeathTimeUpdate() {
     let time = courierDeathTime--;
-    (<Label>$("#deadCourierTimer")).text = Math.floor(time/60) + ":" + ("00" + (time % 60)).slice(-2);
+    (<LabelPanel>$("#deadCourierTimer")).text = Math.floor(time/60) + ":" + ("00" + (time % 60)).slice(-2);
     if (courierDeathTime < 1)
         return;
     $.Schedule(1, onCourierDeathTimeUpdate);
@@ -176,4 +176,4 @@ for (let i = 0; i < 12; i++) {
     }
     items[i] = new ItemPanel(parent, i);
 }
-(<Label>$("#deadCourierTimer")).text = "N/A";
+(<LabelPanel>$("#deadCourierTimer")).text = "N/A";

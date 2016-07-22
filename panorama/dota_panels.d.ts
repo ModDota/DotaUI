@@ -16,6 +16,7 @@ interface Panel {
     BLoadLayoutSnippet(path: string);
     RemoveAndDeleteChildren(): void;
     AddClass(name: string): void;
+    SetHasClass(name: string, active:boolean);
     RemoveClass(name: string): void;
     style: CSSStyleDeclaration;
     MoveChildAfter(child: Panel, afterChild: Panel): void;
@@ -23,13 +24,17 @@ interface Panel {
     BHasClass(className: string): boolean;
     SetPanelEvent(event: string, handler: Function): void;
     SetDialogVariableInt(field: string, value: number): void;
+    DeleteAsync(time: number);
+
+    SetAttributeInt(attribute: string, value: number): void;
+    GetAttributeInt(attribute: string, defaultValue: number): number;
 }
 
-interface Label extends Panel {
+interface LabelPanel extends Panel {
     text: string;
 }
 
-interface Image extends Panel {
+interface ImagePanel extends Panel {
     /**
      * Sets the image of this Image.
      * Example: image.SetImage("s2r://panorama/images/hud/hudv2_iconglyph.png")
@@ -38,12 +43,12 @@ interface Image extends Panel {
     SetScaling(scale: string): void;
 }
 
-interface AbilityImage extends Image {
+interface AbilityImage extends ImagePanel {
     abilityname: string;
     contextEntityIndex: number;
 }
 
-interface ItemImage extends Image {
+interface ItemImage extends ImagePanel {
     itemname: string;
     contextEntityIndex: number;
 }

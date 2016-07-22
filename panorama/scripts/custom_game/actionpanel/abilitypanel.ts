@@ -82,7 +82,7 @@ class AbilityPanel {
         if (Abilities.IsPassive(this.ability)) {
             this.panel.FindChildTraverse("HotkeyLabel").style.visibility = "collapse";
         } else {
-            (<Label>this.panel.FindChildTraverse("HotkeyLabel")).text = hotkey;
+            (<LabelPanel>this.panel.FindChildTraverse("HotkeyLabel")).text = hotkey;
         }
     }
 
@@ -106,7 +106,7 @@ class AbilityPanel {
             }
         } else {
             // Add pips for levels > 8
-            let pipLabel = <Label>$.CreatePanel("Label", pipContainer, "");
+            let pipLabel = <LabelPanel>$.CreatePanel("Label", pipContainer, "");
             pipLabel.text = "0/" + this.maxLevel;
             this.pips[0] = pipLabel;
         }
@@ -131,7 +131,7 @@ class AbilityPanel {
 
                 if (manaCost > 0) {
                     this.panel.FindChildTraverse("ManaLabel").style.visibility = "visible";
-                    (<Label>this.panel.FindChildTraverse("ManaLabel")).text = String(manaCost);
+                    (<LabelPanel>this.panel.FindChildTraverse("ManaLabel")).text = String(manaCost);
                 } else {
                     this.panel.FindChildTraverse("ManaLabel").style.visibility = "collapse";
                 }
@@ -161,7 +161,7 @@ class AbilityPanel {
                     }
                 }
             } else {
-                (<Label>this.pips[0]).text = level + "/" + this.maxLevel;
+                (<LabelPanel>this.pips[0]).text = level + "/" + this.maxLevel;
             }
         }
     }
@@ -179,7 +179,7 @@ class AbilityPanel {
 
         // Update hotkey label, can change because of slot swapping
         let hotkey = Abilities.GetKeybind(this.ability);
-        (<Label>this.panel.FindChildTraverse("HotkeyLabel")).text = hotkey;
+        (<LabelPanel>this.panel.FindChildTraverse("HotkeyLabel")).text = hotkey;
 
         // Do not play shine on panels that came off cooldown while looking away
         if (this.state === AbilityState.Cooldown && Abilities.IsCooldownReady(this.ability)) {
@@ -256,7 +256,7 @@ class AbilityPanel {
         });
 
         // Make cooldown label visible
-        let cooldownLabel = <Label>this.panel.FindChildTraverse("CooldownLabel");
+        let cooldownLabel = <LabelPanel>this.panel.FindChildTraverse("CooldownLabel");
         cooldownLabel.text = String(Math.ceil(duration));
         cooldownLabel.style.visibility = "visible";
 
@@ -271,7 +271,7 @@ class AbilityPanel {
         }
 
         let cooldown = Abilities.GetCooldownTimeRemaining(this.ability);
-        (<Label>this.panel.FindChildTraverse("CooldownLabel")).text = String(Math.ceil(cooldown));
+        (<LabelPanel>this.panel.FindChildTraverse("CooldownLabel")).text = String(Math.ceil(cooldown));
 
         $.Schedule(1.0, this.updateCooldown.bind(this));
     }

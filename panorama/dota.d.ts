@@ -48,7 +48,7 @@ interface CDOTA_PanoramaScript_GameUI {
     /**
      * Get the current UI configuration
      */
-    CustomUIConfig(): {};
+    CustomUIConfig(): Object;
 
     /**
      * Create a minimap ping at the given location
@@ -2126,11 +2126,13 @@ interface CScriptBindingPR_Game {
 interface DollarStatic {
     (selector: string) : Panel;
     CreatePanel(type: string, root: Panel, name: string): Panel;
+    CreatePanel(type: "Image", root: Panel, name: string): ImagePanel;
     Msg(...args: any[]): void;
     GetContextPanel(): Panel;
     Schedule(time: number, callback: Function);
     DispatchEvent(event: string, reference?: Panel, ...args: any[]);
     Localize(token: string, parent?: Panel);
+    RegisterEventHandler(event: string, parent: Panel, handler: Function);
 }
 
 declare var GameEvents: CDOTA_PanoramaScript_GameEvents;

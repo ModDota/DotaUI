@@ -7,6 +7,31 @@ enum ItemState {
     Cooldown,
     Muted
 }
+interface DragCallback {
+    removePositionBeforeDrop: boolean;
+    offsetX: number;
+    offsetY: number;
+    displayPanel: Panel;
+}
+
+function altDump(name, object) {
+    $.Msg("=====================================");
+    $.Msg("This is a giant dump in " + name);
+    $.Msg("=====================================");
+    for (var v in object) {
+        if(typeof object[v] == "object") {
+            $.Msg(v + " = {");
+            for (let w in object[v]) {
+                $.Msg("\t"+v+"." + w + " = " + (""+object[v][w]));
+            }
+            $.Msg("}");
+        } else {
+            $.Msg(name+"." + v + " = (" + typeof object[v] + ") " + object[v]);
+        }
+    }
+    $.Msg("=====================================");
+}
+
 class ItemPanel {
     panel: Panel;
     slot: number;
@@ -23,8 +48,49 @@ class ItemPanel {
         this.slot = slot;
         this.panel = $.CreatePanel( "Panel", parent, "" );
         this.panel.BLoadLayoutSnippet( "itemSlot" );
+        $.RegisterEventHandler("DragStart", this.panel, this.onDragStart.bind(this));
+        $.RegisterEventHandler("DragEnd", this.panel, this.onDragEnd.bind(this));
+        $.RegisterEventHandler("DragDrop", this.panel, this.onDragDrop.bind(this));
         this.update();
     }
+    onDragStart(panelID: string, dragCallbacks:DragCallback) {
+        //If we are empty, fuck dragging.
+        if (this.item == -1) {
+            return true;
+        }
+        let panel = $.CreatePanel("Image", this.panel, "dragImage");
+        panel.SetAttributeInt("itemID", this.item);
+        panel.SetAttributeInt("unitID", this.unit);
+        panel.SetImage("s2r://panorama/images/items/" + Items.GetAbilityTextureSF(this.item) + ".png");
+        dragCallbacks.displayPanel = panel;
+        dragCallbacks.offsetX = 0;
+        dragCallbacks.offsetY = 0;
+        return true;
+    }
+    onDragEnd(panelID: string, draggedPanel: Panel) {
+        let isSwapping = draggedPanel.GetAttributeInt("swapping", 0);
+        if (!isSwapping) {
+            $.Msg("Drop this bitch");
+            let itemID = draggedPanel.GetAttributeInt("itemID", -1);
+            let unitID = draggedPanel.GetAttributeInt("unitID", -1);
+            Game.DropItemAtCursor(unitID, itemID);
+        }
+        draggedPanel.DeleteAsync(0);
+        return true;
+    }
+    onDragDrop(panelID:string, draggedPanel: Panel) {
+        draggedPanel.SetAttributeInt("swapping", 1);
+        if (draggedPanel.GetAttributeInt("itemID", -1) == this.item) {
+            return true;
+        }
+        Game.PrepareUnitOrders({
+            OrderType: dotaunitorder_t.DOTA_UNIT_ORDER_MOVE_ITEM,
+            TargetIndex: this.slot,
+            AbilityIndex: draggedPanel.GetAttributeInt("itemID", -1)
+        });
+        return true;
+    }
+
     update() {
         this.unit = Players.GetQueryUnit(Players.GetLocalPlayer());
         if (this.unit === -1 ) {
@@ -34,7 +100,7 @@ class ItemPanel {
         this.itemName = Abilities.GetAbilityName(this.item);
         if (this.keybind == "") {
            this.keybind = Abilities.GetKeybind(this.item);
-           (<Label>this.panel.FindChildTraverse("hotkey")).text = this.keybind;
+           (<LabelPanel>this.panel.FindChildTraverse("hotkey")).text = this.keybind;
         }
 
 
@@ -50,15 +116,15 @@ class ItemPanel {
         }
 
         //WTF Valve, why not just have secondary being secondary and primary being primary!
-        if (Abilities.GetToggleState(this.item)) {
-            (<Label>this.panel.FindChildTraverse("primary")).text = Items.GetDisplayedCharges(this.item).toString();
-            (<Label>this.panel.FindChildTraverse("secondary")).text = Items.GetSecondaryCharges(this.item).toString();
+        if (Abilities.GetToggleState(this.item) || !Items.ShowSecondaryCharges(this.item)) {
+            (<LabelPanel>this.panel.FindChildTraverse("primary")).text = Items.GetDisplayedCharges(this.item).toString();
+            (<LabelPanel>this.panel.FindChildTraverse("secondary")).text = Items.GetSecondaryCharges(this.item).toString();
         }  else {
-            (<Label>this.panel.FindChildTraverse("secondary")).text = Items.GetDisplayedCharges(this.item).toString();
-            (<Label>this.panel.FindChildTraverse("primary")).text = Items.GetSecondaryCharges(this.item).toString();
+            (<LabelPanel>this.panel.FindChildTraverse("secondary")).text = Items.GetDisplayedCharges(this.item).toString();
+            (<LabelPanel>this.panel.FindChildTraverse("primary")).text = Items.GetSecondaryCharges(this.item).toString();
         }
 
-        let itemImage = <Image>this.panel.FindChildTraverse("bg");
+        let itemImage = <ImagePanel>this.panel.FindChildTraverse("bg");
         itemImage.SetImage("s2r://panorama/images/items/" + ((this.item == -1) ? "emptyitembg" : Items.GetAbilityTextureSF(this.item)) + ".png");
     }
 }

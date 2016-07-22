@@ -103,13 +103,13 @@
         let skinName = (<any>GameUI.CustomUIConfig()).itemdef[event.itemdef];
         if (skinName !== undefined) {
             // TODO: spacer_16_10
-            (<Image>$("#MinimapBorder")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/minimapborder.png`);
-            (<Image>$("#MinimapSpacer")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/spacer_16_9.png`);
-            (<Image>$("#PortraitBorder")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/portrait_wide.png`);
+            (<ImagePanel>$("#MinimapBorder")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/minimapborder.png`);
+            (<ImagePanel>$("#MinimapSpacer")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/spacer_16_9.png`);
+            (<ImagePanel>$("#PortraitBorder")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/portrait_wide.png`);
             // TODO: portrait
-            (<Image>$("#center_left_wide")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/center_left_wide.png`);
+            (<ImagePanel>$("#center_left_wide")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/center_left_wide.png`);
             // TODO: center_left
-            (<Image>$("#center_right")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/center_right.png`);        
+            (<ImagePanel>$("#center_right")).SetImage(`raw://resource/flash3/images/hud_skins/${skinName}/actionpanel/center_right.png`);        
         }
     }
 

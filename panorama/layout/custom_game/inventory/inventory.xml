@@ -12,7 +12,7 @@
     </scripts>
     <snippets>
         <snippet name="itemSlot">
-            <Panel class="ItemSlot">
+            <Panel class="ItemSlot" draggable="true">
                 <Image id="bg" src="raw://resource/flash3/images/items/emptyitembg.png" />
                 <Panel id="hover" />
                 <Label id="primary" text="0" />
