@@ -12,22 +12,130 @@
 */
 
 interface Panel {
-    LoadLayoutAsync(path: string, unknown: boolean, unknown2: boolean): void;
-    BLoadLayoutSnippet(path: string);
-    RemoveAndDeleteChildren(): void;
-    AddClass(name: string): void;
-    SetHasClass(name: string, active:boolean);
-    RemoveClass(name: string): void;
+    paneltype: string;
+    rememberchildfocus: boolean;
     style: CSSStyleDeclaration;
+
+    scrolloffset_x: number;
+    scrolloffset_y: number;
+
+    actualxoffset: number;
+    actualyoffset: number;
+
+    actuallayoutwidth: number;
+    actuallayoutheight: number;
+
+    desiredlayoutwidth: number;
+    desiredlayoutheight: number;
+
+    contentwidth: number;
+    contentheight: number;
+
+    layoutfile: string;
+    id: string;
+
+    selectionpos_x: Object;
+    selectionpos_y: Object;
+
+    tabindex: Object;
+
+    hittestchildren: boolean;
+    hittest: boolean;
+    inputnamespace: string;
+    defaultfocus: string;
+
+    checked: boolean;
+    enabled: boolean;
+    visible: boolean;
+
+    AddClass(name: string): void;
+    RemoveClass(name: string): void;
+    BHasClass(name: string): boolean;
+    SetHasClass(name: string, active: boolean);
+    ToggleClass(name: string): void;
+    SwitchClass(name: string, replacement: string): void;
+
+    ClearPanelEvent(): void;
+
+    SetDraggable(): void;
+    IsDraggable(): boolean;
+
+    GetChildCount(): number;
+    GetChild(index: number): Panel;
+    GetChildIndex(child: Panel): number;
+    Children(): Panel[];
+
+    FindChildrenWithClassTraverse(classname: string): Panel[];
+
+    GetParent(): Panel;
+    SetParent(parent: Panel): void;
+
+    FindChild(childid: string): Panel;
+    FindChildTraverse(childid: string): Panel;
+    FindChildInLayoutFile(childid: string): Panel; // ??? needs layout file param?
+
+    RemoveAndDeleteChildren(): void;
+
+    MoveChildBefore(child: Panel, afterChild: Panel): void;
     MoveChildAfter(child: Panel, afterChild: Panel): void;
-    FindChildTraverse(id: string): Panel;
-    BHasClass(className: string): boolean;
-    SetPanelEvent(event: string, handler: Function): void;
-    SetDialogVariableInt(field: string, value: number): void;
+
+    GetPositionWithinWindow(): Object;
+    ApplyStyles(): void; // ???????
+    ClearPropertyFromCode(): void;
+
     DeleteAsync(time: number);
 
-    SetAttributeInt(attribute: string, value: number): void;
-    GetAttributeInt(attribute: string, defaultValue: number): number;
+    BIsTransparent(): boolean;
+    BAcceptsInput(): boolean;
+    BAcceptsFocus(): boolean;
+    SetFocus(): void; // ??
+    UpdateFocusInContext(): void; // ??
+
+    BHasHoverStyle(): boolean;
+    SetAcceptsFocus(value: boolean): void; // ??
+    SetDisableFocusOnMouseDown(value: boolean): void; // ??
+    BHasKeyFocus(): boolean;
+    SetScrollParentToFitWhenFocused(value: boolean): void; // ??
+    BScrollParentToFitWhenFocussed(): boolean;
+
+    IsSelected(): boolean;
+    BHasDescendantKeyFocus(): boolean;
+
+    BLoadLayout(path: string);
+    BLoadLayoutFromString(layout: string);
+    BLoadLayoutFromStringAsync(layout: string, callback: Function); // ??
+    BLoadLayoutAsync(path: string, callback: Function); // ?
+    BLoadLayoutSnippet(snippetname: string);
+    BCreateChildren(): boolean; // ????
+
+    SetTopOfInputContext(): void; // ????
+    SetDialogVariable(name: string, value: any): void;
+    SetDialogVariableInt(name: string, value: number): void;
+
+    ScrollToTop(): void;
+    ScrollToBottom(): void;
+    ScrollToLeftEdge(): void;
+    ScrollTORightEdge(): void;
+
+    ScrollParentTOMakePanelFit(): void;
+    BCanSeeInParentScroll(): boolean;
+
+    GetAttributeInt(name: string, defaultvalue: number): number;
+    GetAttributeString(name: string, defaultvalue: number): string;
+    GetAttributeUInt32(name: string, defaultvalue: number): number;
+    SetAttributeInt(name: string, value: number): void;
+    SetAttributeString(name: string, value: string): void;
+    SetAttributeUInt32(name: string, value: number): void;
+
+    SetInputNamespace(naespace: string): void; // ??
+
+    RegisterForReadyEvents(callback: Function): void; // ????
+
+    BReadyForDisplay(): boolean;
+    SetReadyForDisplay(value: boolean): void; // ???
+    SetPanelEvent(event: string, handler: Function): void;
+
+    RunScriptInPanelContext(script: string): void;
 }
 
 interface LabelPanel extends Panel {
