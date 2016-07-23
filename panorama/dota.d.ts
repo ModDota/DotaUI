@@ -2126,7 +2126,6 @@ interface CScriptBindingPR_Game {
 interface DollarStatic {
     (selector: string) : Panel;
     CreatePanel(type: string, root: Panel, name: string): Panel;
-    CreatePanel(type: "Image", root: Panel, name: string): ImagePanel;
     Msg(...args: any[]): void;
     GetContextPanel(): Panel;
     Schedule(time: number, callback: Function);

@@ -160,3 +160,17 @@ interface ItemImage extends ImagePanel {
     itemname: string;
     contextEntityIndex: number;
 }
+
+interface ContextMenuScriptPanel extends Panel {
+    GetContentsPanel(): Panel;
+}
+
+//Only put single string literals in here, it'll be merged with the main one
+interface DollarStatic {
+    CreatePanel(type: "Label", root: Panel, name: string): LabelPanel;
+    CreatePanel(type: "Image", root: Panel, name: string): ImagePanel;
+    CreatePanel(type: "DOTAAbilityImage", root: Panel, name: string): AbilityImage;
+    CreatePanel(type: "DOTAItemImage", root: Panel, name: string): ItemImage;
+    CreatePanel(type: "Image", root: Panel, name: string): ImagePanel;
+    CreatePanel(type: "ContextMenuScript", root: Panel, name: String): ContextMenuScriptPanel;
+}

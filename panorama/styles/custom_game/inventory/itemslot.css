@@ -2,6 +2,7 @@
     margin-left: 6px;
     width: 70px;
     height: 52px;
+    tooltip-position: left top;
 }
 .ItemSlot:hover #hover {
     background-color: gradient( linear, 0% 0%, 0% 60%, from( #ffffff0A ), to( #ffffff00 ) );

@@ -1,0 +1,14 @@
+.ItemMenu {
+    flow-children: down;
+}
+.Entry {
+    width: 200px;
+}
+.UnStashable.ItemMenu #MoveToStash,
+.NotInStash.ItemMenu #DropFromStash,
+.UnAlertable.ItemMenu #Alertable,
+.UnDisassemblable.ItemMenu #Disassemble,
+.Unsellable.ItemMenu #Sell,
+.NotInShop.ItemMenu #ShowInShop {
+    visibility: collapse;
+}

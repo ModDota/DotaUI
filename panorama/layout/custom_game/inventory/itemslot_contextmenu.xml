@@ -1,0 +1,35 @@
+<root>
+    <styles>
+        <include src="s2r://panorama/styles/dotastyles.css" />
+        <include src="file://panorama/styles/custom_game/inventory/itemslot_contextmenu.css" />
+    </styles>
+    <scripts>
+        <include src="file://panorama/scripts/custom_game/inventory/itemslot_contextmenu.js" />
+    </scripts>
+    <Panel class="ItemMenu">
+        <Button id="ShowInShop" class="Entry" onactivate="ShowInShop()">
+            <Label text="#DOTA_InventoryMenu_ShowInShop" />
+        </Button>
+        <Button id="Sell" class="Entry" onactivate="Sell()">
+            <Label text="#DOTA_InventoryMenu_Sell" />
+        </Button>
+        <Button id="Disassemble" class="Entry" onactivate="Disassemble()">
+            <Label text="#DOTA_InventoryMenu_Disassemble" />
+        </Button>
+        <Button id="Alertable" class="Entry" onactivate="Alertable()">
+            <Label text="#DOTA_InventoryMenu_Alertable" />
+        </Button>
+        <Button id="DropFromStash" class="Entry" onactivate="DropFromStash()">
+            <Label text="#DOTA_InventoryMenu_DropFromStash" />
+        </Button>
+        <Button id="MoveToStash" class="Entry" onactivate="MoveToStash()">
+            <Label text="#DOTA_InventoryMenu_MoveToStash" />
+        </Button>
+        <Button id="LockCombine" class="Entry" onactivate="LockCombine()">
+            <Label text="#DOTA_InventoryMenu_LockCombine" />
+        </Button>
+        <Button id="UnlockCombine" class="Entry" onactivate="UnlockCombine()">
+            <Label text="#DOTA_InventoryMenu_UnlockCombine" />
+        </Button>
+    </Panel>
+</root>
