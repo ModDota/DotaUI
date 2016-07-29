@@ -3,7 +3,8 @@
 	width: 1920px;
 	height: 1080px;
     //This is to move the UI up so we can do comparisons, remove in final product
-    padding-bottom: -50px;
+    padding-bottom: 200px;
+    padding-right: 0px;
 }
 
 .hudpanel:hover

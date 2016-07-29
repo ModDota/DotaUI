@@ -2,25 +2,58 @@
     <styles>
         <include src="s2r://panorama/styles/dotastyles.vcss_c" />
         <include src="s2r://panorama/styles/hudstyles.vcss_c" />
+        <include src="file://panorama/styles/custom_game/inventory/itemslot.css" />
         <include src="file://panorama/styles/custom_game/inventory/inventory.css" />     
     </styles>
 
     <scripts>
-        <include src="s2r://panorama/scripts/custom_game/inventory/inventory.js" />
+        <include src="file://panorama/scripts/custom_game/inventory/itemslot.js" />
+        <include src="file://panorama/scripts/custom_game/inventory/inventory.js" />
     </scripts>
+    <snippets>
+        <snippet name="itemSlot">
+            <Panel class="ItemSlot" draggable="true">
+                <Image id="bg" src="raw://resource/flash3/images/items/emptyitembg.png" />
+                <Panel id="hover" />
+                <Label id="primary" text="0" />
+                <Label id="secondary" text="0"/>
+                <Label id="hotkey" text="E" />
+            </Panel>
+        </snippet>
+    </snippets>
     <Panel class="inventory" hittest="false">
-        <Image id="rocks" />
-        <Image id="spacer" />
-        <Panel id="background">
-            <Label id="noCourier" text="#DOTA_No_Courier"/>
+        <Panel id="hittest" />
+        <Image id="rocks" src="raw://resource/flash3/images/hud_skins/default/inventory/rocks_16_9.png" hittest="false" />
+        <Image id="spacer" src="raw://resource/flash3/images/hud_skins/default/inventory/spacer.png" hittest="false" />
+        <Image id="background" src="raw://resource/flash3/images/hud_skins/default/inventory/background_wide.png" hittest="false">
+            <Panel id="items" hittest="false" >
+                <Panel id="row0"/>
+                <Panel id="row1"/>
+            </Panel>
+            <Panel id="courier">
+                <Label id="noCourier" text="#DOTA_No_Courier"/>
+                <Panel id="deadCourier" onmouseover="econHover('#deadCourier')" onmouseout="econHoverEnd()">
+                    <Panel id="deadCourierImage" />
+                    <Label id="deadCourierTimer" />
+                </Panel>
+                <Panel id="courierStatus" onactivate="statusClicked()" onmouseover="econHover('#courierStatus')" onmouseout="econHoverEnd()"/>
+                <Panel id="courierBurst" onactivate="burstClicked()" />
+                <Panel id="courierDelivery" onactivate="deliverClicked()" onmouseover="DOTAShowTextTooltip('#DOTA_CourierDeliver')" onmouseout="DOTAHideTextTooltip()"/>
+            </Panel>
+            <Panel id="stats" hittest="false">
+                <Label id="kda" text="#DOTA_Inventory_KDA" />
+                <Label id="kda-value" text="{d:kills} / {d:deaths} / {d:assists}" />
+                <Label id="lhd" text="#DOTA_Inventory_LHD" />
+                <Label id="lhd-value" text="{d:lasthits} / {d:denies}" />
+            </Panel>
             <Image id="glyph" src="s2r://panorama/images/hud/hudv2_iconglyph.png" />
-            <Panel id="gold">
+            <Panel id="gold" hittest="true" onmouseover="UIShowCustomLayoutParametersTooltip( GoldTooltip, file://{resources}/layout/custom_game/inventory/gold_tooltip.xml)" onmouseout="UIHideCustomLayoutTooltip(GoldTooltip)">
                 <Image id="goldImage" src="s2r://panorama/images/hud/icon_gold.psd" />
                 <Label id="goldCount" text="99999" />
             </Panel>
-            <Panel id="shop" class="ShopActive">
+            <Panel id="shop" class="ShopActive" hittest="true" >
                 <Label id="shopLabel" text="#DOTA_HUDShop" />
             </Panel>
-        </Panel>
+        </Image>
     </Panel>
 </root>

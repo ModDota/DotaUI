@@ -1,0 +1,20 @@
+<root>
+    <styles>
+        <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+        <include src="file://panorama/styles/custom_game/inventory/gold_tooltip.css" />
+    </styles>
+    <scripts>
+        <include src="file://panorama/scripts/custom_game/inventory/gold_tooltip.js" />
+    </scripts>
+    <Panel class="GoldTooltip">
+        <Label id="reliable" text="#DOTA_HUD_ReliableGold" />
+        <Label id="unreliable" text="#DOTA_HUD_UnreliableGold" />
+        <Label id="deathCost" text="#DOTA_HUD_DeathCost" />
+        <Label id="buybackCost" text="#DOTA_HUD_BuybackCost" />
+        <Label id="buybackCooldown" text="#DOTA_HUD_BuybackCooldownReady" />
+        <Panel id="BuybackCostContainer">
+            <Image id="goldImage" src="s2r://panorama/images/hud/icon_gold.psd" />
+            <Label id="buybackCostExtra" class="Surplus" text="#DOTA_HUD_BuybackCost_Surplus" />
+        </Panel>
+    </Panel>
+</root>

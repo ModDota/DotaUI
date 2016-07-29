@@ -10,7 +10,7 @@
     margin-top: -17%;
     vertical-align: bottom;
     background-position: left bottom;
-    background-image: url("s2r://panorama/images/hud/default/actionpanel/minimapborder_png.vtex");
+    background-image: url();
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -38,8 +38,6 @@
     height: 100%;
     margin-left: -23px;
     z-index: -1;
-    background-size: 100% 100%;
-    background-image: url("s2r://panorama/images/hud/default/actionpanel/spacer_16_9_png.vtex");
 }
 
 /* Portrait */
@@ -49,8 +47,6 @@
     margin-left: -3.8%;
     width: 16.3%;
     z-index: 5;
-    background-image: url("s2r://panorama/images/hud/default/actionpanel/portrait_wide_png.vtex");
-    background-position: left bottom;
 }
 
 #HeroName
