@@ -117,7 +117,7 @@ interface Panel {
     ScrollToLeftEdge(): void;
     ScrollTORightEdge(): void;
 
-    ScrollParentTOMakePanelFit(): void;
+    ScrollParentToMakePanelFit(unknown: number, unknown2: boolean): void;
     BCanSeeInParentScroll(): boolean;
 
     GetAttributeInt(name: string, defaultvalue: number): number;
